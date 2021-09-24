@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Hello world</h1>
+<p>This is a Project</p>
+
+{{ html|safe }}
+
+<p>
+    {{ my_text }}
+    {{ project_name }}
+
+    {% for x in my_list %}
+        {% if x == True %}
+            <li>Project is live</li>
+        {% else %}
+            <li>{{ forloop.counter }}  {{ x }}</li>
+        {% endif %}
+    {% endfor %}
+</p>
+
+
+{% endblock %}
