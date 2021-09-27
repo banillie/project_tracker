@@ -10,8 +10,8 @@ from .views import (
 app_name = 'projects'
 urlpatterns = [
     path("", project_list_view, name='project-list'),
-    path("create/", project_create_view, name='project-list'),
+    path("create/", project_create_view, name='project-create'),
     path("<int:id>/", project_detail_view, name='project-detail'),
-    path("<int:id>/update", project_update_view, name='project-create'),
-    path("<int:id>/delete", project_delete_view, name='project-delete'),
+    path("<int:id>/update/", project_update_view, name='project-create'),
+    path("<int:id>/delete/", project_delete_view, name='project-delete'),
 ]

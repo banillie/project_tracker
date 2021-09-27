@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 
 from .forms import StakeholderForm
 
@@ -16,10 +16,40 @@ def stakeholders_create_view(request):
     return render(request, "stakeholders/stakeholder_create.html", context)
 
 
-def stakeholders_detail_view(request):
-    obj = Stakeholder.objects.get(id=1)
-    print(obj.last_name)
+def stakeholder_update_view(request, id):
+    obj = get_object_or_404(Stakeholder, id=id)  # handles page not found.
+    form = StakeholderForm(request.POST or None, instance=obj)
+    if form.is_valid():
+        form.save()
+        return redirect('../')
     context = {
-        'object': obj,
+        'form': form
+    }
+    return render(request, "stakeholders/stakeholder_create.html", context)
+
+
+def stakeholders_detail_view(request, id):
+    obj = get_object_or_404(Stakeholder, id=id)
+    context = {
+        "object": obj
     }
     return render(request, "stakeholders/stakeholder_detail.html", context)
+
+
+def stakeholder_delete_view(request, id):
+    obj = get_object_or_404(Stakeholder, id=id)
+    if request.method == "POST":
+        obj.delete()
+        return redirect('../../')
+    context = {
+        "object": obj
+    }
+    return render(request, "stakeholders/stakeholder_delete.html", context)
+
+
+def stakeholder_list_view(request):
+    queryset = Stakeholder.objects.all()
+    context = {
+        "object_list": queryset
+    }
+    return render(request, "stakeholders/stakeholder_list.html", context)

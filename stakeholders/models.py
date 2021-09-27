@@ -1,4 +1,5 @@
 from django.db import models
+from django.urls import reverse
 
 TYPE_CHOICES = [
     ('DfT', 'DFT'),
@@ -17,3 +18,7 @@ class Stakeholder(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        # would be good to understand the reverse in more detail.
+        return reverse("stakeholders:stakeholder-detail", kwargs={"id": self.id})

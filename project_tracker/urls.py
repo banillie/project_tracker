@@ -17,14 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from pages.views import home_view, stakeholder_view
-from stakeholders.views import stakeholders_detail_view, stakeholders_create_view
+from pages.views import home_view
+
 
 urlpatterns = [
-    path("projects/", include('projects.urls')),
-    path("stakeholders/", stakeholders_detail_view),
-    path("create/", stakeholders_create_view),
-    # path("stakeholders/", stakeholder_view),
+    path("projects/", include("projects.urls")),
+    path("stakeholders/", include("stakeholders.urls")),
+
     path("", home_view, name="home"),
     path("admin/", admin.site.urls),
 ]

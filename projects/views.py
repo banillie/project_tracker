@@ -31,14 +31,12 @@ def project_detail_view(request, id):
     return render(request, "projects/project_detail.html", context)
 
 
-def project_update_view(request, id=id):
+def project_update_view(request, id):
     obj = get_object_or_404(Project, id=id)  # handles page not found.
     form = ProjectForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
-        form = ProjectForm(instance=obj)
-    else:
-        print(form.is_valid())
+        return redirect('../')
     context = {
         'form': form
     }
