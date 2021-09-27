@@ -36,6 +36,9 @@ def project_update_view(request, id=id):
     form = ProjectForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
+        form = ProjectForm(instance=obj)
+    else:
+        print(form.is_valid())
     context = {
         'form': form
     }
@@ -52,10 +55,3 @@ def project_create_view(request):
     }
     return render(request, "projects/project_create.html", context)
 
-
-# def project_detail_view(request):
-#     obj = Project.objects.get(id=6)
-#     context = {
-#         'object': obj,
-#     }
-#     return render(request, "projects/project_detail.html", context)

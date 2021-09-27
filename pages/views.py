@@ -4,20 +4,17 @@ from django.shortcuts import render
 
 def home_view(request, *args, **kwargs):
     # print(request.user)
-    # return HttpResponse("<h1>Hello World</h1>")
     my_context = {
-        "my_text": "This is a project",
+        "my_text": "The purpose of the tracker is to...",
     }
     return render(request, "home.html", my_context)
 
 
-def project_view(request, *args, **kwargs):
-    print(request.user)
+def stakeholder_view(request, *args, **kwargs):
     my_context = {
-        "my_text": "This is a project",
-        "project_name": "Project Django",
-        "my_list": [12, 4, 5, 78, "nice", True],
-        "html": "<h1>Hello World</h1>"
+        "my_text": "Stakeholders stakeholders stakeholders",
+        "my_number": 636257,
     }
-    return render(request, "project.html", my_context)
-    # return HttpResponse("<h1>Contact Page</h1>")
+    return render(request, "stakeholder.html", my_context)
+
+

@@ -43,7 +43,8 @@ INSTALLED_APPS = [
 
     # own
     'projects',
-    'pages'
+    'pages',
+    'stakeholders',
 
 ]  # think of apps as components.
 
