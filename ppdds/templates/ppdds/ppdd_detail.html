@@ -8,4 +8,9 @@
 {#    <p>Team: {{ object.team }}</p>#}
     <p>Role: {{ object.role }}</p>
 
+    <p>
+        <a href="{{ object.get_absolute_url }}update">Update</a>
+        <a href="{{ object.get_absolute_url }}delete">Delete</a>
+    </p>
+
 {% endblock %}
