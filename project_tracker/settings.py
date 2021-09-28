@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'projects',
     'pages',
     'stakeholders',
+    'ppdds',
 
 ]  # think of apps as components.
 

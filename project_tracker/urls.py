@@ -23,6 +23,7 @@ from pages.views import home_view
 urlpatterns = [
     path("projects/", include("projects.urls")),
     path("stakeholders/", include("stakeholders.urls")),
+    path("ppdds/", include("ppdds.urls")),
 
     path("", home_view, name="home"),
     path("admin/", admin.site.urls),
