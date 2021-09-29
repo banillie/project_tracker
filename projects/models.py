@@ -12,7 +12,8 @@ TYPE_CHOICES = [
 
 
 class Project(models.Model):
-    name = models.CharField(max_length=120, null=False)
+    # name must be unique
+    name = models.CharField(max_length=120, null=False, unique=True)
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)
     governance = models.CharField(max_length=20, blank=True, null=True)
