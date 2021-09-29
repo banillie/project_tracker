@@ -24,6 +24,7 @@ urlpatterns = [
     path("projects/", include("projects.urls")),
     path("stakeholders/", include("stakeholders.urls")),
     path("ppdds/", include("ppdds.urls")),
+    path("engagements/", include("engagements.urls")),
 
     path("", home_view, name="home"),
     path("admin/", admin.site.urls),
