@@ -36,7 +36,7 @@ class Engagement(models.Model):
     date = models.DateField()
     # To come from projects Project model. One engagement can have many Projects entries.
     # what does on_delete do?
-    project = models.ForeignKey(Project, to_field='name', on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     # To come from stakeholders Stakeholder model. One engagement can have many Stakeholder entries.
     stakeholder = models.ForeignKey(Stakeholder, on_delete=models.CASCADE)
     # To come from ppdds PPDD model. One engagement can have many PPDD entries.

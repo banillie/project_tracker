@@ -22,3 +22,6 @@ class Stakeholder(models.Model):
     def get_absolute_url(self):
         # would be good to understand the reverse in more detail.
         return reverse("stakeholders:stakeholder-detail", kwargs={"id": self.id})
+
+    def __str__(self):
+        return self.first_name + ' ' + self.last_name
