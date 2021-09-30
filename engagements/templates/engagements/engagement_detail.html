@@ -2,11 +2,12 @@
 
 {% block content %}
 
-    <p>Name: {{ object.first_name }} {{ object.last_name }}</p>
-    <p>Org: {{ object.organisation }}</p>
-    <p>Group: {{ object.group }}</p>
-    <p>Team: {{ object.team }}</p>
-    <p>Role: {{ object.role }}</p>
+    <p>Date: {{ object.date }}</p>
+    <p>Project: {{ object.project }}</p>
+    <p>Stakeholder: {{ object.stakeholder }}</p>
+    <p>PPDD: {{ object.ppdd }}</p>
+    <p>Type: {{ object.type }}</p>
+    <p>PDIP workstream: {{ object.wstype }}</p>
 
     <p>
         <a href="{{ object.get_absolute_url }}update">Update</a>

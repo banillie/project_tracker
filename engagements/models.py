@@ -49,7 +49,10 @@ class Engagement(models.Model):
     follow_up_date = models.DateField(blank=True, null=True)
 
     def get_absolute_url(self):
-        return reverse("engagements:engagement-create", kwargs={"id": self.id})
+        # return f"/engagements/{self.id}"
+        return reverse("engagement_detail", kwargs={"id": self.id})
+        # return reverse("engagement-list", kwargs={"id": self.id})
+        # return reverse("engagements:engagement-create", kwargs={"id": self.id})
 
 
 class ProjectEngagement(models.Model):
