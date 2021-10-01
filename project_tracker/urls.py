@@ -17,13 +17,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-from engagements.views import (
-    engagement_list_view,
-    engagement_create_view,
-    engagement_detail_view,
-    engagement_update_view,
-    engagement_delete_view,
-)
+# from engagements.views import (
+#     engagement_list_view,
+#     engagement_create_view,
+#     engagement_detail_view,
+#     engagement_update_view,
+#     engagement_delete_view,
+# )
 from pages.views import home_view
 
 
@@ -31,12 +31,12 @@ urlpatterns = [
     path("projects/", include("projects.urls")),
     path("stakeholders/", include("stakeholders.urls")),
     path("ppdds/", include("ppdds.urls")),
-    # path("engagements/", include("engagements.urls")),
-    path("engagements/", engagement_list_view, name="engagement-list"),
-    path("engagements/create/", engagement_create_view, name="engagement-create"),
-    path("engagements/<int:id>/", engagement_detail_view, name="engagement-detail"),
-    path("engagements/<int:id>/update/", engagement_update_view, name="engagement-create"),
-    path("engagements/<int:id>/delete/", engagement_delete_view, name="engagement-delete"),
+    path("engagements/", include("engagements.urls")),
+    # path("engagements/", engagement_list_view, name="engagement-list"),
+    # path("engagements/create/", engagement_create_view, name="engagement-create"),
+    # path("engagements/<int:id>/", engagement_detail_view, name="engagement-detail"),
+    # path("engagements/<int:id>/update/", engagement_update_view, name="engagement-create"),
+    # path("engagements/<int:id>/delete/", engagement_delete_view, name="engagement-delete"),
 
     path("", home_view, name="home"),
     path("admin/", admin.site.urls),

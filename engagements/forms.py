@@ -3,6 +3,7 @@ from django.forms import Select
 
 from .models import Engagement
 from projects.models import Project
+from easy_select2 import Select2Mixin, Select2Multiple, Select2
 
 
 class EngagementForm(forms.ModelForm):
@@ -10,8 +11,7 @@ class EngagementForm(forms.ModelForm):
     # summary = forms.TextInput()
     # follow_up_date = forms.DateField()
     # projects = forms.CharField(max_length=120, widget={})
-    # projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
-    # projects = forms.ModelChoiceField(queryset=Project.objects.all())
+    projects = forms.ModelMultipleChoiceField(queryset=Project.objects.all())
 
     class Meta:
         model = Engagement
@@ -25,7 +25,6 @@ class EngagementForm(forms.ModelForm):
             "summary",
             "follow_up_date",
         ]
-
 
 # class ProjectEngagementForm(forms.ModelForm):
 #     class Meta:

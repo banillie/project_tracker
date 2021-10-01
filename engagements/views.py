@@ -1,13 +1,23 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.urls import reverse_lazy
+from django.views.generic import ListView, UpdateView
+from django.views.generic.edit import CreateView
+from easy_select2 import select2_modelform
 from .forms import EngagementForm
 from .models import Engagement
 
 
+class EngagementCreateView(CreateView):
+    model = Engagement
+    form_class = select2_modelform(Engagement)
+    success_url = reverse_lazy('engagement-test')
+
+
 def engagement_create_view(request):
     form = EngagementForm(request.POST or None)
+    # form = EngagementForm(request.POST or None)
     if form.is_valid():
         form.save()
-        # form.save_m2m()  # here
         form = EngagementForm()
     context = {
         'form': form,

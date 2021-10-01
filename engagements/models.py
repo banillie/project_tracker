@@ -5,6 +5,7 @@ from django.urls import reverse
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
+from multiselectfield import MultiSelectField
 
 TYPE_CHOICES = (
     ('A', 'Assurance'),
@@ -37,19 +38,14 @@ class Engagement(models.Model):
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
     # Temporary TYPE_CHOICES drop down. Build EngagementType model?
-    type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+    type = MultiSelectField(max_length=20, choices=TYPE_CHOICES)
     # Temporary WS_TYPE_CHOICES drop down. Build EngagementWsType model?
     ws_type = models.CharField(max_length=20, blank=True, null=True, choices=WS_TYPE_CHOICES)
     summary = models.TextField()
     follow_up_date = models.DateField(blank=True, null=True)
 
     def get_absolute_url(self):
-        # bug. working incosistently in templates.
-        return f"/engagements/{self.id}"
-        # unresolved bug. Can't get reverse to work for engagement model.
-        # getting error NoReverseMatch when using below steps.
-        # return reverse("engagement-create", kwargs={"id": self.id})
-        # return reverse("engagements:engagement-create", kwargs={"id": self.id})
+        return reverse("engagements:engagement-detail", kwargs={"id": self.id})
 
 
 # build individual association tables
