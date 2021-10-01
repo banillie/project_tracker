@@ -2,7 +2,6 @@ from django.db import models
 from django.forms import ModelForm
 from django.urls import reverse
 
-
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
@@ -34,13 +33,9 @@ WS_TYPE_CHOICES = (
 
 class Engagement(models.Model):
     date = models.DateField()
-    # To come from projects Project model. One engagement can have many Projects entries.
-    # what does on_delete do?
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    # To come from stakeholders Stakeholder model. One engagement can have many Stakeholder entries.
-    stakeholder = models.ForeignKey(Stakeholder, on_delete=models.CASCADE)
-    # To come from ppdds PPDD model. One engagement can have many PPDD entries.
-    ppdd = models.ForeignKey(PPDD, on_delete=models.CASCADE)
+    projects = models.ManyToManyField(Project)
+    stakeholders = models.ManyToManyField(Stakeholder)
+    ppdds = models.ManyToManyField(PPDD)
     # Temporary TYPE_CHOICES drop down. Build EngagementType model?
     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     # Temporary WS_TYPE_CHOICES drop down. Build EngagementWsType model?
@@ -49,6 +44,7 @@ class Engagement(models.Model):
     follow_up_date = models.DateField(blank=True, null=True)
 
     def get_absolute_url(self):
+        # bug. working incosistently in templates.
         return f"/engagements/{self.id}"
         # unresolved bug. Can't get reverse to work for engagement model.
         # getting error NoReverseMatch when using below steps.
@@ -56,9 +52,22 @@ class Engagement(models.Model):
         # return reverse("engagements:engagement-create", kwargs={"id": self.id})
 
 
-class ProjectEngagement(models.Model):
-    project = models.ManyToManyField(Project)
-    engagement = models.ManyToManyField(Engagement)
+# build individual association tables
+# # class StakeholderProjectEngagement(models.Model):
+#     date = models.DateField()
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+#     stakeholder = models.ForeignKey(Stakeholder, on_delete=models.CASCADE )
 
 
-
+# build one association table between projects, stakeholders, ppdd
+# class Engagements(models.Model):
+#     date = models.DateField()
+#     project = models.ForeignKey(Project, on_delete=models.CASCADE)
+#     stakeholder = models.ForeignKey(Stakeholder, on_delete=models.CASCADE)
+#     ppdd = models.ForeignKey(PPDD, on_delete=models.CASCADE)
+#     # this could also be a foreign key
+#     type = models.CharField(max_length=20, choices=TYPE_CHOICES)
+#     # this could also be a foreign key
+#     ws_type = models.CharField(max_length=20, blank=True, null=True, choices=WS_TYPE_CHOICES)
+#     summary = models.TextField()
+#     follow_up_date = models.DateField(blank=True, null=True)

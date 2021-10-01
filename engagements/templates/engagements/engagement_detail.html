@@ -3,15 +3,21 @@
 {% block content %}
 
     <p>Date: {{ object.date }}</p>
-    <p>Project: {{ object.project }}</p>
+    <p>Projects:</p>
+    {% for instance in object_list %}
+    <p>{{ instance }}</p>
+    {% endfor %}
+
     <p>Stakeholder: {{ object.stakeholder }}</p>
     <p>PPDD: {{ object.ppdd }}</p>
     <p>Type: {{ object.type }}</p>
     <p>PDIP workstream: {{ object.wstype }}</p>
+    <p>Summary: {{ object.summary }}</p>
+    <p>Follow-up Date: {{ object.date }}</p>
 
     <p>
-        <a href="{{ object.get_absolute_url }}update">Update</a>
-        <a href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a href="{{ object.get_absolute_url }}/update">Update</a>
+        <a href="{{ object.get_absolute_url }}/delete">Delete</a>
     </p>
 {#    <p><a href="/update">Update</a></p>#}
 
