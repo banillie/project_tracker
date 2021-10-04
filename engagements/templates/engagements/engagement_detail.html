@@ -3,13 +3,22 @@
 {% block content %}
 
     <p>Date: {{ object.date }}</p>
-    <p>Projects:</p>
-    {% for instance in object_list %}
+
+    <h3>Project(s):</h3>
+    {% for instance in project_list %}
     <p>{{ instance }}</p>
     {% endfor %}
 
-    <p>Stakeholder: {{ object.stakeholder }}</p>
-    <p>PPDD: {{ object.ppdd }}</p>
+    <h3>Stakeholder(s):</h3>
+    {% for instance in stakeholder_list %}
+    <p>{{ instance }}</p>
+    {% endfor %}
+
+    <h3>PPDD colleague(s):</h3>
+    {% for instance in ppdd_list %}
+    <p>{{ instance }}</p>
+    {% endfor %}
+
     <p>Type: {{ object.type }}</p>
     <p>PDIP workstream: {{ object.wstype }}</p>
     <p>Summary: {{ object.summary }}</p>

@@ -31,6 +31,13 @@ WS_TYPE_CHOICES = (
     ('L24', '24 Lessons Workshop')
 )
 
+class EngagementType(models.Model):
+    pass
+
+
+class EngagementWorkStream(models.Model):
+    pass
+
 
 class Engagement(models.Model):
     date = models.DateField()
@@ -38,7 +45,7 @@ class Engagement(models.Model):
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
     # Temporary TYPE_CHOICES drop down. Build EngagementType model?
-    type = MultiSelectField(max_length=20, choices=TYPE_CHOICES)
+    type = models.CharField(max_length=20, choices=TYPE_CHOICES)
     # Temporary WS_TYPE_CHOICES drop down. Build EngagementWsType model?
     ws_type = models.CharField(max_length=20, blank=True, null=True, choices=WS_TYPE_CHOICES)
     summary = models.TextField()

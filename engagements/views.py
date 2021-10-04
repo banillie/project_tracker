@@ -10,7 +10,25 @@ from .models import Engagement
 class EngagementCreateView(CreateView):
     model = Engagement
     form_class = select2_modelform(Engagement)
-    success_url = reverse_lazy('engagement-test')
+    # success_url = reverse_lazy('engagement-form')
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+
+class EngagementUpdateView(UpdateView):
+    model = Engagement
+    form_class = select2_modelform(Engagement)
+    # success_url = reverse_lazy('engagement-form')
+
+    def get_object(self):
+        id_ = self.kwargs.get("id")
+        return get_object_or_404(Engagement, id=id_)
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
 
 
 def engagement_create_view(request):
@@ -36,10 +54,14 @@ def engagement_list_view(request):
 
 def engagement_detail_view(request, id):
     obj = get_object_or_404(Engagement, id=id)
-    queryset = obj.projects.get_queryset()
+    project_queryset = obj.projects.get_queryset()
+    stakeholder_queryset = obj.stakeholders.get_queryset()
+    ppdd_queryset = obj.ppdds.get_queryset()
     context = {
         "object": obj,
-        "object_list": queryset,
+        "project_list": project_queryset,
+        "stakeholder_list": stakeholder_queryset,
+        "ppdd_list": ppdd_queryset,
     }
     return render(request, "engagements/engagement_detail.html", context)
 

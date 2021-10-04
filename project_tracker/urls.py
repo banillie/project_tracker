@@ -17,13 +17,6 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import include, path
 
-# from engagements.views import (
-#     engagement_list_view,
-#     engagement_create_view,
-#     engagement_detail_view,
-#     engagement_update_view,
-#     engagement_delete_view,
-# )
 from pages.views import home_view
 
 
