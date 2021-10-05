@@ -4,11 +4,11 @@ from easy_select2 import select2_modelform
 from .models import Engagement, EngagementType, EngagementWorkStream
 
 
-class NoteAdmin(admin.ModelAdmin):
+class EngagementAdmin(admin.ModelAdmin):
     form = select2_modelform(Engagement)
 
 
-admin.site.register(Engagement)
+admin.site.register(Engagement, EngagementAdmin)
 admin.site.register(EngagementType)
 admin.site.register(EngagementWorkStream)
 

@@ -1,12 +1,14 @@
 from django import forms
 from django.forms import Select
+from easy_select2 import Select2
+
 
 from .models import Engagement
 
 
 class EngagementForm(forms.ModelForm):
-    # date = forms.DateField(input_formats=DATE_INPUT_FORMATS)
-    date = forms.DateField(widget=forms.DateInput(format='%d/%m/%Y'))
+    # projects = Select2(select2attrs={'width': '1000px'})
+    projects = forms.CharField(widget=forms.TextInput(attrs={'cols': 500}))
 
     class Meta:
         model = Engagement
@@ -20,3 +22,7 @@ class EngagementForm(forms.ModelForm):
             "summary",
             "follow_up_date",
         ]
+        Select2.widgets = {
+            # 'cols': '400',
+            'width': '1000px',
+        }

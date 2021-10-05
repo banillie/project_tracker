@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <p>Date: {{ object.date }}</p>
+    <h3>Date:</h3><p>{{ object.date }}</p>
 
     <h3>Project(s):</h3>
     {% for instance in project_list %}
@@ -19,10 +19,19 @@
     <p>{{ instance }}</p>
     {% endfor %}
 
-    <p>Type: {{ object.type }}</p>
-    <p>PDIP workstream: {{ object.wstype }}</p>
-    <p>Summary: {{ object.summary }}</p>
-    <p>Follow-up Date: {{ object.date }}</p>
+    <h3>Engagement Type(s): {{ object.type }}</h3>
+    {% for instance in type_list %}
+    <p>{{ instance }}</p>
+    {% endfor %}
+
+    <h3>PDIP Workstream Type(s):</h3>
+    {% for instance in ws_list %}
+    <p>{{ instance }}</p>
+    {% endfor %}
+
+    <h3>Summary:</h3><p>{{ object.summary }}</p>
+
+    <h4>Follow-up Date:</h4><p>{{ object.date }}</p>
 
     <p>
         <a href="{{ object.get_absolute_url }}update">Update</a>

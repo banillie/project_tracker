@@ -7,6 +7,7 @@ from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from multiselectfield import MultiSelectField
 
+
 # TYPE_CHOICES = (
 #     ('A', 'Assurance'),
 #     ('B', 'Benefits'),
@@ -32,8 +33,6 @@ from multiselectfield import MultiSelectField
 # )
 
 
-
-
 class EngagementType(models.Model):
     type = models.CharField(max_length=30)
 
@@ -50,7 +49,7 @@ class EngagementWorkStream(models.Model):
 
 class Engagement(models.Model):
     date = models.DateField()
-    projects = models.ManyToManyField(Project)
+    projects = models.ManyToManyField(Project, max_length=200)
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
     engagement_types = models.ManyToManyField(EngagementType)
@@ -60,7 +59,6 @@ class Engagement(models.Model):
 
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})
-
 
 # build individual association tables
 # # class StakeholderProjectEngagement(models.Model):

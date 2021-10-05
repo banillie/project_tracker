@@ -11,9 +11,11 @@
 </head>
 <body>
     <h1>{% if form.instance.id %}Edit Engagement{% else %}Create Engagement{% endif%}</h1>
+{#    <style>input, select {width: 30%}</style>#}
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
+{#        width="30%"#}
         <input type="submit" value="{% if form.instance.id %}Save{% else %}Create{% endif%}">
     </form>
 </body>

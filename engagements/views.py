@@ -9,7 +9,7 @@ from .models import Engagement
 
 class EngagementCreateView(CreateView):
     model = Engagement
-    form_class = select2_modelform(Engagement)
+    form_class = select2_modelform(Engagement, attrs={'width': '400px'})
     # success_url = reverse_lazy('engagement-form')
 
     def form_valid(self, form):
@@ -19,7 +19,7 @@ class EngagementCreateView(CreateView):
 
 class EngagementUpdateView(UpdateView):
     model = Engagement
-    form_class = select2_modelform(Engagement)
+    form_class = select2_modelform(Engagement, attrs={'width': '400px'})
     # success_url = reverse_lazy('engagement-form')
 
     def get_object(self):
@@ -57,11 +57,15 @@ def engagement_detail_view(request, id):
     project_queryset = obj.projects.get_queryset()
     stakeholder_queryset = obj.stakeholders.get_queryset()
     ppdd_queryset = obj.ppdds.get_queryset()
+    type_queryset = obj.engagement_types.get_queryset()
+    ws_queryset = obj.engagement_workstreams.get_queryset()
     context = {
         "object": obj,
         "project_list": project_queryset,
         "stakeholder_list": stakeholder_queryset,
         "ppdd_list": ppdd_queryset,
+        "type_list": type_queryset,
+        "ws_list": ws_queryset,
     }
     return render(request, "engagements/engagement_detail.html", context)
 
