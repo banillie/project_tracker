@@ -7,36 +7,45 @@ from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from multiselectfield import MultiSelectField
 
-TYPE_CHOICES = (
-    ('A', 'Assurance'),
-    ('B', 'Benefits'),
-    ('C', 'Carbon'),
-    ('CC', 'Capability and Capacity'),
-    ('CE', 'Cost Estimating and Benchmarking'),
-    ('E', 'Engineering'),
-    ('G', 'Goverance'),
-    ('IT', 'Initial Triage'),
-    ('LL', 'Lessons Learned'),
-    ('OSR', 'Output Spec and Requirements'),
-    ('PD', 'Planning and Dependencies'),
-    ('PR', 'Portfolio Reporting'),
-    ('RI', 'Risks and Issues')
-)
+# TYPE_CHOICES = (
+#     ('A', 'Assurance'),
+#     ('B', 'Benefits'),
+#     ('C', 'Carbon'),
+#     ('CC', 'Capability and Capacity'),
+#     ('CE', 'Cost Estimating and Benchmarking'),
+#     ('E', 'Engineering'),
+#     ('G', 'Goverance'),
+#     ('IT', 'Initial Triage'),
+#     ('LL', 'Lessons Learned'),
+#     ('OSR', 'Output Spec and Requirements'),
+#     ('PD', 'Planning and Dependencies'),
+#     ('PR', 'Portfolio Reporting'),
+#     ('RI', 'Risks and Issues')
+# )
 
-WS_TYPE_CHOICES = (
-    ('AR', 'Assurance'),
-    ('BR', 'Business Case Review'),
-    ('CE', 'Cultural Enquiry'),
-    ('LL', 'Lessons Learned Workshop'),
-    ('L24', '24 Lessons Workshop')
-)
+# WS_TYPE_CHOICES = (
+#     ('AR', 'Assurance'),
+#     ('BR', 'Business Case Review'),
+#     ('CE', 'Cultural Enquiry'),
+#     ('LL', 'Lessons Learned Workshop'),
+#     ('L24', '24 Lessons Workshop')
+# )
+
+
+
 
 class EngagementType(models.Model):
-    pass
+    type = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.type
 
 
 class EngagementWorkStream(models.Model):
-    pass
+    work_stream = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.work_stream
 
 
 class Engagement(models.Model):
@@ -44,10 +53,8 @@ class Engagement(models.Model):
     projects = models.ManyToManyField(Project)
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
-    # Temporary TYPE_CHOICES drop down. Build EngagementType model?
-    type = models.CharField(max_length=20, choices=TYPE_CHOICES)
-    # Temporary WS_TYPE_CHOICES drop down. Build EngagementWsType model?
-    ws_type = models.CharField(max_length=20, blank=True, null=True, choices=WS_TYPE_CHOICES)
+    engagement_types = models.ManyToManyField(EngagementType)
+    engagement_workstreams = models.ManyToManyField(EngagementWorkStream)
     summary = models.TextField()
     follow_up_date = models.DateField(blank=True, null=True)
 

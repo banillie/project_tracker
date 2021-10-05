@@ -1,7 +1,7 @@
 from django.contrib import admin
 from easy_select2 import select2_modelform
 
-from .models import Engagement
+from .models import Engagement, EngagementType, EngagementWorkStream
 
 
 class NoteAdmin(admin.ModelAdmin):
@@ -9,7 +9,8 @@ class NoteAdmin(admin.ModelAdmin):
 
 
 admin.site.register(Engagement)
-
+admin.site.register(EngagementType)
+admin.site.register(EngagementWorkStream)
 
 
 """from .models import Engagement
