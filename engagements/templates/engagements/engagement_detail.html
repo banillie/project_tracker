@@ -31,12 +31,13 @@
 
     <h3>Summary:</h3><p>{{ object.summary }}</p>
 
-    <h4>Follow-up Date:</h4><p>{{ object.date }}</p>
+    <h4>Follow-up Date:</h4><p>{{ object.follow_up_date }}</p>
 
     <p>
         <a href="{{ object.get_absolute_url }}update">Update</a>
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a href="../">Return</a>
     </p>
-{#    <p><a href="/update">Update</a></p>#}
+
 
 {% endblock %}

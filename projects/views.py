@@ -5,7 +5,7 @@ from .models import Project
 
 
 def project_list_view(request):
-    queryset = Project.objects.all()
+    queryset = Project.objects.all().order_by('name')
     context = {
         "object_list": queryset
     }

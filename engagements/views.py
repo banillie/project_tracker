@@ -9,7 +9,7 @@ from .models import Engagement
 
 class EngagementCreateView(CreateView):
     model = Engagement
-    form_class = select2_modelform(Engagement, attrs={'width': '400px'})
+    form_class = select2_modelform(Engagement, attrs={'width': '450px'})
     # success_url = reverse_lazy('engagement-form')
 
     def form_valid(self, form):
@@ -19,7 +19,7 @@ class EngagementCreateView(CreateView):
 
 class EngagementUpdateView(UpdateView):
     model = Engagement
-    form_class = select2_modelform(Engagement, attrs={'width': '400px'})
+    form_class = select2_modelform(Engagement, attrs={'width': '450px'})
     # success_url = reverse_lazy('engagement-form')
 
     def get_object(self):

@@ -2,15 +2,13 @@
 
 {% block content %}
 
-    <p>Name: {{ object.first_name }} {{ object.last_name }}</p>
-{#    <p>Org: {{ object.organisation }}</p>#}
-{#    <p>Group: {{ object.group }}</p>#}
-{#    <p>Team: {{ object.team }}</p>#}
-    <p>Role: {{ object.role }}</p>
+    <font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font>
+    <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
 
     <p>
         <a href="{{ object.get_absolute_url }}update">Update</a>
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a href="../">Return</a>
     </p>
 
 {% endblock %}

@@ -48,7 +48,7 @@ def ppdds_delete_view(request, id):
 
 
 def ppdds_list_view(request):
-    queryset = PPDD.objects.all()
+    queryset = PPDD.objects.all().order_by('last_name')
     context = {
         "object_list": queryset
     }

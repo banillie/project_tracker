@@ -4,20 +4,8 @@ from .models import Project
 
 
 class ProjectForm(forms.ModelForm):
-    # name = forms.CharField()
-    # type = forms.CharField()
-    # abbreviation = forms.CharField()
-    # governance = forms.CharField(required=False)
-    # stage = forms.CharField(required=False)
-    # scope = forms.CharField(
-    #     required=False,
-    #     widget=forms.Textarea(
-    #         attrs={
-    #             "rows": 10,
-    #             "cols": 100,
-    #         }
-    #     ),
-    # )
+    name = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 1}))
+    scope = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 50, 'rows': 20}))
 
     class Meta:
         model = Project

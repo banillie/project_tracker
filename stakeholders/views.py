@@ -48,7 +48,7 @@ def stakeholder_delete_view(request, id):
 
 
 def stakeholder_list_view(request):
-    queryset = Stakeholder.objects.all()
+    queryset = Stakeholder.objects.all().order_by('last_name')
     context = {
         "object_list": queryset
     }
