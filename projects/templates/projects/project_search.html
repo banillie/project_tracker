@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{#    <form action="/projects/" method="GET">#}
+    <form>
+        <input type="text" name="query"/>
+        <input type="submit"/>
+    </form>
+
+    {% if object %}
+        <h1>{{ object.name }}</h1>
+    {% endif %}
+
+{% endblock %}

@@ -17,11 +17,15 @@ class ProjectForm(forms.ModelForm):
             "stage",
             "scope",
         ]
+        filter = ["name", "type"]
 
     # # for adding data validation requirements
-    # # could be useful for email / tele numbers
-    # def clean_name(self, *args, **kwargs):
-    #     name = self.cleaned_data.get("name")
-    #     if not "Project" in name:
-    #         raise forms.ValidationError("This is not a v project name")
+    def clean(self, *args, **kwargs):
+        data = self.cleaned_data
+        name = data.get("name")
+        qs = Project.objects.filter(name__icontains=name)
+        if qs.exists():  # this is not right.
+            self.add_error("name", f"{name} already exists in the database")
+            # raise forms.ValidationError("This project already exists")
+        return data
 
