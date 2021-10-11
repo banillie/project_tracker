@@ -4,7 +4,7 @@ from .models import Project
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name']
+    list_display = ['id', 'name', 'slug', 'timestamp', 'updated']
     search_fields = ['name', 'type', 'governance']
 
 
