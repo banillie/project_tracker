@@ -1,12 +1,13 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
-from django.views.generic import ListView, UpdateView
+from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
+from django.contrib.auth.decorators import login_required
 from easy_select2 import select2_modelform
-from .forms import EngagementForm
 from .models import Engagement
 
 
+# @login_required
 class EngagementCreateView(CreateView):
     model = Engagement
     form_class = select2_modelform(Engagement, attrs={'width': '450px'})
@@ -17,6 +18,7 @@ class EngagementCreateView(CreateView):
         return super().form_valid(form)
 
 
+# @login_required
 class EngagementUpdateView(UpdateView):
     model = Engagement
     form_class = select2_modelform(Engagement, attrs={'width': '450px'})
@@ -31,18 +33,20 @@ class EngagementUpdateView(UpdateView):
         return super().form_valid(form)
 
 
-def engagement_create_view(request):
-    form = EngagementForm(request.POST or None)
-    # form = EngagementForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        form = EngagementForm()
-    context = {
-        'form': form,
-    }
-    return render(request, "engagements/engagement_create.html", context)
+# @login_required
+# def engagement_create_view(request):
+#     form = EngagementForm(request.POST or None)
+#     # form = EngagementForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         form = EngagementForm()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, "engagements/engagement_create.html", context)
 
 
+@login_required
 def engagement_list_view(request):
     queryset = Engagement.objects.all()
     # print(queryset.all())
@@ -52,6 +56,7 @@ def engagement_list_view(request):
     return render(request, "engagements/engagement_list.html", context)
 
 
+@login_required
 def engagement_detail_view(request, id):
     obj = get_object_or_404(Engagement, id=id)
     project_queryset = obj.projects.get_queryset()
@@ -70,17 +75,18 @@ def engagement_detail_view(request, id):
     return render(request, "engagements/engagement_detail.html", context)
 
 
-def engagement_update_view(request, id):
-    obj = get_object_or_404(Engagement, id=id)
-    form = EngagementForm(request.POST or None, instance=obj)
-    if form.is_valid():
-        form.save()
-        # form.save_m2m()
-        return redirect('../')
-    context = {
-        'form': form
-    }
-    return render(request, "engagements/engagement_create.html", context)
+# @login_required
+# def engagement_update_view(request, id):
+#     obj = get_object_or_404(Engagement, id=id)
+#     form = EngagementForm(request.POST or None, instance=obj)
+#     if form.is_valid():
+#         form.save()
+#         # form.save_m2m()
+#         return redirect('../')
+#     context = {
+#         'form': form
+#     }
+#     return render(request, "engagements/engagement_create.html", context)
 
 
 def engagement_delete_view(request, id):

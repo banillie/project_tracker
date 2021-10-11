@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import os
-import secrets
 import django
 
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
