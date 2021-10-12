@@ -21,3 +21,4 @@ class EngagementForm(forms.ModelForm):
         widgets = {
             'summary': forms.Textarea(attrs={'rows': 4, 'cols': 30}),
         }  # not working. leaving for now as text area can be easily manually altered.
+        raw_id_field = ["projects"]  # does nothing leaving for now in case useful

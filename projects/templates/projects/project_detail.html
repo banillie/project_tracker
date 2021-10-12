@@ -13,7 +13,7 @@
     <p>
         <a href="{{ object.get_absolute_url }}update">Update</a>
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="../">Return</a>
+        <a href="{% url "projects:project-list" %}">Return</a>
     </p>
 
 {% endblock %}

@@ -4,8 +4,9 @@ from .models import Project
 
 
 class ProjectAdmin(admin.ModelAdmin):
-    list_display = ['id', 'name', 'slug', 'timestamp', 'updated']
+    list_display = ['name', 'slug', 'timestamp', 'updated']
     search_fields = ['name', 'type', 'governance']
+    # raw_id_fields =
 
 
 admin.site.register(Project, ProjectAdmin)

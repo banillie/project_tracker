@@ -8,8 +8,15 @@
         <input type="submit"/>
     </form>
 
-    {% if object %}
-        <h1>{{ object.name }}</h1>
-    {% endif %}
+    <ol>
+    {% for object in object_list %}
+        {% if object.name %}
+            <li>
+            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+            </li>
+        {% endif %}
+
+    {% endfor %}
+    </ol>
 
 {% endblock %}
