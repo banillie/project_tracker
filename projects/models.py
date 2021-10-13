@@ -47,7 +47,10 @@ class Project(models.Model):
     objects = ProjectManager()
 
     def get_absolute_url(self):
-        return reverse("projects:project-detail", kwargs={"slug": self.slug})
+        return reverse("projects:detail", kwargs={"slug": self.slug})
+
+    def get_update_url(self):
+        return reverse("projects:update", kwargs={"slug": self.slug})
 
     def save(self, *arg, **kwargs):
         super().save(*arg, **kwargs)

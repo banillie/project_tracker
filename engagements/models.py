@@ -62,6 +62,9 @@ class Engagement(models.Model):
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})
 
+    # def get_projects_children(self):
+    #     return self.
+
 # build individual association tables
 # # class StakeholderProjectEngagement(models.Model):
 #     date = models.DateField()

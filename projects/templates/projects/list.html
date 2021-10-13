@@ -4,7 +4,7 @@
 
 
     <h1>Projects Page</h1>
-    <p><a href="{%  url 'projects:project-create' %}">Create New Project Entry</a></p>
+    <p><a href="{%  url 'projects:create' %}">Create New Project Entry</a></p>
     <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>
     {% for instance in object_list %}
     <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>

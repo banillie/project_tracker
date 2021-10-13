@@ -20,12 +20,12 @@ class ProjectForm(forms.ModelForm):
         filter = ["name", "type"]
 
     # # for adding data validation requirements
-    def clean(self, *args, **kwargs):
-        data = self.cleaned_data
-        name = data.get("name")
-        qs = Project.objects.filter(name__icontains=name)
-        if qs.exists():  # this is not right.
-            self.add_error("name", f"{name} already exists in the database")
-            # raise forms.ValidationError("This project already exists")
-        return data
+    # def clean(self, *args, **kwargs):
+    #     data = self.cleaned_data
+    #     name = data.get("name")
+    #     qs = Project.objects.filter(name__icontains=name)
+    #     if qs.exists():  # this is not right.
+    #         self.add_error("name", f"{name} already exists in the database")
+    #         # raise forms.ValidationError("This project already exists")
+    #     return data
 

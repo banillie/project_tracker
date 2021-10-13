@@ -11,7 +11,7 @@ def project_list_view(request):
     context = {
         "object_list": queryset
     }
-    return render(request, "projects/project_list.html", context)
+    return render(request, "projects/list.html", context)
 
 
 @login_required
@@ -23,7 +23,7 @@ def project_delete_view(request, slug):
     context = {
         "object": obj,
     }
-    return render(request, "projects/project_delete.html", context)
+    return render(request, "projects/delete.html", context)
 
 
 @login_required
@@ -32,30 +32,33 @@ def project_detail_view(request, slug=None):
     context = {
         "object": obj,
     }
-    return render(request, "projects/project_detail.html", context)
+    return render(request, "projects/detail.html", context)
 
 
-# @login_required
+
+@login_required
 def project_search_view(request):
     query = request.GET.get('query')
     qs = Project.objects.search(query=query)
     context = {
         "object_list": qs,
     }
-    return render(request, "projects/project_search.html", context)
+    return render(request, "projects/search.html", context)
 
 
 @login_required
-def project_update_view(request, slug):
-    obj = get_object_or_404(Project, slug=slug)  # handles page not found.
+def project_update_view(request, slug=None):
+    obj = get_object_or_404(Project, slug=slug)
     form = ProjectForm(request.POST or None, instance=obj)
+    context = {
+        'form': form,
+        'object': obj,
+    }
     if form.is_valid():
         form.save()
-        return redirect('../')
-    context = {
-        'form': form
-    }
-    return render(request, "projects/project_create.html", context)
+        context['message'] = 'Date Saved'
+
+    return render(request, "projects/create-update.html", context)
 
 
 @login_required
@@ -65,10 +68,10 @@ def project_create_view(request):
         'form': form,
     }
     if form.is_valid():
-        project_object = form.save()
-        context['form'] = ProjectForm()
-        context['object'] = project_object
-        context['created'] = True
-    return render(request, "projects/project_create.html", context)
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
+        return redirect(obj.get_absolute_url())
+    return render(request, "projects/create-update.html", context)
 
 

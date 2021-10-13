@@ -11,9 +11,9 @@
     <p><font size="+1"><b>Scope: </b>{{ object.scope }}</font></p>
 
     <p>
-        <a href="{{ object.get_absolute_url }}update">Update</a>
+        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="{% url "projects:project-list" %}">Return</a>
+        <a href="{% url "projects:list" %}">Return</a>
     </p>
 
 {% endblock %}

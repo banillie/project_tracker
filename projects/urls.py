@@ -10,10 +10,10 @@ from .views import (
 
 app_name = 'projects'
 urlpatterns = [
-    path("", project_list_view, name='project-list'),
-    path("search/", project_search_view, name='project-search'),
-    path("create/", project_create_view, name='project-create'),
-    path("<slug:slug>/", project_detail_view, name='project-detail'),
-    path("<slug:slug>/update/", project_update_view, name='project-create'),
-    path("<slug:slug>/delete/", project_delete_view, name='project-delete'),
+    path("", project_list_view, name='list'),
+    path("search/", project_search_view, name='search'),
+    path("create/", project_create_view, name='create'),
+    path("<slug:slug>/update/", project_update_view, name='update'),
+    path("<slug:slug>/delete/", project_delete_view, name='delete'),
+    path("<slug:slug>/", project_detail_view, name='detail'),
 ]
