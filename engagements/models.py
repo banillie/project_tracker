@@ -1,11 +1,9 @@
+from django.conf import settings
 from django.db import models
-from django.forms import ModelForm
 from django.urls import reverse
-
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
-from multiselectfield import MultiSelectField
 
 
 # TYPE_CHOICES = (
@@ -33,6 +31,9 @@ from multiselectfield import MultiSelectField
 # )
 
 
+User = settings.AUTH_USER_MODEL
+
+
 class EngagementType(models.Model):
     type = models.CharField(max_length=30)
 
@@ -48,6 +49,7 @@ class EngagementWorkStream(models.Model):
 
 
 class Engagement(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     date = models.DateField()
     projects = models.ManyToManyField(Project, max_length=200)
     stakeholders = models.ManyToManyField(Stakeholder)

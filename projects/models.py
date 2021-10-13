@@ -14,6 +14,7 @@ TYPE_CHOICES = [
 
 User = settings.AUTH_USER_MODEL
 
+
 class ProjectQuerySet(models.QuerySet):
     def search(self, query=None):
         if query is None or query == "":
