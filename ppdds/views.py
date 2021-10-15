@@ -15,41 +15,44 @@ def ppdds_create_view(request):
     context = {
         'form': form,
     }
-    return render(request, "ppdds/ppdd_create.html", context)
+    return render(request, "ppdds/create-update.html", context)
 
 
 @login_required
-def ppdds_update_view(request, id):
-    obj = get_object_or_404(PPDD, id=id)  # handles page not found.
+def ppdds_update_view(request, slug=None):
+    obj = get_object_or_404(PPDD, slug=slug)
     form = PPDDForm(request.POST or None, instance=obj)
+    context = {
+        'form': form,
+        'object': obj,
+    }
     if form.is_valid():
         form.save()
-        return redirect('../')
-    context = {
-        'form': form
-    }
-    return render(request, "ppdds/ppdd_create.html", context)
+        context['message'] = 'Date Saved'
+    if request.htmx:
+        return render(request, "ppdds/partials/forms.html", context)
+    return render(request, "ppdds/create-update.html", context)
 
 
 @login_required
-def ppdds_detail_view(request, id):
-    obj = get_object_or_404(PPDD, id=id)
+def ppdds_detail_view(request, slug):
+    obj = get_object_or_404(PPDD, slug=slug)
     context = {
         "object": obj
     }
-    return render(request, "ppdds/ppdd_detail.html", context)
+    return render(request, "ppdds/detail.html", context)
 
 
 @login_required
-def ppdds_delete_view(request, id):
-    obj = get_object_or_404(PPDD, id=id)
+def ppdds_delete_view(request, slug):
+    obj = get_object_or_404(PPDD, slug=slug)
     if request.method == "POST":
         obj.delete()
         return redirect('../../')
     context = {
         "object": obj
     }
-    return render(request, "ppdds/ppdd_delete.html", context)
+    return render(request, "ppdds/delete.html", context)
 
 
 @login_required
@@ -58,6 +61,6 @@ def ppdds_list_view(request):
     context = {
         "object_list": queryset
     }
-    return render(request, "ppdds/ppdd_list.html", context)
+    return render(request, "ppdds/list.html", context)
 
 

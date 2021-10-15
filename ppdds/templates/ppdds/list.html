@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+    <h1>PPDD Colleague Page</h1>
+    <p><a href="{%  url 'ppdds:create' %}">Create new PPDD colleague entry here</a></p>
+    <p>PPDD Lists. There are {{ object_list|length }} PPDDers. These are listed below in
+        alphabetical order (by surname):</p>
+    {% for instance in object_list %}
+        <p>
+        <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a>
+        </p>
+    {% endfor %}
+
+
+{% endblock %}

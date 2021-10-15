@@ -4,6 +4,8 @@ from django.db.models.signals import pre_save, post_save
 from .utils import slugify_instance_title
 
 
+# not including user for this model as don't think its necessary
+# not including timestamp and updated for this model as don't think its necessary
 class PPDD(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
@@ -11,10 +13,10 @@ class PPDD(models.Model):
     team = models.CharField(max_length=100, blank=True, null=True)
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
-    live = models.BooleanField(default=True)
+    live = models.BooleanField(default=True)  # active?
 
     def get_absolute_url(self):
-        return reverse("ppdds:ppdd-detail", kwargs={"id": self.id})
+        return reverse("ppdds:detail", kwargs={"slug": self.slug})
 
     def save(self, *arg, **kwargs):
         super().save(*arg, **kwargs)

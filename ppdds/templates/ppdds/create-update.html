@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{#    <form method="POST"> {% csrf_token %}#}
+{#    {{ form.as_p }}#}
+{#    <input type="submit" value="Save"/>#}
+{#    </form>#}
+
+    <div style="margin-top: 30px;">
+        {% include 'ppdds/partials/forms.html' %}
+    </div>
+
+
+{% endblock %}

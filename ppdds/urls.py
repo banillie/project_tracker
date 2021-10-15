@@ -9,9 +9,9 @@ from .views import (
 
 app_name = "ppdds"
 urlpatterns = [
-    path("", ppdds_list_view, name="ppdd-list"),
-    path("create/", ppdds_create_view, name="ppdd-create"),
-    path("<int:id>/", ppdds_detail_view, name="ppdd-detail"),
-    path("<int:id>/delete/", ppdds_delete_view, name="ppdd-delete"),
-    path("<int:id>/update/", ppdds_update_view, name="ppdd-create"),
+    path("", ppdds_list_view, name="list"),
+    path("create/", ppdds_create_view, name="create"),
+    path("<slug:slug>/delete/", ppdds_delete_view, name="delete"),
+    path("<slug:slug>/update/", ppdds_update_view, name="update"),
+    path("<slug:slug>/", ppdds_detail_view, name="detail"),
 ]
