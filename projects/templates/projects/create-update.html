@@ -3,16 +3,12 @@
 
 {% block content %}
 
-    {% if message %}
-        <p>{{ message }}</p>
-    {% endif %}
+{#    {% if message %}#}
+{#        <p>{{ message }}</p>#}
+{#    {% endif %}#}
 
     <div style="margin-top: 30px;">
-        <form action='.' method="POST">
-            {% csrf_token %}
-            {{ form.as_p }}
-        <input type="submit" value="Save"/>
-        </form>
+        {% include 'projects/partials/forms.html' %}
 
     </div>
 

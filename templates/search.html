@@ -1,0 +1,14 @@
+<form>
+    <input type="text" name="query"/>
+    <input type="submit"/>
+</form>
+
+<ol>
+    {% for object in object_list %}
+        {% if object.name %}
+            <li>
+            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+            </li>
+        {% endif %}
+    {% endfor %}
+</ol>

@@ -1,6 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db.models import Q
 from .forms import ProjectForm
 from .models import Project
 
@@ -35,6 +34,15 @@ def project_detail_view(request, slug=None):
     return render(request, "projects/detail.html", context)
 
 
+@login_required
+def project_detail_hx_view(request, slug=None):
+    obj = get_object_or_404(Project, slug=slug)  # handles page not found.
+    context = {
+        "object": obj,
+    }
+    return render(request, "projects/detail.html", context)
+
+
 
 @login_required
 def project_search_view(request):
@@ -57,7 +65,8 @@ def project_update_view(request, slug=None):
     if form.is_valid():
         form.save()
         context['message'] = 'Date Saved'
-
+    if request.htmx:
+        return render(request, "projects/partials/forms.html", context)
     return render(request, "projects/create-update.html", context)
 
 
