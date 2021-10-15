@@ -9,7 +9,7 @@
     <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
 
     <p>
-        <a href="{{ object.get_absolute_url }}update">Update</a>
+        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
         <a href="../">Return</a>
     </p>

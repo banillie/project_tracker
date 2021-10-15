@@ -15,12 +15,12 @@ def stakeholders_create_view(request):
     context = {
         'form': form,
     }
-    return render(request, "stakeholders/stakeholder_create.html", context)
+    return render(request, "stakeholders/create.html", context)
 
 
 @login_required
-def stakeholder_update_view(request, id):
-    obj = get_object_or_404(Stakeholder, id=id)  # handles page not found.
+def stakeholder_update_view(request, slug):
+    obj = get_object_or_404(Stakeholder, slug=slug)  # handles page not found.
     form = StakeholderForm(request.POST or None, instance=obj)
     if form.is_valid():
         form.save()
@@ -28,28 +28,28 @@ def stakeholder_update_view(request, id):
     context = {
         'form': form
     }
-    return render(request, "stakeholders/stakeholder_create.html", context)
+    return render(request, "stakeholders/create.html", context)
 
 
 @login_required
-def stakeholders_detail_view(request, id):
-    obj = get_object_or_404(Stakeholder, id=id)
+def stakeholders_detail_view(request, slug):
+    obj = get_object_or_404(Stakeholder, slug=slug)
     context = {
         "object": obj
     }
-    return render(request, "stakeholders/stakeholder_detail.html", context)
+    return render(request, "stakeholders/detail.html", context)
 
 
 @login_required
-def stakeholder_delete_view(request, id):
-    obj = get_object_or_404(Stakeholder, id=id)
+def stakeholder_delete_view(request, slug):
+    obj = get_object_or_404(Stakeholder, slug=slug)
     if request.method == "POST":
         obj.delete()
         return redirect('../../')
     context = {
         "object": obj
     }
-    return render(request, "stakeholders/stakeholder_delete.html", context)
+    return render(request, "stakeholders/delete.html", context)
 
 
 @login_required
@@ -58,4 +58,4 @@ def stakeholder_list_view(request):
     context = {
         "object_list": queryset
     }
-    return render(request, "stakeholders/stakeholder_list.html", context)
+    return render(request, "stakeholders/list.html", context)

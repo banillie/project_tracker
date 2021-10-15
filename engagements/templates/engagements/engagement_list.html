@@ -2,10 +2,14 @@
 
 {% block content %}
 
+    <h1>Engagements Page</h1>
+    <p><a href="{%  url 'engagements:engagement-create' %}">Create new Engagement here</a></p>
+    <p>Engagements Lists. There are {{ object_list|length }} engagements. The date these
+        engagements took place are listed below.</p>
+
 {% for instance in object_list %}
-    <p>{{ instance.id }}
-        <a href='{{ instance.get_absolute_url }}'>
-            {{ instance.date }} {{ instance.project }}</a>
+    <p><a href='{{ instance.get_absolute_url }}'>
+            {{ instance.date }}</a>
     </p>
 {% endfor %}
 

@@ -9,9 +9,10 @@ from .views import (
 
 app_name = "stakeholders"
 urlpatterns = [
-    path("", stakeholder_list_view, name="stakeholder-list"),
-    path("create/", stakeholders_create_view, name="stakeholder-create"),
-    path("<int:id>/", stakeholders_detail_view, name="stakeholder-detail"),
-    path("<int:id>/delete/", stakeholder_delete_view, name="stakeholder-delete"),
-    path("<int:id>/update/", stakeholder_update_view, name="stakeholder-create"),
+    path("", stakeholder_list_view, name="list"),
+    path("create/", stakeholders_create_view, name="create"),
+    path("<slug:slug>/delete/", stakeholder_delete_view, name="delete"),
+    path("<slug:slug>/update/", stakeholder_update_view, name="update"),
+    path("<slug:slug>/", stakeholders_detail_view, name="detail"),
+
 ]

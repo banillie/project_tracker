@@ -48,7 +48,7 @@ class EngagementUpdateView(UpdateView):
 
 @login_required
 def engagement_list_view(request):
-    queryset = Engagement.objects.all()
+    queryset = Engagement.objects.all().order_by('-date')  # reverse order
     # print(queryset.all())
     context = {
         "object_list": queryset
