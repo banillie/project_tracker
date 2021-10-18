@@ -52,6 +52,9 @@ class Project(models.Model):
     def get_update_url(self):
         return reverse("projects:update", kwargs={"slug": self.slug})
 
+    def get_hx_url(self):
+        return reverse("projects:hx-detail", kwargs={"slug": self.slug})
+
     def save(self, *arg, **kwargs):
         super().save(*arg, **kwargs)
 

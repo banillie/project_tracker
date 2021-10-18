@@ -1,0 +1,13 @@
+
+    <font size="+1"><b>Project Name: </b>{{ object.name }}</font>
+    <p><font size="+1"><b>Type: </b>{{ object.type }}</font></p>
+    <p><font size="+1"><b>Abbreviation: </b>{{ object.abbreviation }}</font></p>
+    <p><font size="+1"><b>Governance: </b>{{ object.governance }}</font></p>
+    <p><font size="+1"><b>Stage: </b>{{ object.stage }}</font></p>
+    <p><font size="+1"><b>Scope: </b>{{ object.scope }}</font></p>
+
+    <p>
+        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
+        <a href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a href="{% url "projects:list" %}">Return</a>
+    </p>

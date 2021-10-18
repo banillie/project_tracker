@@ -1,4 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
+from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
 from .models import Project
@@ -27,20 +29,26 @@ def project_delete_view(request, slug):
 
 @login_required
 def project_detail_view(request, slug=None):
-    obj = get_object_or_404(Project, slug=slug)  # handles page not found.
+    hx_url = reverse("projects:hx-detail", kwargs={"slug": slug})
+    # print(hx_url)
     context = {
-        "object": obj,
+        "hx_url": hx_url,
     }
     return render(request, "projects/detail.html", context)
 
 
 @login_required
 def project_detail_hx_view(request, slug=None):
-    obj = get_object_or_404(Project, slug=slug)  # handles page not found.
+    try:
+        obj = Project.objects.get(slug=slug)
+    except:
+        obj = None
+    if obj is None:
+        return HttpResponse("Not found.")
     context = {
         "object": obj,
     }
-    return render(request, "projects/detail.html", context)
+    return render(request, "projects/partials/detail.html", context)
 
 
 
