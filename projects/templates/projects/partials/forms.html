@@ -1,11 +1,15 @@
-{% if message %}
-    <p>{{ message }}</p>
-{% endif %}
+
 
 <div style="margin-top: 30px;">
         <form action='.' method="POST" hx-post="." hx-swap="outerHTML">
+{#            hx-trigger="change delay:500ms, submit">#}
             {% csrf_token %}
             {{ form.as_p }}
-            <input type="submit" value="Save"/>
+            <div class="htmx-indicator">Saving...</div>
+            <input class="htmx-inverted_indicator" type="submit" value="Save"/>
+            {% if message %}
+                <p>{{ message }}</p>
+            {% endif %}
         </form>
+
 </div>

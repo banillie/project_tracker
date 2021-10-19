@@ -12,7 +12,7 @@ from .views import (
 app_name = 'projects'
 urlpatterns = [
     path("", project_list_view, name='list'),
-    path("search/", project_search_view, name='search'),
+    # path("search/", project_search_view, name='search'),
     path("create/", project_create_view, name='create'),
     path("hx/<slug:slug>/", project_detail_hx_view, name='hx-detail'),
     path("<slug:slug>/update/", project_update_view, name='update'),

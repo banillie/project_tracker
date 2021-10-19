@@ -12,15 +12,15 @@ def home_view(request, *args, **kwargs):
 
 
 def search_view(request):
-    query = request.GET.get('query')
-    print(query)
-    qs = Project.objects.search(query=query)
-    context = {
-        "object_list": qs,
-    }
-    return render(request, "search.html", context)
-
-
-
-
-
+    if request.method == "POST":
+        query = request.POST['searched']
+        # query = request.GET.get('query')
+        print(query)
+        qs = Project.objects.search(query=query)
+        context = {
+            "searched": query,
+            "search_object_list": qs,
+        }
+        return render(request, "search.html", context)
+    else:
+        return render(request, "search.html", {})

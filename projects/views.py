@@ -1,5 +1,5 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from .forms import ProjectForm
@@ -39,6 +39,8 @@ def project_detail_view(request, slug=None):
 
 @login_required
 def project_detail_hx_view(request, slug=None):
+    if not request.htmx:
+        raise Http404
     try:
         obj = Project.objects.get(slug=slug)
     except:

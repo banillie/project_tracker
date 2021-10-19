@@ -32,5 +32,6 @@ urlpatterns = [
     path("login/", login_view),
     path("logout/", logout_view),
     path("register/", register_view),
+    # path("hx/search/", hx_search_view),
     path("search/", search_view, name="search"),
 ]
