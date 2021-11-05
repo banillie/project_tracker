@@ -49,7 +49,7 @@ class EngagementWorkStream(models.Model):
 
 
 class Engagement(models.Model):
-    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    # user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     date = models.DateField()
     projects = models.ManyToManyField(Project, max_length=200)
     stakeholders = models.ManyToManyField(Stakeholder)
