@@ -1,19 +1,21 @@
+import os
+
+from openpyxl import load_workbook
+
 from django.test import TestCase
 from .models import Stakeholder, StakeholderOrg
-# from data.test_data import stakeholder_data
-from openpyxl import load_workbook
+from project_tracker.settings import ROOT_DIR
+
 
 
 class StakeholderTestCase(TestCase):
 
     def setUp(self) -> None:
-        data_path = "/home/will/Documents/ppdd_engagement_db/ppdd_engagement_db_tables_django.xlsx"
+        data_path = os.path.join(ROOT_DIR, 'project_tracker/data/project_tracker_data.xlsx')
         wb = load_workbook(data_path)
-
         ws = wb["Stakeholders"]
         org_list = []
-        last_row = 61
-        for row in range(2, last_row):
+        for row in range(2, ws.max_row + 1):
             org = ws.cell(row=row, column=3).value
             if org not in org_list:
                 org_list.append(org)
@@ -24,10 +26,11 @@ class StakeholderTestCase(TestCase):
             StakeholderOrg.objects.create(org=x)
 
         all_entries = {}
-        for row in range(2, last_row):
+        for row in range(2, ws.max_row + 1):
             single_entry = {}
-            single_entry["first_name"] = ws.cell(row=row, column=1).value
-            single_entry["last_name"] = ws.cell(row=row, column=2).value
+            single_entry["first_name"] = ws.cell(row=row, column=1).value.strip()
+            # using strip to tidy string whitespacing
+            single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
             org = ws.cell(row=row, column=3).value
             single_entry["organisation"] = StakeholderOrg.objects.get(org=org)
             single_entry["group"] = ws.cell(row=row, column=4).value
@@ -42,9 +45,10 @@ class StakeholderTestCase(TestCase):
             )
 
     def test_uploading_data(self):
-        a = Stakeholder.objects.get(pk=1)
-        print(a.organisation)
+        self.assertEqual(Stakeholder.objects.count(), 60)
 
+
+    # testing required to handle stakeholders/ppdds with the same name.
     ## moved from project testing. More relevant to stakeholders.
     # def test_queryset_exists(self):
     #     qs = Project.objects.all()

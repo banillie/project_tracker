@@ -32,6 +32,8 @@ ALLOWED_HOSTS = []
 if not DEBUG:
     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
 
+ROOT_DIR = os.path.dirname(os.path.abspath('.'))
+
 # Application definition
 
 INSTALLED_APPS = [

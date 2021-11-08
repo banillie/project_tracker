@@ -111,5 +111,4 @@ venv.bak/
 .mypy_cache/
 
 #other
-/data/
-test_data
+data/project_tracker_data.xlsx

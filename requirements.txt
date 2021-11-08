@@ -5,3 +5,4 @@ django-dotenv
 django-htmx
 django-multiselectfield
 django-easy-select2
+openpyxl
