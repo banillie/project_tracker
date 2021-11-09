@@ -49,9 +49,7 @@ def project_detail_hx_view(request, slug=None):
         obj = None
     if obj is None:
         return HttpResponse("Not found.")
-    print(slug)
     qs = Engagement.objects.filter(projects__slug=slug)
-    print(qs.all)
     context = {
         "object": obj,
         "engagement_list": qs,

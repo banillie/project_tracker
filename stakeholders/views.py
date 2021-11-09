@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import StakeholderForm
 
 from .models import Stakeholder
+from engagements.models import Engagement
 
 
 @login_required
@@ -34,8 +35,10 @@ def stakeholder_update_view(request, slug):
 @login_required
 def stakeholders_detail_view(request, slug):
     obj = get_object_or_404(Stakeholder, slug=slug)
+    qs = Engagement.objects.filter(stakeholders__slug=slug)
     context = {
-        "object": obj
+        "object": obj,
+        "engagement_list": qs,
     }
     return render(request, "stakeholders/detail.html", context)
 

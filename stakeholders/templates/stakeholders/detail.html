@@ -1,18 +1,32 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <p></p>
+    <h2>Stakeholder details</h2>
+    <p>
+        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
+        <a href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a href="../">Return</a>
+    </p>
     <font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font>
     <p><font size="+1"><b>Organisation: </b>{{ object.organisation }}</font></p>
     <p><font size="+1"><b>Group: </b>{{ object.group }}</font></p>
     <p><font size="+1"><b>Team: </b>{{ object.team }}</font></p>
     <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
 
-    <p>
-        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
-        <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="../">Return</a>
-    </p>
-{#    <p><a href="/update">Update</a></p>#}
+    <h3>Engagements with this stakeholder</h3>
+    {% if engagement_list %}
+    {#    <ol>#}
+            {% for object in engagement_list %}
+            {% if object.date %}
+            <p>
+            <a href="{{ object.get_absolute_url }}">{{ object.date }}</a>
+            </p>
+            {% endif %}
+        {% endfor %}
+    {#    </ol>#}
+    {% else %}
+        <p>None so far...</p>
+    {% endif %}
+
 
 {% endblock %}

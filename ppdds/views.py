@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import PPDDForm
 
 from .models import PPDD
+from engagements.models import Engagement
 
 
 @login_required
@@ -37,8 +38,10 @@ def ppdds_update_view(request, slug=None):
 @login_required
 def ppdds_detail_view(request, slug):
     obj = get_object_or_404(PPDD, slug=slug)
+    qs = Engagement.objects.filter(ppdds__slug=slug)
     context = {
-        "object": obj
+        "object": obj,
+        "engagement_list": qs,
     }
     return render(request, "ppdds/detail.html", context)
 

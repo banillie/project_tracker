@@ -194,7 +194,12 @@ class EngagementTestCase(TestCase):
         self.assertEqual(Engagement.objects.count(), 50)
 
     def test_engagement_filtering(self):
-        Engagement.objects.filter(projects__id=1)
+        a = Engagement.objects.filter(projects__id=1)
+        self.assertEqual(a.count(), 3)
+        b = Engagement.objects.filter(ppdds__id=1)
+        self.assertEqual(b.count(), 1)
+        c = Engagement.objects.filter(stakeholders__id=1)
+        self.assertEqual(c.count(), 3)
 
     @skip('not testing right now')
     def test_user_count(self):
