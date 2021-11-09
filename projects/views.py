@@ -2,6 +2,8 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+
+from engagements.models import Engagement
 from .forms import ProjectForm
 from .models import Project
 
@@ -47,8 +49,12 @@ def project_detail_hx_view(request, slug=None):
         obj = None
     if obj is None:
         return HttpResponse("Not found.")
+    print(slug)
+    qs = Engagement.objects.filter(projects__slug=slug)
+    print(qs.all)
     context = {
         "object": obj,
+        "engagement_list": qs,
     }
     return render(request, "projects/partials/detail.html", context)
 

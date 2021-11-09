@@ -1,4 +1,7 @@
 
+
+    <h2>Project details</h2>
+
     <font size="+1"><b>Project Name: </b>{{ object.name }}</font>
     <p><font size="+1"><b>Type: </b>{{ object.type }}</font></p>
     <p><font size="+1"><b>Abbreviation: </b>{{ object.abbreviation }}</font></p>
@@ -11,3 +14,18 @@
         <a href="{{ object.get_absolute_url }}delete">Delete</a>
         <a href="{% url "projects:list" %}">Return</a>
     </p>
+
+{% if engagement_list %}
+    <h3>Engagements with this project</h3>
+{#    <ol>#}
+        {% for object in engagement_list %}
+        {% if object.date %}
+        <li>
+        <a href="{{ object.get_absolute_url }}">{{ object.date }}</a>
+        </li>
+        {% endif %}
+    {% endfor %}
+{#    </ol>#}
+{% else %}
+    <h1>No engagements with this project yet</h1>
+{% endif %}
