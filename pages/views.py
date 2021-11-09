@@ -1,3 +1,5 @@
+from itertools import chain
+
 from django.http import HttpResponse
 from django.shortcuts import render
 from projects.models import Project
@@ -14,9 +16,9 @@ def home_view(request, *args, **kwargs):
 def search_view(request):
     if request.method == "POST":
         query = request.POST['searched']
-        # query = request.GET.get('query')
-        print(query)
-        qs = Project.objects.search(query=query)
+        project_name_qs = Project.objects.search(query=query)
+        project_governance_qs = Project.objects.filter(governance=query)
+        qs = list(chain(project_name_qs, project_governance_qs))
         context = {
             "searched": query,
             "search_object_list": qs,

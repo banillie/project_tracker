@@ -34,3 +34,5 @@ class ProjectTestCase(TestCase):
     def test_uploading_data(self):
         self.assertEqual(Project.objects.count(), 52)
 
+    def test_filtering(self):
+        Project.objects.search(query='A2 Dover')
