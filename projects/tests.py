@@ -35,4 +35,10 @@ class ProjectTestCase(TestCase):
         self.assertEqual(Project.objects.count(), 52)
 
     def test_filtering(self):
-        Project.objects.search(query='A2 Dover')
+        a = Project.objects.search(query='A2')
+        b = Project.objects.search(query='1')
+        c = Project.objects.search(query='2')
+        self.assertEqual(a.count(), 1)
+        self.assertEqual(b.count(), 45)
+        self.assertEqual(c.count(), 12)
+

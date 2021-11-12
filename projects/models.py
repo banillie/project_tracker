@@ -9,7 +9,7 @@ from .utils import slugify_instance_title
 TYPE_CHOICES = [
     ("Project", "PROJECT"),
     ("Programme", "PROGRAMME"),
-    ("Portfolio", "PORTFOLIO")
+    ("Portfolio", "PORTFOLIO"),
 ]
 
 User = settings.AUTH_USER_MODEL
@@ -18,14 +18,19 @@ User = settings.AUTH_USER_MODEL
 class ProjectQuerySet(models.QuerySet):
     def search(self, query=None):
         if query is None or query == "":
-            return self.none()
-        lookups = Q(name__icontains=query) | Q(scope__icontains=query)
+            return self.none()   # []
+        lookups = (
+            Q(name__icontains=query)
+            | Q(governance__icontains=query)
+            | Q(abbreviation__icontains=query)
+            | Q(stage__icontains=query)
+        )
         return self.filter(lookups)
 
 
 class ProjectManager(models.Manager):
     def get_queryset(self):
-        return ProjectQuerySet(self.model, using=self._db)
+        return ProjectQuerySet(self.model, using=self._db)  # default db
 
     def search(self, query=None):
         return self.get_queryset().search(query=query)
@@ -33,7 +38,9 @@ class ProjectManager(models.Manager):
 
 class Project(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(max_length=120, null=False, unique=True)  # names are unique. title?
+    name = models.CharField(
+        max_length=120, null=False, unique=True
+    )  # names are unique. title?
     slug = models.SlugField(blank=True, null=True)  # unique = true
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)

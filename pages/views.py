@@ -16,9 +16,7 @@ def home_view(request, *args, **kwargs):
 def search_view(request):
     if request.method == "POST":
         query = request.POST['searched']
-        project_name_qs = Project.objects.search(query=query)
-        project_governance_qs = Project.objects.filter(governance=query)
-        qs = list(chain(project_name_qs, project_governance_qs))
+        qs = Project.objects.search(query=query)
         context = {
             "searched": query,
             "search_object_list": qs,
