@@ -47,6 +47,10 @@ class StakeholderTestCase(TestCase):
     def test_uploading_data(self):
         self.assertEqual(Stakeholder.objects.count(), 60)
 
+    def test_filtering(self):
+        a = Stakeholder.objects.search(query='DfT')
+        self.assertEqual(a.count(), 43)
+
 
     # testing required to handle stakeholders/ppdds with the same name.
     ## moved from project testing. More relevant to stakeholders.

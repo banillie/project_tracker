@@ -3,6 +3,8 @@ from itertools import chain
 from django.http import HttpResponse
 from django.shortcuts import render
 from projects.models import Project
+from stakeholders.models import Stakeholder
+from ppdds.models import PPDD
 
 
 def home_view(request, *args, **kwargs):
@@ -16,10 +18,14 @@ def home_view(request, *args, **kwargs):
 def search_view(request):
     if request.method == "POST":
         query = request.POST['searched']
-        qs = Project.objects.search(query=query)
+        project_qs = Project.objects.search(query=query)
+        stakeholder_qs = Stakeholder.objects.search(query=query)
+        ppdd_qs = PPDD.objects.search(query=query)
         context = {
             "searched": query,
-            "search_object_list": qs,
+            "project_model_search": project_qs,
+            "stakeholder_model_search": stakeholder_qs,
+            "ppdd_model_search": ppdd_qs
         }
         return render(request, "search.html", context)
     else:

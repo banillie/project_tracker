@@ -1,4 +1,5 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from ppdds.utils import slugify_instance_title
@@ -11,10 +12,31 @@ class StakeholderOrg(models.Model):
         return self.org
 
 
+class StakeholderQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == "":
+            return self.none()   # []
+        lookups = (
+            Q(first_name__icontains=query)
+            | Q(last_name__icontains=query)
+            | Q(organisation__org__icontains=query)
+            | Q(group__icontains=query)
+        )
+        return self.filter(lookups)
+
+
+class StakeholderManager(models.Manager):
+    def get_queryset(self):
+        return StakeholderQuerySet(self.model, using=self._db)  # default db
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
+
+
 class Stakeholder(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
-    slug = slug = models.SlugField(blank=True, null=True, unique=True)
+    slug = models.SlugField(blank=True, null=True, unique=True)
     # need to understand on_delete better
     organisation = models.ForeignKey(StakeholderOrg, on_delete=models.CASCADE) # null=False
     group = models.CharField(max_length=100, blank=True, null=True)
@@ -22,6 +44,8 @@ class Stakeholder(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)
+
+    objects = StakeholderManager()
 
     def get_absolute_url(self):
         # would be good to understand the reverse in more detail.

@@ -33,6 +33,10 @@ class PPDDTestCast(TestCase):
     def test_uploading_data(self):
         self.assertEqual(PPDD.objects.count(), 16)
 
+    def test_filtering(self):
+        a = PPDD.objects.search(query='Field')
+        self.assertEqual(a.count(), 1)
+
     ## slug testing to develop
     # def test_slug(self):
     #     obj = PPDD.objects.all().order_by("id").first()

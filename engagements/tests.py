@@ -199,6 +199,8 @@ class EngagementTestCase(TestCase):
         b = Engagement.objects.filter(ppdds__id=1)
         self.assertEqual(b.count(), 1)
         c = Engagement.objects.filter(stakeholders__id=1)
+        # return stakeholders that were in meeting where a project was discussed
+        # Engagement.objects.filter(projects__engagement__stakeholders='Driverless Trains')
         self.assertEqual(c.count(), 3)
 
     @skip('not testing right now')

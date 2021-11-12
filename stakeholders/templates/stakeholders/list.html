@@ -9,7 +9,9 @@
 
     {% for instance in object_list %}
         <p>
-            <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a>
+            <a href='{{ instance.get_absolute_url }}'>
+                {{ instance.first_name }} {{ instance.last_name }}, {{ instance.organisation }}
+            </a>
         </p>
     {% endfor %}
 

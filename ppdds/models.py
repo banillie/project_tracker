@@ -1,11 +1,31 @@
 from django.db import models
+from django.db.models import Q
 from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from .utils import slugify_instance_title
 
 
-# not including user for this model as don't think its necessary
-# not including timestamp and updated for this model as don't think its necessary
+class PPDDQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == "":
+            return self.none()   # []
+        lookups = (
+            Q(first_name__icontains=query)
+            | Q(last_name__icontains=query)
+            | Q(team__icontains=query)
+            | Q(role__icontains=query)
+        )
+        return self.filter(lookups)
+
+
+class PPDDManager(models.Manager):
+    def get_queryset(self):
+        return PPDDQuerySet(self.model, using=self._db)  # default db
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
+
+
 class PPDD(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
@@ -14,6 +34,8 @@ class PPDD(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)  # active?
+
+    objects = PPDDManager()
 
     def get_absolute_url(self):
         return reverse("ppdds:detail", kwargs={"slug": self.slug})
