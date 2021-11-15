@@ -17,13 +17,24 @@
     {% if engagement_list %}
     {#    <ol>#}
             {% for object in engagement_list %}
-            {% if object.date %}
+{#            {% if object.date %}#}
             <p>
             <a href="{{ object.get_absolute_url }}">{{ object.date }}</a>
             </p>
-            {% endif %}
+{#            {% endif %}#}
         {% endfor %}
     {#    </ol>#}
+    {% else %}
+        <p>None so far...</p>
+    {% endif %}
+
+    <h3>Projects associated with this stakeholder</h3>
+    {% if project_list %}
+            {% for object in project_list %}
+            <p>
+            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+            </p>
+            {% endfor %}
     {% else %}
         <p>None so far...</p>
     {% endif %}

@@ -201,12 +201,16 @@ class EngagementTestCase(TestCase):
         c = Engagement.objects.filter(stakeholders__id=1)
         self.assertEqual(c.count(), 3)
         # return stakeholders that were in meeting where a project was discussed
-        # rough need to find
-        l = a.all().values('stakeholders').distinct()
-        qs_obj = []
-        for x in l:
-            qs_obj.append(Stakeholder.objects.get(pk=x['stakeholders']))
-        self.assertEqual(len(qs_obj), 4)
+        stake_qs = []
+        for x in a.all().values('stakeholders').distinct():
+            stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+        self.assertEqual(len(stake_qs), 4)
+        # return projects that discussed at meetings involving a stakeholder
+        project_qs = []
+        for x in c.all().values('projects').distinct():
+            project_qs.append(Project.objects.get(pk=x['projects']))
+        self.assertEqual(len(project_qs), 1)
+
 
     @skip('not testing right now')
     def test_user_count(self):

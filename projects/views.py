@@ -51,9 +51,8 @@ def project_detail_hx_view(request, slug=None):
     if obj is None:
         return HttpResponse("Not found.")
     engage_qs = Engagement.objects.filter(projects__slug=slug)
-    l = engage_qs.all().values('stakeholders').distinct()
     stake_qs = []
-    for x in l:
+    for x in engage_qs.all().values('stakeholders').distinct():
         stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
     context = {
         "object": obj,

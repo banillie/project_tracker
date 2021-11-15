@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
+from projects.models import Project
 from .forms import StakeholderForm
 
 from .models import Stakeholder
@@ -36,9 +37,13 @@ def stakeholder_update_view(request, slug):
 def stakeholders_detail_view(request, slug):
     obj = get_object_or_404(Stakeholder, slug=slug)
     engage_qs = Engagement.objects.filter(stakeholders__slug=slug)
+    project_qs = []
+    for x in engage_qs.all().values('projects').distinct():
+        project_qs.append(Project.objects.get(pk=x['projects']))
     context = {
         "object": obj,
         "engagement_list": engage_qs,
+        "project_list": project_qs,
     }
     return render(request, "stakeholders/detail.html", context)
 
