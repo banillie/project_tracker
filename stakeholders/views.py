@@ -35,10 +35,10 @@ def stakeholder_update_view(request, slug):
 @login_required
 def stakeholders_detail_view(request, slug):
     obj = get_object_or_404(Stakeholder, slug=slug)
-    qs = Engagement.objects.filter(stakeholders__slug=slug)
+    engage_qs = Engagement.objects.filter(stakeholders__slug=slug)
     context = {
         "object": obj,
-        "engagement_list": qs,
+        "engagement_list": engage_qs,
     }
     return render(request, "stakeholders/detail.html", context)
 

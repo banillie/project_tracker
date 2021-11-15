@@ -30,3 +30,16 @@
 {% else %}
     <p>None so far...</p>
 {% endif %}
+
+<h3>Stakeholders associated with project</h3>
+{% if stakeholder_list %}
+    {% for object in stakeholder_list %}
+    <p>
+    <a href="{{ object.get_absolute_url }}">
+        {{ object.first_name }} {{ object.last_name }}, {{ object.organisation }}
+            </a>
+    </p>
+    {% endfor %}
+{% else %}
+    <p>None so far...</p>
+{% endif %}

@@ -4,6 +4,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 
 from engagements.models import Engagement
+from stakeholders.models import Stakeholder
 from .forms import ProjectForm
 from .models import Project
 
@@ -49,10 +50,15 @@ def project_detail_hx_view(request, slug=None):
         obj = None
     if obj is None:
         return HttpResponse("Not found.")
-    qs = Engagement.objects.filter(projects__slug=slug)
+    engage_qs = Engagement.objects.filter(projects__slug=slug)
+    l = engage_qs.all().values('stakeholders').distinct()
+    stake_qs = []
+    for x in l:
+        stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
     context = {
         "object": obj,
-        "engagement_list": qs,
+        "engagement_list": engage_qs,
+        "stakeholder_list": stake_qs,
     }
     return render(request, "projects/partials/detail.html", context)
 
