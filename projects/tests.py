@@ -40,5 +40,5 @@ class ProjectTestCase(TestCase):
         c = Project.objects.search(query='2')
         self.assertEqual(a.count(), 1)
         self.assertEqual(b.count(), 45)
-        self.assertEqual(c.count(), 12)
+        self.assertEqual(c.count(), 13)
 

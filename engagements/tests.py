@@ -205,12 +205,11 @@ class EngagementTestCase(TestCase):
         for x in a.all().values('stakeholders').distinct():
             stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
         self.assertEqual(len(stake_qs), 4)
-        # return projects that discussed at meetings involving a stakeholder
+        # return projects discussed at meetings involving a stakeholder
         project_qs = []
         for x in c.all().values('projects').distinct():
             project_qs.append(Project.objects.get(pk=x['projects']))
         self.assertEqual(len(project_qs), 1)
-
 
     @skip('not testing right now')
     def test_user_count(self):

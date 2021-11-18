@@ -112,3 +112,5 @@ venv.bak/
 
 #other
 data/project_tracker_data.xlsx
+data/pt_data.json
+data/test_data.json
