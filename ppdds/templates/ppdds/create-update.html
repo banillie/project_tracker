@@ -12,11 +12,8 @@
         {% csrf_token %}
         {{ form.as_p }}
         <p><input type="submit" value="Save"/>
-            <a href="{{ object.get_absolute_url }}">Return</a>
         </p>
     </form>
-
-
 
 
 

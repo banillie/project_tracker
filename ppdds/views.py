@@ -10,13 +10,19 @@ from engagements.models import Engagement
 @login_required
 def ppdds_create_view(request):
     form = PPDDForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-        form = PPDDForm()
     context = {
         'form': form,
     }
+    # if form.is_valid():
+    #     form.save()
+    #     form = PPDDForm()
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
+        return redirect(obj.get_absolute_url())
     return render(request, "ppdds/create-update.html", context)
+
 
 
 @login_required
@@ -25,14 +31,16 @@ def ppdds_update_view(request, slug=None):
     form = PPDDForm(request.POST or None, instance=obj)
     context = {
         'form': form,
-        'object': obj,
+        # 'object': obj,
     }
     if form.is_valid():
         form.save()
+        return redirect('../')
         # context['message'] = 'Date Saved'
     # if request.htmx:
     #     return render(request, "ppdds/partials/forms.html", context)
     return render(request, "ppdds/create-update.html", context)
+
 
 
 @login_required

@@ -99,19 +99,6 @@ def project_update_view(request, slug=None):
     return render(request, "projects/create-update.html", context)
 
 
-# @login_required
-# def stakeholder_update_view(request, slug):
-#     obj = get_object_or_404(Stakeholder, slug=slug)  # handles page not found.
-#     form = StakeholderForm(request.POST or None, instance=obj)
-#     if form.is_valid():
-#         form.save()
-#         return redirect('../')
-#     context = {
-#         'form': form
-#     }
-#     return render(request, "stakeholders/create.html", context)
-
-
 @login_required
 def project_create_view(request):
     form = ProjectForm(request.POST or None)
@@ -132,16 +119,6 @@ def project_create_view(request):
     return render(request, "projects/create-update.html", context)
 
 
-# @login_required
-# def stakeholders_create_view(request):
-#     form = StakeholderForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = StakeholderForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, "stakeholders/create.html", context)
 
 
 
