@@ -29,9 +29,9 @@ def ppdds_update_view(request, slug=None):
     }
     if form.is_valid():
         form.save()
-        context['message'] = 'Date Saved'
-    if request.htmx:
-        return render(request, "ppdds/partials/forms.html", context)
+        # context['message'] = 'Date Saved'
+    # if request.htmx:
+    #     return render(request, "ppdds/partials/forms.html", context)
     return render(request, "ppdds/create-update.html", context)
 
 

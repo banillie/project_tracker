@@ -4,12 +4,20 @@
 
 {#    <form method="POST"> {% csrf_token %}#}
 {#    {{ form.as_p }}#}
-{#    <input type="submit" value="Save"/>#}
+{#    <a href="{{ object.get_absolute_url }}">Save</a>#}
+{#    <input type="submit" value="Save" />#}
 {#    </form>#}
 
-    <div style="margin-top: 30px;">
-        {% include 'ppdds/partials/forms.html' %}
-    </div>
+    <form action='.' method="POST">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <p><input type="submit" value="Save"/>
+            <a href="{{ object.get_absolute_url }}">Return</a>
+        </p>
+    </form>
+
+
+
 
 
 {% endblock %}

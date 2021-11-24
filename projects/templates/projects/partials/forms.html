@@ -7,6 +7,7 @@
             {{ form.as_p }}
             <div class="htmx-indicator">Saving...</div>
             <input class="htmx-inverted_indicator" type="submit" value="Save"/>
+            <a href="{{ object.get_absolute_url }}">Return</a>
             {% if message %}
                 <p>{{ message }}</p>
             {% endif %}

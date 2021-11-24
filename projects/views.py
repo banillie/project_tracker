@@ -31,25 +31,10 @@ def project_delete_view(request, slug):
 
 
 @login_required
-def project_detail_view(request, slug=None):
-    hx_url = reverse("projects:hx-detail", kwargs={"slug": slug})
+def project_detail_view(request, slug):
+    obj = get_object_or_404(Project, slug=slug)
+    # hx_url = reverse("projects:hx-detail", kwargs={"slug": slug})
     # print(hx_url)
-    context = {
-        "hx_url": hx_url,
-    }
-    return render(request, "projects/detail.html", context)
-
-
-@login_required
-def project_detail_hx_view(request, slug=None):
-    if not request.htmx:
-        raise Http404
-    try:
-        obj = Project.objects.get(slug=slug)
-    except:
-        obj = None
-    if obj is None:
-        return HttpResponse("Not found.")
     engage_qs = Engagement.objects.filter(projects__slug=slug)
     stake_qs = []
     for x in engage_qs.all().values('stakeholders').distinct():
@@ -59,8 +44,32 @@ def project_detail_hx_view(request, slug=None):
         "engagement_list": engage_qs,
         "stakeholder_list": stake_qs,
     }
-    return render(request, "projects/partials/detail.html", context)
+    # context = {
+    #     "hx_url": hx_url,
+    # }
+    return render(request, "projects/detail.html", context)
 
+
+# @login_required
+# def project_detail_hx_view(request, slug=None):
+#     if not request.htmx:
+#         raise Http404
+#     try:
+#         obj = Project.objects.get(slug=slug)
+#     except:
+#         obj = None
+#     if obj is None:
+#         return HttpResponse("Not found.")
+#     engage_qs = Engagement.objects.filter(projects__slug=slug)
+#     stake_qs = []
+#     for x in engage_qs.all().values('stakeholders').distinct():
+#         stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+#     context = {
+#         "object": obj,
+#         "engagement_list": engage_qs,
+#         "stakeholder_list": stake_qs,
+#     }
+#     return render(request, "projects/partials/detail.html", context)
 
 
 @login_required
@@ -79,14 +88,28 @@ def project_update_view(request, slug=None):
     form = ProjectForm(request.POST or None, instance=obj)
     context = {
         'form': form,
-        'object': obj,
+        # 'object': obj,
     }
     if form.is_valid():
         form.save()
-        context['message'] = 'Date Saved'
-    if request.htmx:
-        return render(request, "projects/partials/forms.html", context)
+        return redirect('../')
+        # context['message'] = 'Date Saved'
+    # if request.htmx:
+    #     return render(request, "projects/partials/forms.html", context)
     return render(request, "projects/create-update.html", context)
+
+
+# @login_required
+# def stakeholder_update_view(request, slug):
+#     obj = get_object_or_404(Stakeholder, slug=slug)  # handles page not found.
+#     form = StakeholderForm(request.POST or None, instance=obj)
+#     if form.is_valid():
+#         form.save()
+#         return redirect('../')
+#     context = {
+#         'form': form
+#     }
+#     return render(request, "stakeholders/create.html", context)
 
 
 @login_required
@@ -100,6 +123,27 @@ def project_create_view(request):
         obj.user = request.user
         obj.save()
         return redirect(obj.get_absolute_url())
+    # if form.is_valid():
+    #     form.save()
+    #     form = ProjectForm()
+    # context = {
+    #     'form': form,
+    # }
     return render(request, "projects/create-update.html", context)
+
+
+# @login_required
+# def stakeholders_create_view(request):
+#     form = StakeholderForm(request.POST or None)
+#     if form.is_valid():
+#         form.save()
+#         form = StakeholderForm()
+#     context = {
+#         'form': form,
+#     }
+#     return render(request, "stakeholders/create.html", context)
+
+
+
 
 
