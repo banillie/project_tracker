@@ -37,7 +37,7 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Setup Python 3.6
-        uses: action/setup-python@v2
+        uses: actions/setup-python@v2
         with:
           python-version: 3.6
       - name: Install requirements
@@ -54,7 +54,7 @@ jobs:
         run: |
           python manage.py test
       - name: Push Main Branch into Production
-        uses: banillie/action-branch-to_branch@main
+        uses: banillie/action-branch-to-branch@main
         with:
           dest_branch: production
           source_branch: main
