@@ -1,0 +1,96 @@
+name: project-tracker-via_cli
+alerts:
+- rule: DEPLOYMENT_FAILED
+- rule: DOMAIN_FAILED
+databases:
+- engine: PG
+  name: db
+  num_nodes: 1
+  size: db-s-dev-database
+  version: "12"
+envs:
+- key: DISABLE_COLLECTSTATIC
+  scope: RUN_AND_BUILD_TIME
+  value: "0"
+- key: DEBUG
+  scope: RUN_AND_BUILD_TIME
+  value: "0"
+- key: DJANGO_ALLOWED_HOST
+  scope: RUN_AND_BUILD_TIME
+  value: .ondigitalocean.app
+- key: DJANGO_SUPERUSER_EMAIL
+  scope: RUN_AND_BUILD_TIME
+  value: william.grant@dft.gov.uk
+- key: DJANGO_SUPERUSER_USERNAME
+  scope: RUN_AND_BUILD_TIME
+  value: will_super
+- key: DJANGO_SECRET_KEY
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: abc123
+- key: DJANGO_SUPERUSER_PASSWORD
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: abc
+- key: POSTGRES_DB
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.DATABASE}
+- key: POSTGRES_HOST
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.HOSTNAME}
+- key: POSTGRES_USER
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.USERNAME}
+- key: POSTGRES_PASSWORD
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.PASSWORD}
+- key: POSTGRES_PORT
+  scope: RUN_AND_BUILD_TIME
+  value: ${db.PORT}
+- key: AWS_ACCESS_KEY_ID
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: abc
+- key: AWS_SECRET_ACCESS_KEY
+  scope: RUN_AND_BUILD_TIME
+  type: SECRET
+  value: abc
+- key: AWS_STORAGE_BUCKET_NAME
+  scope: RUN_AND_BUILD_TIME
+  value: projecttracker
+jobs:
+- environment_slug: python
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${db.DATABASE_URL}
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: banillie/project_tracker
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  kind: POST_DEPLOY
+  name: django-migrate-job
+  run_command: |
+    python manage.py migrate --noinput
+  source_dir: /
+region: lon
+services:
+- environment_slug: python
+  envs:
+  - key: DATABASE_URL
+    scope: RUN_TIME
+    value: ${db.DATABASE_URL}
+  github:
+    branch: main
+    deploy_on_push: true
+    repo: banillie/project_tracker
+  http_port: 8080
+  instance_count: 1
+  instance_size_slug: basic-xxs
+  name: project-tracker
+  routes:
+  - path: /
+  run_command: gunicorn --worker-tmp-dir /dev/shm project_tracker.wsgi
+  source_dir: /
