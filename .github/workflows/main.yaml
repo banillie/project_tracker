@@ -53,14 +53,14 @@ jobs:
           POSTGRES_PORT: 5432
         run: |
           python manage.py test
-      - name: Push Main Branch into Production
-        uses: banillie/action-branch-to-branch@main
-        with:
-          dest_branch: production
-          source_branch: main
-          commit_message: "Release production version"
-        env:
-          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+#      - name: Push Main Branch into Production
+#        uses: banillie/action-branch-to-branch@main
+#        with:
+#          dest_branch: production
+#          source_branch: main
+#          commit_message: "Release production version"
+#        env:
+#          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
       - name: Install doctl
         uses: digitalocean/action-doctl@v2
         with:
