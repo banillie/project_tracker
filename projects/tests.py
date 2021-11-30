@@ -14,17 +14,26 @@ from .utils import slugify_instance_title
 class ProjectTestCase(TestCase):
 
     def setUp(self):
-        data_path = os.path.join(ROOT_DIR, 'project_tracker/data/project_tracker_data.xlsx')
-        wb = load_workbook(data_path)
-        ws = wb['Projects']
-        all_entries = {}
-        for row in range(2, ws.max_row + 1):
-            single_entry = {}
-            single_entry["name"] = ws.cell(row=row, column=2).value
-            single_entry["type"] = ws.cell(row=row, column=1).value
-            single_entry["abbreviation"] = ws.cell(row=row, column=3).value
-            single_entry["governance"] = ws.cell(row=row, column=4).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "name": "Make a Big Bridge",
+                "type": "Project",
+                "abbreviation": "BIGBRIDGE",
+                "governance": "Tier 1",
+            },
+            3: {
+                "name": "Dig a Big Hole",
+                "type": "Programme",
+                "abbreviation": "BIGHOLE",
+                "governance": "Tier 2",
+            },
+            4: {
+                "name": "Make a Big Port",
+                "type": "Portfolio",
+                "abbreviation": "BIGPORT",
+                "governance": "Tier 1",
+            }
+        }
 
         for x in all_entries:
             Project.objects.create(
@@ -32,13 +41,13 @@ class ProjectTestCase(TestCase):
             )
 
     def test_uploading_data(self):
-        self.assertEqual(Project.objects.count(), 52)
+        self.assertEqual(Project.objects.count(), 3)
 
     def test_filtering(self):
-        a = Project.objects.search(query='A2')
+        a = Project.objects.search(query='PORT')
         b = Project.objects.search(query='1')
-        c = Project.objects.search(query='2')
+        c = Project.objects.search(query='Project')
         self.assertEqual(a.count(), 1)
-        self.assertEqual(b.count(), 45)
-        self.assertEqual(c.count(), 13)
+        self.assertEqual(b.count(), 2)
+        self.assertEqual(c.count(), 0)
 
