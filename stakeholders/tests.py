@@ -7,37 +7,32 @@ from .models import Stakeholder, StakeholderOrg
 from project_tracker.settings import ROOT_DIR
 
 
-
 class StakeholderTestCase(TestCase):
-
     def setUp(self) -> None:
-        data_path = os.path.join(ROOT_DIR, 'project_tracker/data/project_tracker_data.xlsx')
-        wb = load_workbook(data_path)
-        ws = wb["Stakeholders"]
-        org_list = []
-        for row in range(2, ws.max_row + 1):
-            org = ws.cell(row=row, column=3).value
-            if org not in org_list:
-                org_list.append(org)
-            else:
-                pass
-
+        org_list = ['Org 1', 'Org 2']
         for x in org_list:
             StakeholderOrg.objects.create(org=x)
 
-        all_entries = {}
-        for row in range(2, ws.max_row + 1):
-            single_entry = {}
-            single_entry["first_name"] = ws.cell(row=row, column=1).value.strip()
-            # using strip to tidy string whitespacing
-            single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
-            org = ws.cell(row=row, column=3).value
-            single_entry["organisation"] = StakeholderOrg.objects.get(org=org)
-            single_entry["group"] = ws.cell(row=row, column=4).value
-            single_entry["team"] = ws.cell(row=row, column=5).value
-            single_entry["role"] = ws.cell(row=row, column=6).value
-            single_entry["tele_no"] = ws.cell(row=row, column=7).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "first_name": "Andrew",
+                "last_name": "Appiah",
+                "organisation": StakeholderOrg.objects.get(org='Org 1'),
+                "group": "RPE",
+                "team": "RIS Client CIP Projects, Commercial &PDIP",
+                "role": None,
+                "tele_no": None,
+            },
+            3: {
+                "first_name": "Albi",
+                "last_name": "Luguiqi",
+                "organisation": StakeholderOrg.objects.get(org='Org 2'),
+                "group": None,
+                "team": None,
+                "role": None,
+                "tele_no": None,
+            },
+        }
 
         for x in all_entries:
             Stakeholder.objects.create(
@@ -45,11 +40,11 @@ class StakeholderTestCase(TestCase):
             )
 
     def test_uploading_data(self):
-        self.assertEqual(Stakeholder.objects.count(), 60)
+        self.assertEqual(Stakeholder.objects.count(), 2)
 
     def test_filtering(self):
-        a = Stakeholder.objects.search(query='DfT')
-        self.assertEqual(a.count(), 43)
+        a = Stakeholder.objects.search(query='Org')
+        self.assertEqual(a.count(), 2)
 
 
     # testing required to handle stakeholders/ppdds with the same name.
