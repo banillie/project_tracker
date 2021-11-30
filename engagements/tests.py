@@ -27,35 +27,31 @@ class UserTestCase(TestCase):
 
 class EngagementTestCase(TestCase):
     def setUp(self):
-        data_path = os.path.join(ROOT_DIR, 'project_tracker/data/project_tracker_data.xlsx')
-        wb = load_workbook(data_path)
-
         # Stakeholders
-        ws = wb["Stakeholders"]
-        org_list = []
-        for row in range(2, ws.max_row+1):
-            org = ws.cell(row=row, column=3).value
-            if org not in org_list:
-                org_list.append(org)
-            else:
-                pass
-
+        org_list = ['Org 1', 'Org 2']
         for x in org_list:
             StakeholderOrg.objects.create(org=x)
 
-        all_entries = {}
-        for row in range(2, ws.max_row+1):
-            single_entry = {}
-            single_entry["first_name"] = ws.cell(row=row, column=1).value.strip()
-            # using strip to tidy string whitespacing
-            single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
-            org = ws.cell(row=row, column=3).value
-            single_entry["organisation"] = StakeholderOrg.objects.get(org=org)
-            single_entry["group"] = ws.cell(row=row, column=4).value
-            single_entry["team"] = ws.cell(row=row, column=5).value
-            single_entry["role"] = ws.cell(row=row, column=6).value
-            single_entry["tele_no"] = ws.cell(row=row, column=7).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "first_name": "Andrew",
+                "last_name": "Appiah",
+                "organisation": StakeholderOrg.objects.get(org='Org 1'),
+                "group": "RPE",
+                "team": "RIS Client CIP Projects, Commercial &PDIP",
+                "role": None,
+                "tele_no": None,
+            },
+            3: {
+                "first_name": "Albi",
+                "last_name": "Luguiqi",
+                "organisation": StakeholderOrg.objects.get(org='Org 2'),
+                "group": None,
+                "team": None,
+                "role": None,
+                "tele_no": None,
+            },
+        }
 
         for x in all_entries:
             Stakeholder.objects.create(
@@ -63,16 +59,29 @@ class EngagementTestCase(TestCase):
             )
 
         # PPDD data
-        ws = wb['PPDDs']
-        all_entries = {}
-        for row in range(2, ws.max_row+1):
-            single_entry = {}
-            single_entry["first_name"] = ws.cell(row=row, column=1).value.strip()
-            single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
-            single_entry["role"] = ws.cell(row=row, column=3).value
-            single_entry["team"] = ws.cell(row=row, column=4).value
-            single_entry["tele_no"] = ws.cell(row=row, column=5).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "first_name": "Micky",
+                "last_name": "Mouse",
+                "role": "Entertainer",
+                "team": "Disney",
+                "tele_no": None,
+            },
+            3: {
+                "first_name": "James",
+                "last_name": "Brown",
+                "role": "Musician",
+                "team": "Funky",
+                "tele_no": None,
+            },
+            4: {
+                "first_name": "David",
+                "last_name": "Blaine",
+                "role": "Magician",
+                "team": "Astonish",
+                "tele_no": None,
+            }
+        }
 
         for x in all_entries:
             PPDD.objects.create(
@@ -80,16 +89,26 @@ class EngagementTestCase(TestCase):
             )
 
         # Project data
-        ws = wb['Projects']
-
-        all_entries = {}
-        for row in range(2, ws.max_row+1):
-            single_entry = {}
-            single_entry["name"] = ws.cell(row=row, column=2).value
-            single_entry["type"] = ws.cell(row=row, column=1).value
-            single_entry["abbreviation"] = ws.cell(row=row, column=3).value
-            single_entry["governance"] = ws.cell(row=row, column=4).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "name": "Make a Big Bridge",
+                "type": "Project",
+                "abbreviation": "BIGBRIDGE",
+                "governance": "Tier 1",
+            },
+            3: {
+                "name": "Dig a Big Hole",
+                "type": "Programme",
+                "abbreviation": "BIGHOLE",
+                "governance": "Tier 2",
+            },
+            4: {
+                "name": "Make a Big Port",
+                "type": "Portfolio",
+                "abbreviation": "BIGPORT",
+                "governance": "Tier 1",
+            }
+        }
 
         for x in all_entries:
             Project.objects.create(
@@ -97,92 +116,42 @@ class EngagementTestCase(TestCase):
             )
 
         # Engagement data
-        ws = wb['EngagementTypes']
-        type_list = []
-        for row in range(2, ws.max_row+1):
-            type = ws.cell(row=row, column=1).value
-            if type:
-                if type not in type_list:
-                    type_list.append(type)
-                else:
-                    pass
-            else:
-                pass
-
+        type_list = ['Type 1', 'Type 100', 'Type 500']
         for x in type_list:
             EngagementType.objects.create(type=x)
 
-        wsheet = wb['EngagementWorkStreams']
-        ws_list = []
-        for row in range(2, wsheet.max_row+1):
-            ws = wsheet.cell(row=row, column=1).value
-            if ws not in ws_list:
-                ws_list.append(ws)
-            else:
-                pass
-
+        ws_list = ['WS one', 'WS two', 'WS three']
         for x in ws_list:
             EngagementWorkStream.objects.create(work_stream=x)
 
-        ws = wb['Engagements']
-        for row in range(2, ws.max_row+1):
-            eng = Engagement(
-                date=ws.cell(row=row, column=1).value,
-                summary=ws.cell(row=row, column=7).value,
-
+        a1 = Engagement(
+                date=datetime.datetime(2021, 8, 25, 0, 0),
+                summary="something something summary summary",
             )
-            eng.save()
+        a1.save()
+        a1.projects.add(Project.objects.get(id=1), Project.objects.get(id=2))
+        a1.stakeholders.add(Stakeholder.objects.get(id=1), Stakeholder.objects.get(id=2))
+        a1.ppdds.add(PPDD.objects.get(id=1), PPDD.objects.get(id=2))
+        a1.engagement_types.add(EngagementType.objects.get(id=1))
+        a1.engagement_workstreams.add(EngagementWorkStream.objects.get(id=2))
 
-            project_list = ws.cell(row=row, column=2).value.split(", ")
-            p_object_list = []
-            for name in project_list:
-                p_object_list.append(Project.objects.get(name=name))
-            eng.projects.add(*p_object_list)
-
-            stakeholder_list = ws.cell(row=row, column=4).value.split(", ")
-            object_list = []
-            for name in stakeholder_list:
-                split_name = name.split(" ")
-                object_list.append(Stakeholder.objects.get(
-                    first_name=split_name[0],
-                    last_name=split_name[1])
-                )
-            eng.stakeholders.add(*object_list)
-
-            ppdd_list = ws.cell(row=row, column=3).value.split(", ")
-            object_list = []
-            for name in ppdd_list:
-                split_name = name.split(" ")
-                object_list.append(PPDD.objects.get(
-                    first_name=split_name[0],
-                    last_name=split_name[1])
-                )
-            eng.ppdds.add(*object_list)
-
-            type_list = ws.cell(row=row, column=5).value.split(", ")
-            type_object_list = []
-            for type in type_list:
-                type_object_list.append(EngagementType.objects.get(type=type))
-            eng.engagement_types.add(*type_object_list)
-
-            wstream = ws.cell(row=row, column=6).value
-            if wstream:
-                ws_list = wstream.value.split(", ")
-                ws_object_list = []
-                for x in ws_list:
-                    ws_object_list.append(EngagementWorkStream.objects.get(work_stream=x))
-                eng.engagement_workstreams.add(*ws_object_list)
-            else:
-                pass
-
-            # not including follow-up date for now as no data
+        a2 = Engagement(
+            date=datetime.datetime(2021, 9, 25, 0, 0),
+            summary="something something summary summary",
+        )
+        a2.save()
+        a2.projects.add(Project.objects.get(id=1), Project.objects.get(id=2))
+        a2.stakeholders.add(Stakeholder.objects.get(id=1), Stakeholder.objects.get(id=2))
+        a2.ppdds.add(PPDD.objects.get(id=1), PPDD.objects.get(id=2))
+        a2.engagement_types.add(EngagementType.objects.get(id=1))
+        a2.engagement_workstreams.add(EngagementWorkStream.objects.get(id=2))
 
     def test_stakeholder_data(self):
         a = Stakeholder.objects.get(pk=1)
-        self.assertEqual(str(a.organisation), 'DfT(c)')
+        self.assertEqual(str(a.organisation), 'Org 1')
 
     def test_ppdd_data(self):
-        self.assertEqual(PPDD.objects.count(), 16)
+        self.assertEqual(PPDD.objects.count(), 3)
 
     def test_project_data(self):
         a = Project.objects.get(pk=1)
@@ -191,25 +160,25 @@ class EngagementTestCase(TestCase):
     def test_engagement_data(self):
         a = Engagement.objects.get(pk=1)
         self.assertIsInstance(a.date, datetime.date)
-        self.assertEqual(Engagement.objects.count(), 50)
+        self.assertEqual(Engagement.objects.count(), 2)
 
     def test_engagement_filtering(self):
         a = Engagement.objects.filter(projects__id=1)
-        self.assertEqual(a.count(), 3)
+        self.assertEqual(a.count(), 2)
         b = Engagement.objects.filter(ppdds__id=1)
-        self.assertEqual(b.count(), 1)
+        self.assertEqual(b.count(), 2)
         c = Engagement.objects.filter(stakeholders__id=1)
-        self.assertEqual(c.count(), 3)
+        self.assertEqual(c.count(), 2)
         # return stakeholders that were in meeting where a project was discussed
         stake_qs = []
         for x in a.all().values('stakeholders').distinct():
             stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
-        self.assertEqual(len(stake_qs), 4)
+        self.assertEqual(len(stake_qs), 2)
         # return projects discussed at meetings involving a stakeholder
         project_qs = []
         for x in c.all().values('projects').distinct():
             project_qs.append(Project.objects.get(pk=x['projects']))
-        self.assertEqual(len(project_qs), 1)
+        self.assertEqual(len(project_qs), 2)
 
     @skip('not testing right now')
     def test_user_count(self):
