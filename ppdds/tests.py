@@ -12,18 +12,29 @@ from .utils import slugify_instance_title
 
 class PPDDTestCast(TestCase):
     def setUp(self):
-        data_path = os.path.join(ROOT_DIR, 'project_tracker/data/project_tracker_data.xlsx')
-        wb = load_workbook(data_path)
-        ws = wb['PPDDs']
-        all_entries = {}
-        for row in range(2, ws.max_row + 1):
-            single_entry = {}
-            single_entry["first_name"] = ws.cell(row=row, column=1).value.strip()
-            single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
-            single_entry["role"] = ws.cell(row=row, column=3).value
-            single_entry["team"] = ws.cell(row=row, column=4).value
-            single_entry["tele_no"] = ws.cell(row=row, column=5).value
-            all_entries[int(row)] = single_entry
+        all_entries = {
+            2: {
+                "first_name": "Micky",
+                "last_name": "Mouse",
+                "role": "Entertainer",
+                "team": "Disney",
+                "tele_no": None,
+            },
+            3: {
+                "first_name": "James",
+                "last_name": "Brown",
+                "role": "Musician",
+                "team": "Funky",
+                "tele_no": None,
+            },
+            4: {
+                "first_name": "David",
+                "last_name": "Blaine",
+                "role": "Magician",
+                "team": "Astonish",
+                "tele_no": None,
+            }
+        }
 
         for x in all_entries:
             PPDD.objects.create(
@@ -31,10 +42,10 @@ class PPDDTestCast(TestCase):
             )
 
     def test_uploading_data(self):
-        self.assertEqual(PPDD.objects.count(), 16)
+        self.assertEqual(PPDD.objects.count(), 3)
 
     def test_filtering(self):
-        a = PPDD.objects.search(query='Field')
+        a = PPDD.objects.search(query='Blaine')
         self.assertEqual(a.count(), 1)
 
     ## slug testing to develop
