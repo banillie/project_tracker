@@ -49,11 +49,11 @@ envs:
 - key: AWS_ACCESS_KEY_ID
   scope: RUN_AND_BUILD_TIME
   type: SECRET
-  value: EV[1:eEzfP9Mwvo1w1JQcrJFwWO/fZ8kn7iyK:GHb1mF0b75ypCuD6+pxmEU0SAw==]
+  value: EV[1:cHNtNrgmu3uLgeG+fL5m8Yb+wlIRzzLm:rZuE+prdmF8vS5ezeW+OUexsSm6iSb7W1f9cvuUoDKkjBWxf]
 - key: AWS_SECRET_ACCESS_KEY
   scope: RUN_AND_BUILD_TIME
   type: SECRET
-  value: EV[1:8wuGG+KHp4vCdRskHkB8iaZXNQiuo+Oz:1iEp7yoG9oQZ9Chj9KERISsPsQ==]
+  value: EV[1:/V7Uf4rYikJ0YW4/GGOG1w1SUoU4k+BY:UIh73fD0nnNxyP/KUtbIWY0gBBYmRCZv6ut2jdrzMcG1mcVYebO6MnRxbd7XqtYD6Zx9zKovQ7PuDs0=]
 - key: AWS_STORAGE_BUCKET_NAME
   scope: RUN_AND_BUILD_TIME
   value: projecttracker
