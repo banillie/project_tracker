@@ -9,13 +9,12 @@
         <p><font size="+1"><b>Team: </b>{{ object.team }}</font></p>
         <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
     <p>
-        <div class="btn-group btn-group-lg" role="group">
-        <a {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
-
-        <button type="button" class="btn btn-default">Update</button>
-        <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="../">Return</a>
-        </div>
+{#        <div class="btn-group btn-group-lg" role="group">#}
+        <a class="btn btn-primary" {% if object.get_update_url %} href={{ object.get_update_url }}
+            role="button">Update{% endif %}</a>
+        <a href="{{ object.get_absolute_url }}delete" class="btn btn-primary" role="button">Delete</a>
+        <a href="../" class="btn btn-primary" role="button">Return</a>
+{#        </div>#}
     </p>
     </div>
 

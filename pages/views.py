@@ -10,7 +10,7 @@ from ppdds.models import PPDD
 def home_view(request, *args, **kwargs):
     # print(request.user)
     my_context = {
-        "my_text": "The purpose of the tracker is to...",
+        "my_text": "Welcome to the home page for the PPDD Project Tracker Tool.",
     }
     return render(request, "home.html", my_context)
 

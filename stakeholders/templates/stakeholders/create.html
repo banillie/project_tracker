@@ -2,10 +2,16 @@
 
 {% block content %}
 
+    <div class="col-lg-12">
+
+    <h4>Create/Update Stakeholder Details</h4>
+        <p></p>
     <form method="POST"> {% csrf_token %}
     {{ form.as_p }}
-    <input type="submit" value="Save"/>
+    <input class="btn btn-primary" type="submit" value="Save"/>
     </form>
+
+    </div>
 
 
 {% endblock %}
