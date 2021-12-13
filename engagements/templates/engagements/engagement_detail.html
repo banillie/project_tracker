@@ -2,41 +2,58 @@
 
 {% block content %}
 
-    <h3>Date:</h3><p>{{ object.date }}</p>
+    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-    <h3>Project(s):</h3>
-    {% for instance in project_list %}
-    <p>{{ instance }}</p>
-    {% endfor %}
+        <h4>Engagement Details</h4>
 
-    <h3>Stakeholder(s):</h3>
-    {% for instance in stakeholder_list %}
-    <p>{{ instance }}</p>
-    {% endfor %}
+        <p><b>Date:</b> {{ object.date }}</p>
+        <p><b>Projects:</b>
+        {% for instance in project_list %}
+            <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>
+        {% endfor %}</p>
 
-    <h3>PPDD colleague(s):</h3>
-    {% for instance in ppdd_list %}
-    <p>{{ instance }}</p>
-    {% endfor %}
+        <p><b>Stakeholders:</b>
+        {% for instance in stakeholder_list %}
+            <a href='{{ instance.get_absolute_url }}'>
+                {{ instance.first_name }} {{ instance.last_name }},
+                {{ instance.organisation }}</a>
+        {% endfor %}</p>
 
-    <h3>Engagement Type(s): {{ object.type }}</h3>
-    {% for instance in type_list %}
-    <p>{{ instance }}</p>
-    {% endfor %}
+        </div>
 
-    <h3>PDIP Workstream Type(s):</h3>
-    {% for instance in ws_list %}
-    <p>{{ instance }}</p>
-    {% endfor %}
+        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
 
-    <h3>Summary:</h3><p>{{ object.summary }}</p>
+        <p><b>PPDD colleagues:</b>
+        {% for instance in ppdd_list %}
+            <a href='{{ instance.get_absolute_url }}'>
+                {{ instance.first_name }} {{ instance.last_name }}</a>
+        {% endfor %}
 
-    <h4>Follow-up Date:</h4><p>{{ object.follow_up_date }}</p>
+        <p><b>Engagement Types:</b>
+        {% for instance in type_list %}
+            <a>{{ instance }}</a>
+        {% endfor %}</p>
+
+        <p><b>Workstream Types: </b>
+        {% for instance in ws_list %}
+            <a>{{ instance }}</a>
+        {% endfor %}</p>
+
+        <p><b>Follow-up Date:</b><a> {{ object.follow_up_date }}</a></p>
+
+        </div>
+
+        <div class="col-12">
+
+        <h4>Summary:</h4>
+            <p> {{ object.summary }}</p>
+
+        </div>
 
     <p>
-        <a href="{{ object.get_absolute_url }}update">Update</a>
-        <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="../">Return</a>
+        <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
+        <a class="btn btn-primary" href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a class="btn btn-primary" href="../">Return</a>
     </p>
 
 

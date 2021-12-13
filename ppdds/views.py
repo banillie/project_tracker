@@ -25,7 +25,6 @@ def ppdds_create_view(request):
     return render(request, "ppdds/create-update.html", context)
 
 
-
 @login_required
 def ppdds_update_view(request, slug=None):
     obj = get_object_or_404(PPDD, slug=slug)
@@ -43,15 +42,9 @@ def ppdds_update_view(request, slug=None):
     return render(request, "ppdds/create-update.html", context)
 
 
-
 @login_required
 def ppdds_detail_view(request, slug):
     obj = get_object_or_404(PPDD, slug=slug)
-    # qs = Engagement.objects.filter(ppdds__slug=slug)
-    # context = {
-    #     "object": obj,
-    #     "engagement_list": qs,
-    # }
     engage_qs = Engagement.objects.filter(ppdds__slug=slug)
     project_qs = []
     for x in engage_qs.all().values('projects').distinct():
