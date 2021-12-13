@@ -2,16 +2,13 @@
 
 {% block content %}
 
-{#    <form method="POST"> {% csrf_token %}#}
-{#    {{ form.as_p }}#}
-{#    <a href="{{ object.get_absolute_url }}">Save</a>#}
-{#    <input type="submit" value="Save" />#}
-{#    </form>#}
+    <h4>Create/Update Stakeholder Details</h4>
+        <p></p>
 
     <form action='.' method="POST">
         {% csrf_token %}
         {{ form.as_p }}
-        <p><input type="submit" value="Save"/>
+        <p><input class="btn btn-primary" type="submit" value="Save"/>
         </p>
     </form>
 

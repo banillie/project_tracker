@@ -2,18 +2,22 @@
 
 {% block content %}
 
-    <h2>PPDD colleagues details</h2>
-
-    <p>
-        <a href="{{ object.get_absolute_url }}update">Update</a>
-        <a href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a href="../">Return</a>
-    </p>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <h4>PPDD Colleague Details</h4>
 
     <p><font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font></p>
     <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
 
-    <h3>Engagements by this colleague</h3>
+     <p>
+        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}update">Update</a>
+        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a class="btn btn-primary" role="button" href="../">Return</a>
+    </p>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+
+    <h4>Engagements</h4>
     {% if engagement_list %}
     {#    <ol>#}
             {% for object in engagement_list %}
@@ -27,6 +31,21 @@
     {% else %}
         <p>None so far...</p>
     {% endif %}
+
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+        <h4>Associated Projects</h4>
+        {% if project_list %}
+                {% for object in project_list %}
+                <p>
+                <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
+                </p>
+                {% endfor %}
+        {% else %}
+            <p>None so far...</p>
+        {% endif %}
+    </div>
 
 
 {% endblock %}
