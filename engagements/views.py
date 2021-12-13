@@ -12,6 +12,7 @@ class EngagementCreateView(CreateView):
     model = Engagement
     form_class = select2_modelform(Engagement, attrs={'width': '450px'})
     # success_url = reverse_lazy('engagement-form')
+    template_name = "engagements/engagement_create.html"
 
     def form_valid(self, form):
         print(form.cleaned_data)
@@ -23,6 +24,7 @@ class EngagementUpdateView(UpdateView):
     model = Engagement
     form_class = select2_modelform(Engagement, attrs={'width': '450px'})
     # success_url = reverse_lazy('engagement-form')
+    template_name = "engagements/engagement_create.html"
 
     def get_object(self):
         id_ = self.kwargs.get("id")

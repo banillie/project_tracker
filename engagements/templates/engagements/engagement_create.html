@@ -1,30 +1,21 @@
-{% load static %}
-
 {% extends 'base.html' %}
+
+    <title>
+        {% if form.instance.pk %}Edit engagement{{ form.instance }}
+        {% else %}Create engagement{% endif %}
+    </title>
 
 {% block content %}
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>{% if form.instance.pk %}Edit {{ form.instance }}{% else %}Create Engagement{% endif%}</title>
-    {{ form.media.css }}
-    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>
-    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>
-    {{ form.media.js }}
-    <style>
-        input, select {width: 100%}
-    </style>
-</head>
-<body>
-    <h1>{% if form.instance.pk %}Edit {{ form.instance }}{% else %}Create Engagement{% endif%}</h1>
+
+    <h4>{% if form.instance.pk %}Edit engagement{% else %}Create new engagement{% endif%}</h4>
+    <p></p>
     <form method="post">
         {% csrf_token %}
         {{ form.as_p }}
-        <input type="submit" value="{% if form.instance.pk %}Save{% else %}Create{% endif%}">
+        <input class="btn btn-primary" type="submit"
+               value="{% if form.instance.pk %}Save{% else %}Create{% endif%}">
+                <a class="btn btn-primary" href="../">Cancel</a></p>
     </form>
-</body>
-</html>
 
 {% endblock %}
