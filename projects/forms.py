@@ -4,8 +4,8 @@ from .models import Project
 
 
 class ProjectForm(forms.ModelForm):
-    name = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 1}))
-    scope = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 50, 'rows': 20}))
+    # name = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 1}))
+    # scope = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 50, 'rows': 20}))
 
     class Meta:
         model = Project
@@ -17,7 +17,15 @@ class ProjectForm(forms.ModelForm):
             "stage",
             "scope",
         ]
-        filter = ["name", "type"]
+        # filter = ["name", "type"]
+        widgets = {
+            "name": forms.TextInput(attrs={'class': 'form-control'}),
+            "type": forms.Select(attrs={'class': 'form-control'}),
+            "abbreviation": forms.TextInput(attrs={'class': 'form-control'}),
+            "governance": forms.TextInput(attrs={'class': 'form-control'}),
+            "stage": forms.TextInput(attrs={'class': 'form-control'}),
+            "scope": forms.Textarea(attrs={'class': 'form-control'}),
+        }
 
     # # for adding data validation requirements
     # def clean(self, *args, **kwargs):

@@ -110,12 +110,6 @@ def project_create_view(request):
         obj.user = request.user
         obj.save()
         return redirect(obj.get_absolute_url())
-    # if form.is_valid():
-    #     form.save()
-    #     form = ProjectForm()
-    # context = {
-    #     'form': form,
-    # }
     return render(request, "projects/create-update.html", context)
 
 

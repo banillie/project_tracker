@@ -8,3 +8,4 @@ django-easy-select2
 openpyxl
 django-storages
 boto3
+django-crispy-forms

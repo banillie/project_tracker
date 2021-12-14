@@ -50,14 +50,16 @@ INSTALLED_APPS = [
     'multiselectfield',
     'easy_select2',
     'storages',
+    'crispy_forms',
     # own
     'projects',
     'pages',
     'stakeholders',
     'ppdds',
     'engagements',
+]
 
-]  # think of apps as components.
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

@@ -1,14 +1,42 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
 
 {% block content %}
 
     <h4>Create/Update Project Details</h4>
-        <p></p>
-    <form method="POST"> {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary"  type="submit" value="Save"/>
-    </form>
+
+    <div class="form-group">
+        <form method="POST" novalidate> {% csrf_token %}
+            <div class="row mt-2">
+                <div class="col-6">
+                {{ form.name|as_crispy_field }}
+                </div>
+                <div class="col-6">
+                {{ form.abbreviation|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-4">
+                    {{ form.type|as_crispy_field }}
+                </div>
+                <div class="col-4">
+                    {{ form.governance|as_crispy_field }}
+                </div>
+                <div class="col-4">
+                    {{ form.stage|as_crispy_field }}
+                </div>
+            </div>
+            <div class="row mt-2">
+                <div class="col-12">
+                    {{ form.scope|as_crispy_field }}
+                </div>
+            </div>
+
+
+            <br>
+            <input class="btn btn-primary"  type="submit" value="Save"/>
+        </form>
 
 {#    <div style="margin-top: 30px;">#}
 {#        {% include 'projects/partials/forms.html' %}#}
