@@ -1,9 +1,9 @@
 # not in use handled via form_class in engagement.views
 
-# from django import forms
-#
-# from .models import Engagement
-# from easy_select2 import select2_modelform_meta
+from django import forms
+
+from .models import Engagement
+from easy_select2 import select2_modelform_meta
 
 #
 # class EngagementForm(forms.ModelForm):
