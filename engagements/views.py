@@ -10,7 +10,7 @@ from .models import Engagement
 # @login_required
 class EngagementCreateView(CreateView):
     model = Engagement
-    form_class = select2_modelform(Engagement, attrs={'width': 'auto'})
+    form_class = select2_modelform(Engagement, attrs={'width': '100%'})
     # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
     # success_url = reverse_lazy('engagement-form')
     template_name = "engagements/engagement_create.html"
