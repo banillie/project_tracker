@@ -8,11 +8,6 @@
     <p><font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font></p>
     <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
 
-     <p>
-        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}update">Update</a>
-        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a class="btn btn-primary" role="button" href="../">Return</a>
-    </p>
     </div>
 
     <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
@@ -46,6 +41,12 @@
             <p>None so far...</p>
         {% endif %}
     </div>
+
+    <p>
+        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}update">Update</a>
+        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a class="btn btn-primary" role="button" href="../">Return</a>
+    </p>
 
 
 {% endblock %}

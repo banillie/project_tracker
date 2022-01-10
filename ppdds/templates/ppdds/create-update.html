@@ -1,16 +1,28 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
-    <h4>Create/Update Stakeholder Details</h4>
-        <p></p>
+    <h4>{% if form.instance.pk %}Edit Details{% else %}Create PPDD colleague entry{% endif%}</h4>
 
-    <form action='.' method="POST">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <p><input class="btn btn-primary" type="submit" value="Save"/>
-        </p>
-    </form>
+    <div class="form-group">
+        <form method="POST" novalidate> {% csrf_token %}
+{#    <form action='.' method="POST">#}
+{#        {% csrf_token %}#}
+            <div class="row mt-2">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {{ form.first_name|as_crispy_field }}
+                    {{ form.last_name|as_crispy_field }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {{ form.role|as_crispy_field }}
+                    {{ form.tele_no|as_crispy_field }}
+                </div>
+            </div>
+            <br><input class="btn btn-primary" type="submit" value="Save"/>
+        </form>
+
 
 
 
