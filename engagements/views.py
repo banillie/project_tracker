@@ -23,7 +23,7 @@ class EngagementCreateView(CreateView):
 # @login_required
 class EngagementUpdateView(UpdateView):
     model = Engagement
-    form_class = select2_modelform(Engagement, attrs={'width': '450px'})
+    form_class = select2_modelform(Engagement, attrs={'width': '100%'})
     # success_url = reverse_lazy('engagement-form')
     template_name = "engagements/engagement_create.html"
 
