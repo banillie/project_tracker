@@ -1,17 +1,30 @@
 {% extends 'base.html' %}
 
+{% load crispy_forms_tags %}
+
 {% block content %}
 
-    <div class="col-lg-12">
+    <h4>{% if form.instance.pk %}Edit Details{% else %}Create Stakeholder Entry{% endif%}</h4>
 
-    <h4>Create/Update Stakeholder Details</h4>
-        <p></p>
-    <form method="POST"> {% csrf_token %}
-    {{ form.as_p }}
-    <input class="btn btn-primary" type="submit" value="Save"/>
-    </form>
-
-    </div>
+    <div class="form-group">
+        <form method="POST" novalidate> {% csrf_token %}
+{#    <form action='.' method="POST">#}
+{#        {% csrf_token %}#}
+            <div class="row mt-2">
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {{ form.first_name|as_crispy_field }}
+                    {{ form.last_name|as_crispy_field }}
+                    {{ form.organisation|as_crispy_field }}
+                    {{ form.tele_no|as_crispy_field }}
+                </div>
+                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                    {{ form.group|as_crispy_field }}
+                    {{ form.team|as_crispy_field }}
+                    {{ form.role|as_crispy_field }}
+                </div>
+            </div>
+            <br><input class="btn btn-primary" type="submit" value="Save"/>
+        </form>
 
 
 {% endblock %}

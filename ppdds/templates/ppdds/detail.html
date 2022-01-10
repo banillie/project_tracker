@@ -2,7 +2,7 @@
 
 {% block content %}
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <h4>PPDD Colleague Details</h4>
 
     <p><font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font></p>
@@ -10,7 +10,7 @@
 
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
     <h4>Engagements</h4>
     {% if engagement_list %}
@@ -29,7 +29,7 @@
 
     </div>
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
         <h4>Associated Projects</h4>
         {% if project_list %}
                 {% for object in project_list %}
