@@ -5,7 +5,7 @@
 {#        <div class="htmx-indicator">Loading...</div>#}
 {#    </div>#}
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
     <h4>Project Details</h4>
 
     <p><font size="+1"><b>Project Name: </b>{{ object.name }}</font></p>
@@ -15,17 +15,10 @@
     <p><font size="+1"><b>Stage: </b>{{ object.stage }}</font></p>
     <p><font size="+1"><b>Scope: </b>{{ object.scope }}</font></p>
 
-        <p>
-        <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>
-            Update{% endif %}</a>
-        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>
-        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>
-    </p>
-
     </div>
 
 
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
     <h4>Engagements</h4>
     {% if engagement_list %}
@@ -42,7 +35,7 @@
         <p>None so far...</p>
     {% endif %}
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
 
     <h4>Associated Stakeholders</h4>
     {% if stakeholder_list %}
@@ -58,6 +51,13 @@
     {% endif %}
 
     </div>
+
+    <p>
+        <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>
+            Update{% endif %}</a>
+        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>
+        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>
+    </p>
 
 {% endblock %}
 
