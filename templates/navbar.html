@@ -5,11 +5,11 @@
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-            <li><a class="btn btn-primary" class="nav-link" href="{% url "home" %}">Home</a></li>
-            <li><a class="btn btn-success" class="nav-link" href="/projects/">Projects</a></li>
-            <li><a class="btn btn-warning" class="nav-link" href="/stakeholders/">Stakeholders</a></li>
-            <li><a class="btn btn-info" class="nav-link" href="/ppdds/">PPDD colleagues</a></li>
-            <li><a class="btn btn-danger" class="nav-link" href="/engagements/">Engagements</a></li>
+            <li><a class="btn btn-primary btn-lg" class="nav-link" href="{% url "home" %}">Home</a></li>
+            <li><a class="btn btn-success btn-lg" class="nav-link" href="/projects/">Projects</a></li>
+            <li><a class="btn btn-warning btn-lg" class="nav-link" href="/stakeholders/">Stakeholders</a></li>
+            <li><a class="btn btn-info btn-lg" class="nav-link" href="/ppdds/">PPDDs</a></li>
+            <li><a class="btn btn-danger btn-lg" class="nav-link" href="/engagements/">Engagements</a></li>
         </ul>
     {% if request.user.is_authenticated %}
         <form class="d-flex" method="POST" action="{% url 'search' %}">{% csrf_token %}
