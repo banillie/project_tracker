@@ -1,23 +1,22 @@
 <nav class="navbar navbar-expand-lg navbar-light bg-light mb-3">
   <div class="container-fluid">
-{#    <a class="navbar-brand" href="#">Navbar</a>#}
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <a class="nav-link" href="{% url "home" %}">Home</a>
-          <li><a class="nav-link" href="/projects/">Projects</a></li>
-          <li><a class="nav-link" href="/stakeholders/">Stakeholders</a></li>
-          <li><a class="nav-link" href="/ppdds/">PPDD colleagues</a></li>
-          <li><a class='btn btn-warning' class="nav-link" href="/engagements/">Engagements</a></li>
-      </ul>
-        {% if request.user.is_authenticated %}
-      <form class="d-flex" method="POST" action="{% url 'search' %}">{% csrf_token %}
-          <input class="form-control me-2" type="search" placeholder="Search" name="searched">
-        <button class="btn btn-success">Search</button>
-      </form>
-        {% endif %}
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+            <li><a class="btn btn-primary" class="nav-link" href="{% url "home" %}">Home</a></li>
+            <li><a class="btn btn-success" class="nav-link" href="/projects/">Projects</a></li>
+            <li><a class="btn btn-warning" class="nav-link" href="/stakeholders/">Stakeholders</a></li>
+            <li><a class="btn btn-info" class="nav-link" href="/ppdds/">PPDD colleagues</a></li>
+            <li><a class="btn btn-danger" class="nav-link" href="/engagements/">Engagements</a></li>
+        </ul>
+    {% if request.user.is_authenticated %}
+        <form class="d-flex" method="POST" action="{% url 'search' %}">{% csrf_token %}
+            <input class="form-control me-2" type="search" placeholder="Search" name="searched">
+            <button class="btn btn-success">Search</button>
+        </form>
+    {% endif %}
     </div>
   </div>
 </nav>
