@@ -5,32 +5,6 @@ from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 
-
-# TYPE_CHOICES = (
-#     ('A', 'Assurance'),
-#     ('B', 'Benefits'),
-#     ('C', 'Carbon'),
-#     ('CC', 'Capability and Capacity'),
-#     ('CE', 'Cost Estimating and Benchmarking'),
-#     ('E', 'Engineering'),
-#     ('G', 'Goverance'),
-#     ('IT', 'Initial Triage'),
-#     ('LL', 'Lessons Learned'),
-#     ('OSR', 'Output Spec and Requirements'),
-#     ('PD', 'Planning and Dependencies'),
-#     ('PR', 'Portfolio Reporting'),
-#     ('RI', 'Risks and Issues')
-# )
-
-# WS_TYPE_CHOICES = (
-#     ('AR', 'Assurance'),
-#     ('BR', 'Business Case Review'),
-#     ('CE', 'Cultural Enquiry'),
-#     ('LL', 'Lessons Learned Workshop'),
-#     ('L24', '24 Lessons Workshop')
-# )
-
-
 User = settings.AUTH_USER_MODEL
 
 
@@ -49,15 +23,15 @@ class EngagementWorkStream(models.Model):
 
 
 class Engagement(models.Model):
-    # user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     date = models.DateField()
-    projects = models.ManyToManyField(Project, max_length=200)
+    projects = models.ManyToManyField(Project)
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
     engagement_types = models.ManyToManyField(EngagementType)
     engagement_workstreams = models.ManyToManyField(EngagementWorkStream)
     summary = models.TextField()
-    follow_up_date = models.DateField(blank=True, null=True)
+    # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
 
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})
