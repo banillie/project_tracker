@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 
@@ -39,7 +40,10 @@ def stakeholders_detail_view(request, slug):
     engage_qs = Engagement.objects.filter(stakeholders__slug=slug)
     project_qs = []
     for x in engage_qs.all().values('projects').distinct():
-        project_qs.append(Project.objects.get(pk=x['projects']))
+        try:
+            project_qs.append(Project.objects.get(pk=x['projects']))
+        except ObjectDoesNotExist:
+            pass
     context = {
         "object": obj,
         "engagement_list": engage_qs,

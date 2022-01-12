@@ -1,3 +1,4 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
@@ -38,7 +39,10 @@ def project_detail_view(request, slug):
     engage_qs = Engagement.objects.filter(projects__slug=slug)
     stake_qs = []
     for x in engage_qs.all().values('stakeholders').distinct():
-        stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+        try:
+            stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+        except ObjectDoesNotExist:
+            pass
     context = {
         "object": obj,
         "engagement_list": engage_qs,

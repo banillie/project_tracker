@@ -26,11 +26,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG')) == "1"  # 1 == True
+DEBUG = str(os.environ.get('DEBUG'))  # 1 == True
 
 ALLOWED_HOSTS = ['project-tracker-tz2gu.ondigitalocean.app']
-# ALLOWED_HOSTS = ['.ondigitalocean.app']
-# ALLOWED_HOSTS = []
+ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+
+# not sure what this does
 if not DEBUG:
     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
 

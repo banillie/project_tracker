@@ -13,7 +13,7 @@ envs:
   value: "1"
 - key: DEBUG
   scope: RUN_AND_BUILD_TIME
-  value: "1"
+  value: "0"
 - key: DJANGO_ALLOWED_HOST
   scope: RUN_AND_BUILD_TIME
   value: .ondigitalocean.app
