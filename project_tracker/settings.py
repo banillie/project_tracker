@@ -28,7 +28,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = str(os.environ.get('DEBUG')) == "1"  # 1 == True
 
-ALLOWED_HOSTS = ['https://project-tracker-tz2gu.ondigitalocean.app']
+# ALLOWED_HOSTS = ['https://project-tracker-tz2gu.ondigitalocean.app']
 # ALLOWED_HOSTS = ['.ondigitalocean.app']
 ALLOWED_HOSTS = []
 if not DEBUG:
