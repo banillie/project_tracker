@@ -2,30 +2,37 @@
 
 {% block content %}
 {% if searched %}
-    <h3>Projects</h3>
-    <ol>{% for object in project_model_search %}
-{#        {% if object.name %}#}
-{#            <li>#}
-            <a href="{{ object.get_absolute_url }}">{{ object.name }}</a>
-{#            </li>#}
-{#        {% endif %}#}
-    {% endfor %}</ol>
-    <h3>Stakeholders</h3>
-    <ol>{% for object in stakeholder_model_search %}
-{#        {% if object.name %}#}
-            <li>
-            <a href="{{ object.get_absolute_url }}">{{ object.first_name }} {{ object.last_name }}</a>
-            </li>
-{#        {% endif %}#}
-    {% endfor %} </ol>
-    <h3>PPDD colleagues</h3>
-    <ol>{% for object in ppdd_model_search %}
-{#        {% if object.name %}#}
-            <li>
-            <a href="{{ object.get_absolute_url }}">{{ object.first_name }} {{ object.last_name }}</a>
-            </li>
-{#        {% endif %}#}
-    {% endfor %} </ol>
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <h3>Projects</h3>
+            <ul>
+            {% for object in project_model_search %}
+                <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
+            {% endfor %}
+            </ul>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <h3>Stakeholders</h3>
+            <ul>
+            {% for object in stakeholder_model_search %}
+                <li>
+                <a href="{{ object.get_absolute_url }}">{{ object.first_name }} {{ object.last_name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+    </div>
+
+    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+        <h3>PPDD colleagues</h3>
+            <ul>
+            {% for object in ppdd_model_search %}
+                <li>
+                    <a href="{{ object.get_absolute_url }}">{{ object.first_name }} {{ object.last_name }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+    </div>
+
 {% else %}
     <h1>Hey you forgot to search for something...</h1>
 {% endif %}
