@@ -25,6 +25,7 @@ body {
   text-transform: capitalize;
   margin-top: 0.2em;
   /*browers automatically adds margin to h1s*/
+  margin-bottom: 0.5em;
 }
 .left-col .primary-cta {
   background: var(--primary-color);
@@ -60,7 +61,7 @@ body {
     text-align: left;
   }
   .hero .container .left-col {
-    margin: 3em 3em 0 3em;
+    margin: 3em 3em 0em 3em;
   }
   .hero .container .left-col h1 {
     font-size: 3em;
@@ -78,54 +79,6 @@ body {
 
   .primary-cta {
     margin-right: 1em;
-  }
-
-  ul.features-list {
-    display: block;
-    margin-left: 5em;
-  }
-  ul.features-list li {
-    font-size: 1.4em;
-  }
-  ul.features-list li:before {
-    width: 30px;
-    height: 30px;
-  }
-
-  .features-section {
-    position: relative;
-  }
-
-  .features-section img {
-    display: block;
-    position: absolute;
-    right: 0;
-    width: 350px;
-    bottom: -2em;
-  }
-
-  .testimonials-section ul {
-    display: flex;
-  }
-  .testimonials-section ul li {
-    margin: 0 1em;
-  }
-
-  .contact-section {
-    position: relative;
-  }
-  .contact-section .container {
-    display: flex;
-  }
-  .contact-section .contact-right {
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 45%;
-    height: 100%;
-  }
-  .contact-section .contact-right iframe {
-    height: 100%;
   }
 }
 
