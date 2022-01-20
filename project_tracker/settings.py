@@ -171,6 +171,6 @@ STATICFILES_DIRS = (
 # this requires python manage.py collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static files need to create the staticfiles-cdn
 
-# from .cdn.conf import * # noqa
+from .cdn.conf import * # noqa
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
