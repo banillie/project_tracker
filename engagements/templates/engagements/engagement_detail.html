@@ -2,61 +2,51 @@
 
 {% block content %}
 
-    <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <h4>Engagement Details</h4>
+                    <p><b>Date:</b> {{ object.date }}</p>
+                    <p><b>Projects:</b>
+                    {% for instance in project_list %}
+                        <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>
+                    {% endfor %}</p>
 
-        <h4>Engagement Details</h4>
+                    <p><b>Stakeholders:</b>
+                    {% for instance in stakeholder_list %}
+                        <a href='{{ instance.get_absolute_url }}'>
+                            {{ instance.first_name }} {{ instance.last_name }},
+                            {{ instance.organisation }}</a>
+                    {% endfor %}</p>
+            </div>
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                <p><b>PPDD colleagues:</b>
+                    {% for instance in ppdd_list %}
+                        <a href='{{ instance.get_absolute_url }}'>
+                        {{ instance.first_name }} {{ instance.last_name }}</a>
+                    {% endfor %}
 
-        <p><b>Date:</b> {{ object.date }}</p>
-        <p><b>Projects:</b>
-        {% for instance in project_list %}
-            <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>
-        {% endfor %}</p>
+                <p><b>Engagement Types:</b>
+                {% for instance in type_list %}
+                    <a>{{ instance }}</a>
+                {% endfor %}</p>
 
-        <p><b>Stakeholders:</b>
-        {% for instance in stakeholder_list %}
-            <a href='{{ instance.get_absolute_url }}'>
-                {{ instance.first_name }} {{ instance.last_name }},
-                {{ instance.organisation }}</a>
-        {% endfor %}</p>
+                <p><b>Workstream Types: </b>
+                {% for instance in ws_list %}
+                    <a>{{ instance }}</a>
+                {% endfor %}</p>
 
+                <p><b>Follow-up Date:</b><a> {{ object.follow_up_date }}</a></p>
+            </div>
+            <div class="col-12">
+                <h4>Summary:</h4><p> {{ object.summary }}</p>
+            </div>
+            <p>
+                <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
+                <a class="btn btn-primary" href="{{ object.get_absolute_url }}delete">Delete</a>
+        {#        <a class="btn btn-primary" href="../">Engagements Page</a>#}
+            </p>
         </div>
-
-        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-
-        <p><b>PPDD colleagues:</b>
-        {% for instance in ppdd_list %}
-            <a href='{{ instance.get_absolute_url }}'>
-                {{ instance.first_name }} {{ instance.last_name }}</a>
-        {% endfor %}
-
-        <p><b>Engagement Types:</b>
-        {% for instance in type_list %}
-            <a>{{ instance }}</a>
-        {% endfor %}</p>
-
-        <p><b>Workstream Types: </b>
-        {% for instance in ws_list %}
-            <a>{{ instance }}</a>
-        {% endfor %}</p>
-
-        <p><b>Follow-up Date:</b><a> {{ object.follow_up_date }}</a></p>
-
-        </div>
-
-        <div class="col-12">
-
-        <h4>Summary:</h4>
-            <p> {{ object.summary }}</p>
-
-        </div>
-
-    <p>
-        <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
-        <a class="btn btn-primary" href="{{ object.get_absolute_url }}delete">Delete</a>
-{#        <a class="btn btn-primary" href="../">Engagements Page</a>#}
-    </p>
-
-
-
+    </div>
 
 {% endblock %}

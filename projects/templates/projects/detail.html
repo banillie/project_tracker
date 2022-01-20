@@ -1,63 +1,50 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{#    <div hx-get='{{ hx_url }}' hx-trigger="revealed">#}
-{#        <div class="htmx-indicator">Loading...</div>#}
-{#    </div>#}
 
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-    <h4>Project Details</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <h4>Project Details</h4>
+                <p><font size="+1"><b>Project Name: </b>{{ object.name }}</font></p>
+                <p><font size="+1"><b>Type: </b>{{ object.type }}</font></p>
+                <p><font size="+1"><b>Abbreviation: </b>{{ object.abbreviation }}</font></p>
+                <p><font size="+1"><b>Governance: </b>{{ object.governance }}</font></p>
+                <p><font size="+1"><b>Stage: </b>{{ object.stage }}</font></p>
+                <p><font size="+1"><b>Scope: </b>{{ object.scope }}</font></p>
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <h4>Engagements</h4>
+                {% if engagement_list %}
+                {% for object in engagement_list %}
+                {% if object.date %}
+                    <p><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></p>
+                {% endif %}
+                {% endfor %}
+                {% else %}
+                    <p>None so far...</p>
+                {% endif %}
+            </div>
+            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                <h4>Associated Stakeholders</h4>
+                    {% if stakeholder_list %}
+                    {% for object in stakeholder_list %}
+                    <p><a href="{{ object.get_absolute_url }}">
+                    {{ object.first_name }} {{ object.last_name }}, {{ object.organisation }}</a></p>
+                    {% endfor %}
+                    {% else %}
+                    <p>None so far...</p>
+                    {% endif %}
+            </div>
 
-    <p><font size="+1"><b>Project Name: </b>{{ object.name }}</font></p>
-    <p><font size="+1"><b>Type: </b>{{ object.type }}</font></p>
-    <p><font size="+1"><b>Abbreviation: </b>{{ object.abbreviation }}</font></p>
-    <p><font size="+1"><b>Governance: </b>{{ object.governance }}</font></p>
-    <p><font size="+1"><b>Stage: </b>{{ object.stage }}</font></p>
-    <p><font size="+1"><b>Scope: </b>{{ object.scope }}</font></p>
-
-    </div>
-
-
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-    <h4>Engagements</h4>
-    {% if engagement_list %}
-    {#    <ol>#}
-            {% for object in engagement_list %}
-            {% if object.date %}
             <p>
-            <a href="{{ object.get_absolute_url }}">{{ object.date }}</a>
+                <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>
+                    Update{% endif %}</a>
+        {#        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>#}
+        {#        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>#}
             </p>
-            {% endif %}
-        {% endfor %}
-    {#    </ol>#}
-    {% else %}
-        <p>None so far...</p>
-    {% endif %}
+        </div>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-
-    <h4>Associated Stakeholders</h4>
-    {% if stakeholder_list %}
-        {% for object in stakeholder_list %}
-        <p>
-        <a href="{{ object.get_absolute_url }}">
-            {{ object.first_name }} {{ object.last_name }}, {{ object.organisation }}
-                </a>
-        </p>
-        {% endfor %}
-    {% else %}
-        <p>None so far...</p>
-    {% endif %}
-
-    </div>
-
-    <p>
-        <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>
-            Update{% endif %}</a>
-{#        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>#}
-{#        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>#}
-    </p>
 
 {% endblock %}
 

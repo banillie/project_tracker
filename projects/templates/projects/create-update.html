@@ -4,40 +4,42 @@
 
 {% block content %}
 
-    <h4>{% if form.instance.pk %}Edit Details{% else %}Create Project Entry{% endif%}</h4>
+    <div class="container-fluid">
+        <div class="row">
+            <h4>{% if form.instance.pk %}Edit Details{% else %}Create Project Entry{% endif%}</h4>
 
-    <div class="form-group">
-        <form method="POST" novalidate> {% csrf_token %}
-            <div class="row mt-2">
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                {{ form.name|as_crispy_field }}
-                </div>
-                <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                {{ form.abbreviation|as_crispy_field }}
-                </div>
+            <div class="form-group">
+                <form method="POST" novalidate> {% csrf_token %}
+                    <div class="row mt-2">
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            {{ form.name|as_crispy_field }}
+                        </div>
+                        <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
+                            {{ form.abbreviation|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            {{ form.type|as_crispy_field }}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            {{ form.governance|as_crispy_field }}
+                        </div>
+                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
+                            {{ form.stage|as_crispy_field }}
+                        </div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-12">
+                            {{ form.scope|as_crispy_field }}
+                        </div>
+                    </div>
+
+                    <br><input class="btn btn-primary"  type="submit" value="Save"/>
+                </form>
             </div>
-            <div class="row mt-2">
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    {{ form.type|as_crispy_field }}
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    {{ form.governance|as_crispy_field }}
-                </div>
-                <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                    {{ form.stage|as_crispy_field }}
-                </div>
-            </div>
-            <div class="row mt-2">
-                <div class="col-12">
-                    {{ form.scope|as_crispy_field }}
-                </div>
-            </div>
-
-
-
-            <br>
-            <input class="btn btn-primary"  type="submit" value="Save"/>
-        </form>
+        </div>
+    </div>
 
 {#    <div style="margin-top: 30px;">#}
 {#        {% include 'projects/partials/forms.html' %}#}
