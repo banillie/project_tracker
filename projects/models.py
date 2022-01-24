@@ -36,6 +36,13 @@ class ProjectManager(models.Manager):
         return self.get_queryset().search(query=query)
 
 
+class Tier(models.Model):
+    type = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.type
+
+
 class Project(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(
@@ -45,6 +52,7 @@ class Project(models.Model):
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)
     governance = models.CharField(max_length=20, blank=True, null=True)
+    tier = models.ForeignKey(Tier, blank=True, null=True, on_delete=models.SET_NULL)
     stage = models.CharField(max_length=20, blank=True, null=True)
     scope = models.TextField(max_length=200, blank=True, null=True)
     live = models.BooleanField(default=True, null=False)  # active?
