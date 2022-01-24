@@ -116,3 +116,4 @@ venv.bak/
 data/project_tracker_data.xlsx
 data/clean_dict.py
 data/pt_data_24_01_22.json
+data/upload.py
