@@ -13,7 +13,7 @@ class ProjectForm(forms.ModelForm):
             "name",
             "type",
             "abbreviation",
-            "governance",
+            "tier",
             "stage",
             "scope",
         ]
@@ -22,7 +22,7 @@ class ProjectForm(forms.ModelForm):
             "name": forms.TextInput(attrs={'class': 'form-control'}),
             "type": forms.Select(attrs={'class': 'form-control'}),
             "abbreviation": forms.TextInput(attrs={'class': 'form-control'}),
-            "governance": forms.TextInput(attrs={'class': 'form-control'}),
+            "tier": forms.Select(attrs={'class': 'form-control'}),
             "stage": forms.TextInput(attrs={'class': 'form-control'}),
             "scope": forms.Textarea(attrs={'class': 'form-control'}),
         }
