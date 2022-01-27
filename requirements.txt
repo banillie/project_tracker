@@ -2,6 +2,7 @@ django>=3.2,<3.3
 gunicorn
 psycopg2-binary
 django-dotenv
+django-environ
 django-htmx
 django-multiselectfield
 django-easy-select2
@@ -9,3 +10,4 @@ openpyxl
 django-storages
 boto3
 django-crispy-forms
+google-cloud-secret-manager==2.8.0

@@ -10,14 +10,51 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
-import os
 import django
+
+import io
+import os
+
+import environ
+from google.cloud import secretmanager
 
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# [START gaestd_py_django_secret_config]
+env = environ.Env(DEBUG=(bool, False))
+env_file = os.path.join(BASE_DIR, ".env")
+
+if os.path.isfile(env_file):
+    # Use a local secret file, if provided
+
+    env.read_env(env_file)
+# [START_EXCLUDE]
+elif os.getenv("TRAMPOLINE_CI", None):
+    # Create local settings if running with CI, for unit testing
+
+    placeholder = (
+        f"SECRET_KEY=a\n"
+        f"DATABASE_URL=sqlite://{os.path.join(BASE_DIR, 'db.sqlite3')}"
+    )
+    env.read_env(io.StringIO(placeholder))
+# [END_EXCLUDE]
+elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
+    # Pull secrets from Secret Manager
+    project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
+
+    client = secretmanager.SecretManagerServiceClient()
+    settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
+    name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
+    payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
+
+    env.read_env(io.StringIO(payload))
+else:
+    raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
+# [END gaestd_py_django_secret_config]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
@@ -26,7 +63,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG'))  # 1 == True
+DEBUG = str(os.environ.get('DEBUG')) == '1'  # 1 == True
 
 ALLOWED_HOSTS = ['project-tracker-tz2gu.ondigitalocean.app']
 ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
@@ -171,6 +208,6 @@ STATICFILES_DIRS = (
 # this requires python manage.py collectstatic
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static files need to create the staticfiles-cdn
 
-from .cdn.conf import * # noqa
+# from .cdn.conf import * # noqa
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
