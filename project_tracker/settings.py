@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 """
 
 import django
-
 import io
 import os
 
@@ -30,47 +29,33 @@ env_file = os.path.join(BASE_DIR, ".env")
 
 if os.path.isfile(env_file):
     # Use a local secret file, if provided
-
     env.read_env(env_file)
-# [START_EXCLUDE]
-elif os.getenv("TRAMPOLINE_CI", None):
-    # Create local settings if running with CI, for unit testing
-
-    placeholder = (
-        f"SECRET_KEY=a\n"
-        f"DATABASE_URL=sqlite://{os.path.join(BASE_DIR, 'db.sqlite3')}"
-    )
-    env.read_env(io.StringIO(placeholder))
-# [END_EXCLUDE]
 elif os.environ.get("GOOGLE_CLOUD_PROJECT", None):
     # Pull secrets from Secret Manager
     project_id = os.environ.get("GOOGLE_CLOUD_PROJECT")
-
     client = secretmanager.SecretManagerServiceClient()
     settings_name = os.environ.get("SETTINGS_NAME", "django_settings")
     name = f"projects/{project_id}/secrets/{settings_name}/versions/latest"
     payload = client.access_secret_version(name=name).payload.data.decode("UTF-8")
-
     env.read_env(io.StringIO(payload))
 else:
     raise Exception("No local .env or GOOGLE_CLOUD_PROJECT detected. No secrets found.")
-# [END gaestd_py_django_secret_config]
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY')
+SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(os.environ.get('DEBUG')) == '1'  # 1 == True
+DEBUG = str(env('DEBUG')) == '1'  # 1 == True
 
-ALLOWED_HOSTS = ['project-tracker-tz2gu.ondigitalocean.app']
-ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
+# ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
 
 # not sure what this does
-if not DEBUG:
-    ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+# if not DEBUG:
+ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
 
 ROOT_DIR = os.path.dirname(os.path.abspath('.'))
 
@@ -134,38 +119,30 @@ WSGI_APPLICATION = 'project_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-    }
-}
-
-POSTGRES_DB = os.environ.get("POSTGRES_DB")  # database name
-POSTGRES_PASSWORD = os.environ.get("POSTGRES_PASSWORD")  # database user password
-POSTGRES_USER = os.environ.get("POSTGRES_USER")  # database username
-POSTGRES_HOST = os.environ.get("POSTGRES_HOST")  # database host
-POSTGRES_PORT = os.environ.get("POSTGRES_PORT")  # database port
-
-POSTGRES_READY = (
-        POSTGRES_DB is not None
-        and POSTGRES_PASSWORD is not None
-        and POSTGRES_USER is not None
-        and POSTGRES_HOST is not None
-        and POSTGRES_PORT is not None
-)
-
-if POSTGRES_READY:
+if os.getenv('GAE_APPLICATION', None):
+    # Running on production App Engine, so connect to Google Cloud SQL using
+    # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
-        "default": {
-            "ENGINE": "django.db.backends.postgresql",
-            "NAME": POSTGRES_DB,
-            "USER": POSTGRES_USER,
-            "PASSWORD": POSTGRES_PASSWORD,
-            "HOST": POSTGRES_HOST,
-            "PORT": POSTGRES_PORT,
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': '/cloudsql/dft-paps-sb-wgrant:europe-west2:project-tracker',
+            'USER': 'project-tracker',
+            'PASSWORD': env('GCP_DB_PASSWORD'),
+            'NAME': 'project-tracker',
         }
     }
+else:
+    # Running locally so connect to either a local MySQL instance or connect
+    # to Cloud SQL via the proxy.  To start the proxy via command line:
+    #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': 'db.sqlite3',
+        }
+    }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -202,11 +179,14 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.0/howto/static-files/
 STATIC_URL = '/static/'
 
-STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'static'),
-)
+STATIC_ROOT = 'static'
+
+# STATICFILES_DIRS = (
+#     os.path.join(BASE_DIR, 'static'),
+# )
+
 # this requires python manage.py collectstatic
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static files need to create the staticfiles-cdn
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static files need to create the staticfiles-cdn
 
 # from .cdn.conf import * # noqa
 
