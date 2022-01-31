@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% load crispy_forms_tags %}
+
+{% block content %}
+
+    {{ form.date|as_crispy_field}}
+
+        <script>
+          $(function () {
+            $("#id_date").datepicker({
+              format:'dd/mm/yyyy',
+            });
+          });
+        </script>
+
+{#    {{ form.projects|as_crispy_field }}#}
+
+
+
+
+{% endblock %}

@@ -15,20 +15,27 @@
                 <form method="post" novalidate>{% csrf_token %}
                     <div class="row mt-1">
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
-                            {{ form.date|as_crispy_field }}
+{#                            {{ form.date|as_crispy_field}}
+                                <script>
+                                  $(function () {
+                                    $("#id_date").datepicker({
+                                      format:'dd/mm/yyyy',
+                                    });
+                                  });
+                                </script>
                             {{ form.projects|as_crispy_field }}
-                            {{ form.stakeholders|as_crispy_field }}
+{#                            {{ form.stakeholders|as_crispy_field }}#}
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
         {#                    {{ form.follow_up_date|as_crispy_field }}#}
-                            {{ form.ppdds|as_crispy_field }}
-                            {{ form.engagement_types|as_crispy_field }}
-                            {{ form.engagement_workstreams|as_crispy_field }}
+{#                            {{ form.ppdds|as_crispy_field }}#}
+{#                            {{ form.engagement_types|as_crispy_field }}#}
+{#                            {{ form.engagement_workstreams|as_crispy_field }}#}
                         </div>
                     </div>
                     <div class="row mt-1">
                         <div class="col-lg">
-                            {{ form.summary|as_crispy_field }}
+{#                            {{ form.summary|as_crispy_field }}#}
                         </div>
                     </div>
                     <br><input class="btn btn-primary" type="submit" value="{% if form.instance.pk %}Save{% else %}Create{% endif %}">
