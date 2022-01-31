@@ -48,14 +48,15 @@ else:
 SECRET_KEY = env('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = str(env('DEBUG')) == '1'  # 1 == True
+# DEBUG = True
+# DEBUG = str(env('DEBUG')) == '1'  # 1 == True
+DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
-# ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+ALLOWED_HOSTS = []
 
-# not sure what this does
-# if not DEBUG:
-ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+if not DEBUG:
+    ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+    ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
 
 ROOT_DIR = os.path.dirname(os.path.abspath('.'))
 
@@ -80,6 +81,7 @@ INSTALLED_APPS = [
     'stakeholders',
     'ppdds',
     'engagements',
+    'pages',
 ]
 
 CRISPY_TEMPLATE_PACK = 'bootstrap4'

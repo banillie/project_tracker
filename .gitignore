@@ -113,8 +113,9 @@ venv.bak/
 .mypy_cache/
 
 #other
-data/project_tracker_data.xlsx
-data/clean_dict.py
-data/pt_data_24_01_22.json
-data/pt_data_25_01_22.json
-data/upload.py
+data/
+#data/project_tracker_data.xlsx
+#data/clean_dict.py
+#data/pt_data_24_01_22.json
+#data/pt_data_25_01_22.json
+#data/upload.py
