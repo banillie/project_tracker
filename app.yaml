@@ -19,14 +19,14 @@
 runtime: python39
 
 handlers:
-# This configures Google App Engine to serve the files in the app's static
+# This configures Google App Engine to serve the files in the app's static_old
 # directory.
-- url: /static
-  static_dir: static/
+- url: /static_old
+  static_dir: static_old/
 
 # This handler routes all requests not caught above to your main app. It is
-# required when static routes are defined, but can be omitted (along with
-# the entire handlers section) when there are no static files defined.
+# required when static_old routes are defined, but can be omitted (along with
+# the entire handlers section) when there are no static_old files defined.
 - url: /.*
   script: auto
 # [END gaestd_py_django_app_yaml]

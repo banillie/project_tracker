@@ -76,7 +76,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     # own
     'projects',
-    'pages',
+    'project_tracker',
     'stakeholders',
     'ppdds',
     'engagements',
@@ -182,11 +182,11 @@ STATIC_URL = '/static/'
 STATIC_ROOT = 'static'
 
 # STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static'),
+#     os.path.join(BASE_DIR, 'static_old'),
 # )
 
 # this requires python manage.py collectstatic
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static files need to create the staticfiles-cdn
+# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static_old files need to create the staticfiles-cdn
 
 # from .cdn.conf import * # noqa
 
