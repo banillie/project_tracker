@@ -11,6 +11,13 @@
                 <p><font size="+1"><b>Group: </b>{{ object.group }}</font></p>
                 <p><font size="+1"><b>Team: </b>{{ object.team }}</font></p>
                 <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
+
+                <p>
+                <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
+                {#        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>#}
+                {#        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>#}
+                </p>
+
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                 <h4>Engagements</h4>
@@ -31,11 +38,6 @@
                 {% else %}
                     <p>None so far...</p>
                 {% endif %}
-            </div>
-            <div>
-                <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
-                {#        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>#}
-                {#        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>#}
             </div>
         </div>
     </div>
