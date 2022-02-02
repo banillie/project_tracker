@@ -5,32 +5,35 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from easy_select2 import select2_modelform
 from .models import Engagement
-from .forms import EngagementForm, DateForm
-
-
-def date_view(request):
-    form = EngagementForm(request.POST or None)
-    context = {
-        'form': form,
-    }
-    return render(request, "engagements/date_icon.html", context)
-
-
-# # @login_required
-# class EngagementCreateView(CreateView):
-#     model = Engagement
-#     form_class = EngagementForm
-#     # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
-#     # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
-#     # success_url = reverse_lazy('engagement-form')
-#     template_name = "engagements/engagement_create.html"
-
-    # def form_valid(self, form):
-    #     print(form.cleaned_data)
-    #     return super().form_valid(form)
 
 
 # @login_required
+# def engagement_create_view(request):
+#     form = EngagementForm(request.POST or None)
+#     context = {
+#         'form': form,
+#     }
+#     if form.is_valid():
+#         obj = form.save(commit=False)
+#         obj.user = request.user
+#         obj.save()
+#         return redirect(obj.get_absolute_url())
+#     return render(request, "engagements/engagement_create.html", context)
+
+
+class EngagementCreateView(CreateView):
+    model = Engagement
+    # form_class = EngagementForm
+    form_class = select2_modelform(Engagement, attrs={'width': '100%'})
+    # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
+    # success_url = reverse_lazy('engagement-form')
+    template_name = "engagements/engagement_create.html"
+
+    def form_valid(self, form):
+        print(form.cleaned_data)
+        return super().form_valid(form)
+
+
 class EngagementUpdateView(UpdateView):
     model = Engagement
     form_class = select2_modelform(Engagement, attrs={'width': '100%'})

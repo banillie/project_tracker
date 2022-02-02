@@ -7,14 +7,19 @@
     {{ form.date|as_crispy_field}}
 
         <script>
-          $(function () {
+          $.noConflict();  //Not to conflict with other scripts
+            jQuery(document).ready(function($){
             $("#id_date").datepicker({
               format:'dd/mm/yyyy',
+                {#autoHide: true,#}
+                {#zIndex: 9999,#}
             });
           });
         </script>
 
-{#    {{ form.projects|as_crispy_field }}#}
+    {{ form.summary|as_crispy_field }}
+
+    {{ form.projects|as_crispy_field }}
 
 
 
