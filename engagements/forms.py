@@ -10,7 +10,7 @@ from easy_select2 import select2_modelform_meta, Select2Multiple
 
 
 class EngagementForm(forms.ModelForm):
-    date = forms.DateTimeField(input_formats=['%d/%m/%Y'])
+    date = forms.DateField(input_formats=['%d/%m/%Y'])
     projects = forms.ModelMultipleChoiceField(
         queryset=Project.objects.all(),
         widget=Select2Multiple(select2attrs={'width': '100%'})

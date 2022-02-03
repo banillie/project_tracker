@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 from easy_select2 import select2_modelform
 from .models import Engagement
+from .forms import EngagementForm
 
 
 # @login_required
@@ -23,8 +24,8 @@ from .models import Engagement
 
 class EngagementCreateView(CreateView):
     model = Engagement
-    # form_class = EngagementForm
-    form_class = select2_modelform(Engagement, attrs={'width': '100%'})
+    form_class = EngagementForm
+    # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
     # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
     # success_url = reverse_lazy('engagement-form')
     template_name = "engagements/engagement_create.html"
@@ -36,7 +37,8 @@ class EngagementCreateView(CreateView):
 
 class EngagementUpdateView(UpdateView):
     model = Engagement
-    form_class = select2_modelform(Engagement, attrs={'width': '100%'})
+    form_class = EngagementForm
+    # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
     # success_url = reverse_lazy('engagement-form')
     template_name = "engagements/engagement_create.html"
 
