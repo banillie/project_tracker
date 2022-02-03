@@ -6,7 +6,7 @@ from django.contrib.auth import get_user_model
 from django.test import TestCase
 
 from project_tracker.settings import ROOT_DIR
-from .models import Engagement, EngagementType, EngagementWorkStream
+from .models import Engagement, EngagementType, EngagementWorkStream, EngagementTopic
 from projects.models import Project
 from stakeholders.models import Stakeholder, StakeholderOrg
 from ppdds.models import PPDD
@@ -26,6 +26,39 @@ class UserTestCase(TestCase):
 
 
 class EngagementTestCase(TestCase):
+    # def SetUp(self):
+    #     wt_list = [
+    #         'Lessons Learned',
+    #         'Assurance',
+    #         'Carbon',
+    #         'Benefits',
+    #         'Governance',
+    #         'Risks and Issues',
+    #         'Cost Estimating and Benchmarking',
+    #         'Engineering',
+    #         'Output Sec and Requirements',
+    #         'Planning and Dependencies',
+    #         'Portfolio',
+    #         'Specialist Advice',
+    #         'PDIP2']
+    #
+        # ws_list = [
+        #     '24 Lessons Workshop',
+        #     'Cultural Enquiry',
+        #     'Red Team',
+        #     'Management Case Review',
+        #     'Benchmarking',
+        #     'Assurance Review',
+        #     'Resourcing & Recruitment',
+        #     'Goverance',
+        #     'SRO Letters']
+    #
+    #     for x in wt_list:
+    #         EngagementType.objects.create(type=x)
+    #
+    #     for x in ws_list:
+    #         EngagementWorkStream.objects.create(type=x)
+
     def setUp(self):
         # Stakeholders
         org_list = ['Org 1', 'Org 2']
@@ -116,11 +149,38 @@ class EngagementTestCase(TestCase):
             )
 
         # Engagement data
-        type_list = ['Type 1', 'Type 100', 'Type 500']
+        type_list = [
+            'Lessons Learned',
+            'Assurance',
+            'Carbon',
+            'Benefits',
+            'Governance',
+            'Risks and Issues',
+            'Cost Estimating and Benchmarking',
+            'Engineering',
+            'Output Sec and Requirements',
+            'Planning and Dependencies',
+            'Portfolio',
+            'Specialist Advice',
+            'PDIP2',
+            '24 Lessons Workshop',
+        ]
+
         for x in type_list:
             EngagementType.objects.create(type=x)
 
-        ws_list = ['WS one', 'WS two', 'WS three']
+        ws_list = [
+            '24 Lessons Workshop',
+            'Cultural Enquiry',
+            'Red Team',
+            'Management Case Review',
+            'Benchmarking',
+            'Assurance Review',
+            'Resourcing & Recruitment',
+            'Goverance',
+            'SRO Letters'
+        ]
+
         for x in ws_list:
             EngagementWorkStream.objects.create(work_stream=x)
 
@@ -132,7 +192,7 @@ class EngagementTestCase(TestCase):
         a1.projects.add(Project.objects.get(id=1), Project.objects.get(id=2))
         a1.stakeholders.add(Stakeholder.objects.get(id=1), Stakeholder.objects.get(id=2))
         a1.ppdds.add(PPDD.objects.get(id=1), PPDD.objects.get(id=2))
-        a1.engagement_types.add(EngagementType.objects.get(id=1))
+        a1.engagement_types.add(EngagementType.objects.get(id=1), EngagementType.objects.get(id=5))
         a1.engagement_workstreams.add(EngagementWorkStream.objects.get(id=2))
 
         a2 = Engagement(
@@ -143,8 +203,32 @@ class EngagementTestCase(TestCase):
         a2.projects.add(Project.objects.get(id=1), Project.objects.get(id=2))
         a2.stakeholders.add(Stakeholder.objects.get(id=1), Stakeholder.objects.get(id=2))
         a2.ppdds.add(PPDD.objects.get(id=1), PPDD.objects.get(id=2))
-        a2.engagement_types.add(EngagementType.objects.get(id=1))
-        a2.engagement_workstreams.add(EngagementWorkStream.objects.get(id=2))
+        a2.engagement_types.add(
+            EngagementType.objects.get(type='Lessons Learned'),
+            EngagementType.objects.get(type='Governance'),
+            EngagementType.objects.get(type='24 Lessons Workshop'),  # test putting same object in
+        )
+        a2.engagement_workstreams.add(
+            EngagementWorkStream.objects.get(work_stream='24 Lessons Workshop'),
+            EngagementWorkStream.objects.get(work_stream='Assurance Review'),
+        )
+
+    def test_merge_worktype_with_workstream(self) -> None:
+        for engagement in Engagement.objects.all():
+            if engagement.engagement_types is not None:
+                for type in engagement.engagement_types.all():
+                    topic, created = EngagementTopic.objects.get_or_create(topic=type.type)
+                    engagement.topics.add(EngagementTopic.objects.get(topic=topic))
+            if engagement.engagement_workstreams is not None:
+                for ws in engagement.engagement_workstreams.all():
+                    topic, created = EngagementTopic.objects.get_or_create(topic=ws.work_stream)
+                    engagement.topics.add(EngagementTopic.objects.get(topic=topic))
+
+        a = Engagement.objects.get(pk=2)
+        self.assertEqual(
+            list(a.topics.values_list('topic', flat=True)),
+            ['Lessons Learned', 'Governance', '24 Lessons Workshop', 'Assurance Review']
+        )
 
     def test_stakeholder_data(self):
         a = Stakeholder.objects.get(pk=1)

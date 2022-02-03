@@ -22,6 +22,13 @@ class EngagementWorkStream(models.Model):
         return self.work_stream
 
 
+class EngagementTopic(models.Model):
+    topic = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.topic
+
+
 class Engagement(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     date = models.DateField()
@@ -30,6 +37,7 @@ class Engagement(models.Model):
     ppdds = models.ManyToManyField(PPDD)
     engagement_types = models.ManyToManyField(EngagementType)
     engagement_workstreams = models.ManyToManyField(EngagementWorkStream)
+    topics = models.ManyToManyField(EngagementTopic)
     summary = models.TextField()
     # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
 
