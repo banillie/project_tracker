@@ -1,16 +1,20 @@
 from django.contrib import admin
 from easy_select2 import select2_modelform
 
-from .models import Engagement, EngagementType, EngagementWorkStream
+from .models import Engagement, EngagementType, EngagementWorkStream, EngagementTopic
 
 
 class EngagementAdmin(admin.ModelAdmin):
     form = select2_modelform(Engagement)
 
+# class EngagementTopicAdmin(admin.ModelAdmin):
+#    """ Team Role admin view with modifications """
+#    model = EngagementTopic
+#    ordering = ['topic']
+
 
 admin.site.register(Engagement, EngagementAdmin)
-admin.site.register(EngagementType)
-admin.site.register(EngagementWorkStream)
+admin.site.register(EngagementTopic)
 
 
 """from .models import Engagement

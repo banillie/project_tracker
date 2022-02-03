@@ -2,7 +2,7 @@
 
 from django import forms
 
-from .models import Engagement, EngagementType, EngagementWorkStream
+from .models import Engagement, EngagementTopic
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
@@ -24,15 +24,15 @@ class EngagementForm(forms.ModelForm):
         widget=Select2Multiple(select2attrs={'width': '100%'}),
         label='PPDD colleagues'
     )
-    engagement_types = forms.ModelMultipleChoiceField(
-        queryset=EngagementType.objects.all(),
+    topics = forms.ModelMultipleChoiceField(
+        queryset=EngagementTopic.objects.all(),
         widget=Select2Multiple(select2attrs={'width': '100%'}),
-        label='Engagement Topic'
+        label='Engagement Topics'
     )
-    engagement_workstreams = forms.ModelMultipleChoiceField(
-        queryset=EngagementWorkStream.objects.all(),
-        widget=Select2Multiple(select2attrs={'width': '100%'}),
-    )
+    # engagement_workstreams = forms.ModelMultipleChoiceField(
+    #     queryset=EngagementWorkStream.objects.all(),
+    #     widget=Select2Multiple(select2attrs={'width': '100%'}),
+    # )
     summary = forms.CharField(
         widget=forms.Textarea,
         required=False,
@@ -45,8 +45,7 @@ class EngagementForm(forms.ModelForm):
             'projects',
             'stakeholders',
             'ppdds',
-            'engagement_types',
-            'engagement_workstreams',
+            'topics',
             'summary',
         ]
 

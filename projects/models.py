@@ -76,6 +76,9 @@ class Project(models.Model):
     def __str__(self):
         return self.name
 
+    class Meta:
+        ordering = ('name',)
+
 
 def project_pre_save(sender, instance, *args, **kwargs):
     # print('pre-save')

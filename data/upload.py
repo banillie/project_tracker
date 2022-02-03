@@ -1,7 +1,7 @@
 import os
 
 from project_tracker.settings import ROOT_DIR
-from engagements.models import Engagement, EngagementType, EngagementWorkStream
+from engagements.models import Engagement, EngagementType, EngagementWorkStream, EngagementTopic
 from projects.models import Project
 from stakeholders.models import Stakeholder, StakeholderOrg
 from ppdds.models import PPDD
@@ -157,4 +157,18 @@ def upload_data():
             eng.engagement_workstreams.add(*ws_object_list)
         else:
             pass
+
+
+def test_merge_worktype_with_workstream() -> None:
+    # code of merging fields 'engagement_workstream' and 'engagement_type' into the
+    # newly created 'topics' field in Engagement model.
+    for engagement in Engagement.objects.all():
+        if engagement.engagement_types is not None:
+            for type in engagement.engagement_types.all():
+                topic, created = EngagementTopic.objects.get_or_create(topic=type.type)
+                engagement.topics.add(EngagementTopic.objects.get(topic=topic))
+        if engagement.engagement_workstreams is not None:
+            for ws in engagement.engagement_workstreams.all():
+                topic, created = EngagementTopic.objects.get_or_create(topic=ws.work_stream)
+                engagement.topics.add(EngagementTopic.objects.get(topic=topic))
 

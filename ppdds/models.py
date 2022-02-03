@@ -50,6 +50,9 @@ class PPDD(models.Model):
     def __str__(self):
         return self.first_name + ' ' + self.last_name
 
+    class Meta:
+        ordering = ('first_name',)
+
 
 def ppdd_pre_save(sender, instance, *args, **kwargs):
     if instance.slug is None:

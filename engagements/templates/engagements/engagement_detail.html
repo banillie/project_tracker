@@ -26,15 +26,15 @@
                         {{ instance.first_name }} {{ instance.last_name }}</a>
                     {% endfor %}
 
-                <p><b>Engagement Types:</b>
-                {% for instance in type_list %}
+                <p><b>Engagement Topics:</b>
+                {% for instance in topic_list %}
                     <a>{{ instance }}</a>
                 {% endfor %}</p>
 
-                <p><b>Workstream Types: </b>
-                {% for instance in ws_list %}
-                    <a>{{ instance }}</a>
-                {% endfor %}</p>
+{#                <p><b>Workstream Types: </b>#}
+{#                {% for instance in ws_list %}#}
+{#                    <a>{{ instance }}</a>#}
+{#                {% endfor %}</p>#}
 
 {#                <p><b>Follow-up Date:</b><a> {{ object.follow_up_date }}</a></p>#}
             </div>

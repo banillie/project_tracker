@@ -80,15 +80,15 @@ def engagement_detail_view(request, id):
     project_queryset = obj.projects.get_queryset()
     stakeholder_queryset = obj.stakeholders.get_queryset()
     ppdd_queryset = obj.ppdds.get_queryset()
-    type_queryset = obj.engagement_types.get_queryset()
-    ws_queryset = obj.engagement_workstreams.get_queryset()
+    topic_queryset = obj.topics.get_queryset()
+    # type_queryset = obj.engagement_types.get_queryset()
+    # ws_queryset = obj.engagement_workstreams.get_queryset()
     context = {
         "object": obj,
         "project_list": project_queryset,
         "stakeholder_list": stakeholder_queryset,
         "ppdd_list": ppdd_queryset,
-        "type_list": type_queryset,
-        "ws_list": ws_queryset,
+        "topic_list": topic_queryset,
     }
     return render(request, "engagements/engagement_detail.html", context)
 

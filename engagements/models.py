@@ -28,6 +28,9 @@ class EngagementTopic(models.Model):
     def __str__(self):
         return self.topic
 
+    class Meta:
+        ordering = ('topic',)
+
 
 class Engagement(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
@@ -35,14 +38,17 @@ class Engagement(models.Model):
     projects = models.ManyToManyField(Project)
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
-    engagement_types = models.ManyToManyField(EngagementType)
-    engagement_workstreams = models.ManyToManyField(EngagementWorkStream)
+    # engagement_types = models.ManyToManyField(EngagementType, blank=True, null=True)
+    # engagement_workstreams = models.ManyToManyField(EngagementWorkStream, blank=True, null=True)
     topics = models.ManyToManyField(EngagementTopic)
     summary = models.TextField()
     # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
 
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})
+
+    # def __str__(self):
+    #     return self.date
 
     # def get_projects_children(self):
     #     return self.
