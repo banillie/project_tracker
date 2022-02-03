@@ -4,8 +4,33 @@ from django.urls import reverse
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
+from django.db.models import Q
 
 User = settings.AUTH_USER_MODEL
+
+
+# class EngagementQuerySet(models.QuerySet):
+#     def search(self, query=None):
+#         print(query)
+#         a = EngagementTopic.objects.filter(engagement__topics__topic=query)
+#         print(a)
+#         if query is None or query == "":
+#             return self.none()   # []
+        # lookups = (
+        #     Q(engagement__topics__topic__icontains=query)
+            # | Q(governance__icontains=query)
+            # | Q(abbreviation__icontains=query)
+            # | Q(stage__icontains=query)
+        # )
+        # return self.filter(lookups)
+
+
+# class EngagementManager(models.Manager):
+#     def get_queryset(self):
+#         return EngagementQuerySet(self.model, using=self._db)  # default db
+#
+#     def search(self, query=None):
+#         return self.get_queryset().search(query=query)
 
 
 class EngagementType(models.Model):
@@ -43,6 +68,8 @@ class Engagement(models.Model):
     topics = models.ManyToManyField(EngagementTopic)
     summary = models.TextField()
     # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
+
+    # objects = EngagementManager()
 
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})

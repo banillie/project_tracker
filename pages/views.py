@@ -5,6 +5,7 @@ from django.shortcuts import render
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
+from engagements.models import Engagement
 
 
 def home_view(request, *args, **kwargs):
@@ -21,11 +22,13 @@ def search_view(request):
         project_qs = Project.objects.search(query=query)
         stakeholder_qs = Stakeholder.objects.search(query=query)
         ppdd_qs = PPDD.objects.search(query=query)
+        # engagement_qs = Engagement.objects.search(query=query)
         context = {
             "searched": query,
             "project_model_search": project_qs,
             "stakeholder_model_search": stakeholder_qs,
-            "ppdd_model_search": ppdd_qs
+            "ppdd_model_search": ppdd_qs,
+            # "engagement_model_search": engagement_qs,
         }
         return render(request, "search.html", context)
     else:
