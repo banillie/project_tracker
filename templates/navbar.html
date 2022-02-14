@@ -16,6 +16,9 @@
             <input class="form-control me-2" type="search" placeholder="Search" name="searched">
             <button class="btn btn-success">Search</button>
         </form>
+        <li><a class="btn btn-primary" class="nav-link" href="/logout/">Log Out</a></li>
+    {% else %}
+        <a class="btn btn-primary" class="nav-link" href="/login/">Log In</a>
     {% endif %}
     </div>
   </div>
