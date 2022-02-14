@@ -6,6 +6,8 @@ from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from django.db.models import Q
 
+from simple_history.models import HistoricalRecords
+
 User = settings.AUTH_USER_MODEL
 
 
@@ -68,6 +70,7 @@ class Engagement(models.Model):
     topics = models.ManyToManyField(EngagementTopic)
     summary = models.TextField()
     # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
+    history = HistoricalRecords()
 
     # objects = EngagementManager()
 

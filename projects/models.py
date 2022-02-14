@@ -6,11 +6,14 @@ from django.db.models import Q
 
 from .utils import slugify_instance_title
 
+from simple_history.models import HistoricalRecords
+
 TYPE_CHOICES = [
     ("Project", "PROJECT"),
     ("Programme", "PROGRAMME"),
     ("Portfolio", "PORTFOLIO"),
 ]
+
 
 User = settings.AUTH_USER_MODEL
 
@@ -58,6 +61,7 @@ class Project(models.Model):
     live = models.BooleanField(default=True, null=False)  # active?
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    history = HistoricalRecords()
 
     objects = ProjectManager()
 

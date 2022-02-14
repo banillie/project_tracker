@@ -3,9 +3,13 @@ from easy_select2 import select2_modelform
 
 from .models import Engagement, EngagementType, EngagementWorkStream, EngagementTopic
 
+from simple_history.admin import SimpleHistoryAdmin
 
-class EngagementAdmin(admin.ModelAdmin):
+
+class EngagementAdmin(SimpleHistoryAdmin):
     form = select2_modelform(Engagement)
+    list_display = ['date']
+
 
 # class EngagementTopicAdmin(admin.ModelAdmin):
 #    """ Team Role admin view with modifications """

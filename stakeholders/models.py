@@ -4,6 +4,7 @@ from django.db.models import Q
 from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from ppdds.utils import slugify_instance_title
+from simple_history.models import HistoricalRecords
 
 User = settings.AUTH_USER_MODEL
 
@@ -48,6 +49,7 @@ class Stakeholder(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)
+    history = HistoricalRecords()
 
     objects = StakeholderManager()
 

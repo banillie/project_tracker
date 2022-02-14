@@ -75,6 +75,7 @@ INSTALLED_APPS = [
     'easy_select2',
     'storages',
     'crispy_forms',
+    'simple_history',
     # own
     'projects',
     'project_tracker',
@@ -95,6 +96,7 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'django_htmx.middleware.HtmxMiddleware',
+    'simple_history.middleware.HistoryRequestMiddleware',
 ]
 
 ROOT_URLCONF = 'project_tracker.urls'
@@ -144,7 +146,6 @@ else:
             'NAME': 'db.sqlite3',
         }
     }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
