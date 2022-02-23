@@ -16,6 +16,7 @@ django-easy-select2==1.5.7
 django-environ==0.8.1
 django-htmx==1.6.0
 django-multiselectfield==0.1.12
+django-simple-history==3.0.0
 django-storages==1.12.3
 et-xmlfile==1.1.0
 google-api-core==2.4.0
@@ -58,5 +59,3 @@ typing_extensions==4.0.1
 tzdata==2021.5
 tzlocal==4.1
 urllib3==1.26.7
-django-simple-history==3.0.0
-

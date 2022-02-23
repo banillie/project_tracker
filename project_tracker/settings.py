@@ -25,7 +25,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # [START gaestd_py_django_secret_config]
 env = environ.Env(DEBUG=(bool, False))
-env_file = os.path.join(BASE_DIR, ".env")
+env_file = os.path.join(BASE_DIR, ".env.gcp")
 
 if os.path.isfile(env_file):
     # Use a local secret file, if provided
@@ -45,18 +45,18 @@ else:
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env('DJANGO_SECRET_KEY')
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+DEBUG = False
 # DEBUG = str(env('DEBUG')) == '1'  # 1 == True
-DEBUG = env('DEBUG')
+# DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['dft-ppd-prt-projectengtracker.ew.r.appspot.com']
 
-if not DEBUG:
-    ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
-    ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
+# if not DEBUG:
+#     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
+#     ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
 
 ROOT_DIR = os.path.dirname(os.path.abspath('.'))
 
@@ -123,16 +123,38 @@ WSGI_APPLICATION = 'project_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+# if os.getenv('GAE_APPLICATION', None):
+#     # Running on production App Engine, so connect to Google Cloud SQL using
+#     # the unix socket at /cloudsql/<your-cloudsql-connection string>
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.postgresql',
+#             'HOST': '/cloudsql/dft-paps-sb-wgrant:europe-west2:project-tracker',
+#             'USER': 'project-tracker',
+#             'PASSWORD': env('GCP_DB_PASSWORD'),
+#             'NAME': 'project-tracker',
+#         }
+#     }
+# else:
+#     # # Running locally so connect to either a local MySQL instance or connect
+#     # # to Cloud SQL via the proxy.  To start the proxy via command line:
+#     #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
+#     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': 'db.sqlite3',
+#         }
+#     }
+
 if os.getenv('GAE_APPLICATION', None):
-    # Running on production App Engine, so connect to Google Cloud SQL using
-    # the unix socket at /cloudsql/<your-cloudsql-connection string>
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
-            'HOST': '/cloudsql/dft-paps-sb-wgrant:europe-west2:project-tracker',
-            'USER': 'project-tracker',
+            'HOST': '/cloudsql/dft-ppd-prt-projectengtracker:europe-west1:tracker',
+            'USER': env('USER_NAME'),
             'PASSWORD': env('GCP_DB_PASSWORD'),
-            'NAME': 'project-tracker',
+            'NAME': env('DB_NAME'),
         }
     }
 else:
@@ -142,10 +164,15 @@ else:
     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': 'db.sqlite3',
+            'ENGINE': 'django.db.backends.postgresql',
+            'HOST': '127.0.0.1',
+            'PORT': '5432',
+            'USER': env('USER_NAME'),
+            'PASSWORD': env('GCP_DB_PASSWORD'),
+            'NAME': env('DB_NAME'),
         }
     }
+
 
 # Password validation
 # https://docs.djangoproject.com/en/2.0/ref/settings/#auth-password-validators
@@ -183,14 +210,5 @@ USE_TZ = True
 STATIC_URL = '/static/'
 
 STATIC_ROOT = 'static'
-
-# STATICFILES_DIRS = (
-#     os.path.join(BASE_DIR, 'static_old'),
-# )
-
-# this requires python manage.py collectstatic
-# STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles-cdn')  # production static_old files need to create the staticfiles-cdn
-
-# from .cdn.conf import * # noqa
 
 DEFAULT_AUTO_FIELD = 'django.db.models.AutoField'
