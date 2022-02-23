@@ -13,9 +13,11 @@ https://docs.djangoproject.com/en/2.0/ref/settings/
 import django
 import io
 import os
+from urllib.parse import urlparse
 
 import environ
 from google.cloud import secretmanager
+
 
 DJANGO_ROOT = os.path.dirname(os.path.realpath(django.__file__))
 SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
@@ -23,9 +25,8 @@ SITE_ROOT = os.path.dirname(os.path.realpath(__file__))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# [START gaestd_py_django_secret_config]
 env = environ.Env(DEBUG=(bool, False))
-env_file = os.path.join(BASE_DIR, ".env.gcp")
+env_file = os.path.join(BASE_DIR, ".env")
 
 if os.path.isfile(env_file):
     # Use a local secret file, if provided
@@ -49,14 +50,19 @@ SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False
-# DEBUG = str(env('DEBUG')) == '1'  # 1 == True
-# DEBUG = env('DEBUG')
 
-ALLOWED_HOSTS = ['dft-ppd-prt-projectengtracker.ew.r.appspot.com']
-
-# if not DEBUG:
-#     ALLOWED_HOSTS += [os.environ.get('DJANGO_ALLOWED_HOST')]
-#     ALLOWED_HOSTS = ['dft-paps-sb-wgrant.ew.r.appspot.com']
+# SECURITY WARNING: It's recommended that you use this when
+# running in production. The URL will be known once you first deploy
+# to App Engine. This code takes the URL and converts it to both these settings formats.
+APPENGINE_URL = env("APPENGINE_URL", default=None)
+if APPENGINE_URL:
+    # Ensure the HTTPS is in the URL before it's used.
+    APPENGINE_URL = urlparse(APPENGINE_URL, "https").geturl()
+    ALLOWED_HOSTS = [APPENGINE_URL]
+    CSRF_TRUSTED_ORIGINS = [urlparse(APPENGINE_URL).netloc]
+    SECURE_SSL_REDIRECT = True
+else:
+    ALLOWED_HOSTS = ["*"]
 
 ROOT_DIR = os.path.dirname(os.path.abspath('.'))
 
@@ -123,30 +129,6 @@ WSGI_APPLICATION = 'project_tracker.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
-# if os.getenv('GAE_APPLICATION', None):
-#     # Running on production App Engine, so connect to Google Cloud SQL using
-#     # the unix socket at /cloudsql/<your-cloudsql-connection string>
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.postgresql',
-#             'HOST': '/cloudsql/dft-paps-sb-wgrant:europe-west2:project-tracker',
-#             'USER': 'project-tracker',
-#             'PASSWORD': env('GCP_DB_PASSWORD'),
-#             'NAME': 'project-tracker',
-#         }
-#     }
-# else:
-#     # # Running locally so connect to either a local MySQL instance or connect
-#     # # to Cloud SQL via the proxy.  To start the proxy via command line:
-#     #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-#     # See https://cloud.google.com/sql/docs/mysql-connect-proxy
-#     DATABASES = {
-#         'default': {
-#             'ENGINE': 'django.db.backends.sqlite3',
-#             'NAME': 'db.sqlite3',
-#         }
-#     }
-
 if os.getenv('GAE_APPLICATION', None):
     DATABASES = {
         'default': {
@@ -158,10 +140,6 @@ if os.getenv('GAE_APPLICATION', None):
         }
     }
 else:
-    # Running locally so connect to either a local MySQL instance or connect
-    # to Cloud SQL via the proxy.  To start the proxy via command line:
-    #    $ cloud_sql_proxy -instances=[INSTANCE_CONNECTION_NAME]=tcp:3306
-    # See https://cloud.google.com/sql/docs/mysql-connect-proxy
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
@@ -172,6 +150,14 @@ else:
             'NAME': env('DB_NAME'),
         }
     }
+
+# # Use django-environ to parse the connection string
+# DATABASES = {"default": env.db()}
+#
+# # If the flag as been set, configure to use proxy
+# if os.getenv("USE_CLOUD_SQL_AUTH_PROXY", None):
+#     DATABASES["default"]["HOST"] = "127.0.0.1"
+#     DATABASES["default"]["PORT"] = 5432
 
 
 # Password validation
