@@ -26,6 +26,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 DEBUG = True
 
 ALLOWED_HOSTS = []
+
+ROOT_DIR = os.path.dirname(os.path.abspath('.'))
 # Application definition
 
 INSTALLED_APPS = [

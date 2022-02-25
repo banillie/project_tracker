@@ -93,19 +93,19 @@ def upload_data():
             pass
 
     for x in type_list:
-        EngagementType.objects.create(type=x)
+        EngagementTopic.objects.create(topic=x)
 
-    wsheet = wb['EngagementWorkStreams']
-    ws_list = []
-    for row in range(2, wsheet.max_row+1):
-        ws = wsheet.cell(row=row, column=1).value
-        if ws not in ws_list:
-            ws_list.append(ws)
-        else:
-            pass
-
-    for x in ws_list:
-        EngagementWorkStream.objects.create(work_stream=x)
+    # wsheet = wb['EngagementWorkStreams']
+    # ws_list = []
+    # for row in range(2, wsheet.max_row+1):
+    #     ws = wsheet.cell(row=row, column=1).value
+    #     if ws not in ws_list:
+    #         ws_list.append(ws)
+    #     else:
+    #         pass
+    #
+    # for x in ws_list:
+    #     EngagementWorkStream.objects.create(work_stream=x)
 
     ws = wb['Engagements']
     for row in range(2, ws.max_row+1):
@@ -145,18 +145,19 @@ def upload_data():
         type_list = ws.cell(row=row, column=5).value.split(", ")
         type_object_list = []
         for type in type_list:
-            type_object_list.append(EngagementType.objects.get(type=type))
-        eng.engagement_types.add(*type_object_list)
+            print()
+            type_object_list.append(EngagementTopic.objects.get(topic=type))
+        eng.topics.add(*type_object_list)
 
-        wstream = ws.cell(row=row, column=6).value
-        if wstream:
-            ws_list = wstream.value.split(", ")
-            ws_object_list = []
-            for x in ws_list:
-                ws_object_list.append(EngagementWorkStream.objects.get(work_stream=x))
-            eng.engagement_workstreams.add(*ws_object_list)
-        else:
-            pass
+        # wstream = ws.cell(row=row, column=6).value
+        # if wstream:
+        #     ws_list = wstream.value.split(", ")
+        #     ws_object_list = []
+        #     for x in ws_list:
+        #         ws_object_list.append(EngagementWorkStream.objects.get(work_stream=x))
+        #     eng.engagement_workstreams.add(*ws_object_list)
+        # else:
+        #     pass
 
 
 def test_merge_worktype_with_workstream() -> None:
