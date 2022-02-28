@@ -10,10 +10,18 @@ User = settings.AUTH_USER_MODEL
 
 
 class StakeholderOrg(models.Model):
-    org = models.CharField(max_length=30)
+    name = models.CharField(max_length=30)
 
     def __str__(self):
-        return self.org
+        return self.name
+
+
+class Group(models.Model):
+    organisation = models.ForeignKey(StakeholderOrg, on_delete=models.CASCADE)
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
 
 
 class StakeholderQuerySet(models.QuerySet):
@@ -43,8 +51,9 @@ class Stakeholder(models.Model):
     last_name = models.CharField(max_length=40)
     slug = models.SlugField(blank=True, null=True, unique=True)
     # need to understand on_delete better
-    organisation = models.ForeignKey(StakeholderOrg, on_delete=models.CASCADE) # null=False
+    organisation = models.ForeignKey(StakeholderOrg, on_delete=models.SET_NULL, null=True)
     group = models.CharField(max_length=100, blank=True, null=True)
+    group_drop = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
     team = models.CharField(max_length=100, blank=True, null=True)
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
