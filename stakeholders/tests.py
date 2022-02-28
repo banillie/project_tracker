@@ -46,7 +46,6 @@ class StakeholderTestCase(TestCase):
         a = Stakeholder.objects.search(query='Org')
         self.assertEqual(a.count(), 2)
 
-
     # testing required to handle stakeholders/ppdds with the same name.
     ## moved from project testing. More relevant to stakeholders.
     # def test_queryset_exists(self):

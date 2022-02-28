@@ -71,3 +71,4 @@ def stakeholder_list_view(request):
         "object_list": queryset
     }
     return render(request, "stakeholders/list.html", context)
+

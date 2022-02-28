@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Project, Tier
+from .models import Project, Tier, Stage
 from simple_history.admin import SimpleHistoryAdmin
 
 
@@ -10,7 +10,7 @@ class ProjectAdmin(SimpleHistoryAdmin):
 
 
 admin.site.register(Project, ProjectAdmin)
-
 admin.site.register(Tier, SimpleHistoryAdmin)
+admin.site.register(Stage, SimpleHistoryAdmin)
 
 

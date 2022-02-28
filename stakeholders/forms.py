@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Stakeholder
+from .models import Stakeholder, DFTGroup
 
 
 class StakeholderForm(forms.ModelForm):
@@ -19,6 +19,7 @@ class StakeholderForm(forms.ModelForm):
             "last_name",
             "organisation",
             "group",
+            "dft_group",
             "team",
             "role",
             "tele_no",
@@ -29,6 +30,7 @@ class StakeholderForm(forms.ModelForm):
             "last_name": forms.TextInput(attrs={'class': 'form-control'}),
             "organisation": forms.Select(attrs={'class': 'form-control'}),
             "group": forms.TextInput(attrs={'class': 'form-control'}),
+            "dft_group": forms.Select(attrs={'class': 'form-control'}),
             "team": forms.TextInput(attrs={'class': 'form-control'}),
             "role": forms.TextInput(attrs={'class': 'form-control'}),
             "tele_no": forms.TextInput(attrs={'class': 'form-control'}),

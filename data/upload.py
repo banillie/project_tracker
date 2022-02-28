@@ -24,7 +24,7 @@ def upload_data():
             pass
 
     for x in org_list:
-        StakeholderOrg.objects.create(org=x)
+        StakeholderOrg.objects.create(name=x)
 
     all_entries = {}
     for row in range(2, ws.max_row+1):
@@ -33,7 +33,7 @@ def upload_data():
         # using strip to tidy string whitespacing
         single_entry["last_name"] = ws.cell(row=row, column=2).value.strip()
         org = ws.cell(row=row, column=3).value
-        single_entry["organisation"] = StakeholderOrg.objects.get(org=org)
+        single_entry["organisation"] = StakeholderOrg.objects.get(name=org)
         single_entry["group"] = ws.cell(row=row, column=4).value
         single_entry["team"] = ws.cell(row=row, column=5).value
         single_entry["role"] = ws.cell(row=row, column=6).value

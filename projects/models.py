@@ -8,6 +8,8 @@ from .utils import slugify_instance_title
 
 from simple_history.models import HistoricalRecords
 
+from stakeholders.models import DFTGroup
+
 TYPE_CHOICES = [
     ("Project", "PROJECT"),
     ("Programme", "PROGRAMME"),
@@ -46,6 +48,13 @@ class Tier(models.Model):
         return self.type
 
 
+class Stage(models.Model):
+    name = models.CharField(max_length=30)
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(
@@ -55,8 +64,10 @@ class Project(models.Model):
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)
     governance = models.CharField(max_length=20, blank=True, null=True)
+    dft_group = models.ForeignKey(DFTGroup, on_delete=models.SET_NULL, null=True, blank=True)
     tier = models.ForeignKey(Tier, blank=True, null=True, on_delete=models.SET_NULL)
     stage = models.CharField(max_length=20, blank=True, null=True)
+    stage_name = models.ForeignKey(Stage, on_delete=models.SET_NULL, null=True, blank=True)
     scope = models.TextField(max_length=200, blank=True, null=True)
     live = models.BooleanField(default=True, null=False)  # active?
     timestamp = models.DateTimeField(auto_now_add=True)

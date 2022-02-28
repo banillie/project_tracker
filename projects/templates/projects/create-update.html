@@ -10,23 +10,16 @@
 
             <div class="form-group">
                 <form method="POST" novalidate> {% csrf_token %}
-                    <div class="row mt-2">
+                    <div class="row mt-1">
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             {{ form.name|as_crispy_field }}
+                            {{ form.type|as_crispy_field }}
+                            {{ form.dft_group|as_crispy_field }}
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                             {{ form.abbreviation|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row mt-2">
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            {{ form.type|as_crispy_field }}
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
                             {{ form.tier|as_crispy_field }}
-                        </div>
-                        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                            {{ form.stage|as_crispy_field }}
+                            {{ form.stage_name|as_crispy_field }}
                         </div>
                     </div>
                     <div class="row mt-2">

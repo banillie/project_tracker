@@ -16,8 +16,7 @@ class StakeholderOrg(models.Model):
         return self.name
 
 
-class Group(models.Model):
-    organisation = models.ForeignKey(StakeholderOrg, on_delete=models.CASCADE)
+class DFTGroup(models.Model):
     name = models.CharField(max_length=30)
 
     def __str__(self):
@@ -31,8 +30,8 @@ class StakeholderQuerySet(models.QuerySet):
         lookups = (
             Q(first_name__icontains=query)
             | Q(last_name__icontains=query)
-            | Q(organisation__org__icontains=query)
-            | Q(group__icontains=query)
+            | Q(organisation__name__icontains=query)
+            | Q(dft_group__name__icontains=query)
         )
         return self.filter(lookups)
 
@@ -50,10 +49,9 @@ class Stakeholder(models.Model):
     first_name = models.CharField(max_length=40)
     last_name = models.CharField(max_length=40)
     slug = models.SlugField(blank=True, null=True, unique=True)
-    # need to understand on_delete better
     organisation = models.ForeignKey(StakeholderOrg, on_delete=models.SET_NULL, null=True)
     group = models.CharField(max_length=100, blank=True, null=True)
-    group_drop = models.ForeignKey(Group, on_delete=models.SET_NULL, null=True)
+    dft_group = models.ForeignKey(DFTGroup, on_delete=models.SET_NULL, null=True, blank=True)
     team = models.CharField(max_length=100, blank=True, null=True)
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)

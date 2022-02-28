@@ -1,6 +1,6 @@
 from django import forms
 
-from .models import Project
+from .models import Project, Stage
 
 
 class ProjectForm(forms.ModelForm):
@@ -14,16 +14,23 @@ class ProjectForm(forms.ModelForm):
             "type",
             "abbreviation",
             "tier",
-            "stage",
+            "stage_name",
             "scope",
+            "dft_group"
         ]
         # filter = ["name", "type"]
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'}),
             "type": forms.Select(attrs={'class': 'form-control'}),
+            "dft_group": forms.Select(attrs={'class': 'form-control'}),
             "abbreviation": forms.TextInput(attrs={'class': 'form-control'}),
             "tier": forms.Select(attrs={'class': 'form-control'}),
-            "stage": forms.TextInput(attrs={'class': 'form-control'}),
+            "stage_name": forms.Select(
+                attrs={
+                    'class': 'form-control',
+                    'label': 'Stage',
+                },
+            ),
             "scope": forms.Textarea(attrs={'class': 'form-control'}),
         }
 
