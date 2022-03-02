@@ -6,7 +6,13 @@
         <div class="row">
             <h1>Engagements Page</h1>
             <p><a href="{%  url 'engagements:engagement-create' %}">Create new Engagement here</a></p>
-            <p>Engagements Lists. There are {{ object_list|length }} engagements. The date these engagements took place are listed below.</p>
+            <p>
+                This contains a list of general engagements with projects, {{ object_list|length }} so far, and helps illustrate our performance across specific timeframe. We are working on how information is displayed on this page.
+            </p>
+            <p>
+                If you are looking for an engagement with a particular person or project please use the search bar.
+            </p>
+{#            <p>Engagements Lists. There are {{ object_list|length }} engagements. The date these engagements took place are listed below.</p>#}
             {% for instance in object_list %}
                 <p><a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a></p>
             {% endfor %}

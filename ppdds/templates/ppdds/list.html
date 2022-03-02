@@ -6,7 +6,15 @@
         <div class="row">
             <h1>PPDD Colleague Page</h1>
             <p><a href="{%  url 'ppdds:create' %}">Create new PPDD colleague entry here</a></p>
-            <p>PPDD List. There are {{ object_list|length }} recorded PPDD colleagues. These are listed below in alphabetical order (by surname):</p>
+            <p>
+                This tab contains a list of the PPDD Team Members who have engaged with projects. Thus far there are {{ object_list|length }}. By clicking on a stakeholder below you will be able to walk through the various projects they have supported and the issues they have tackled.
+                If you are reviewing a business case, please reference this tab to identify colleagues who may have worked with specific project team that may also have additional information which might be of use.
+            </p>
+
+            <p>
+                If you are looking for details on a particular ppdd colleague please use the search bar.
+            </p>
+{#            <p>PPDD List. There are {{ object_list|length }} recorded PPDD colleagues. These are listed below in alphabetical order (by surname):</p>#}
             {% for instance in object_list %}
                 <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>
             {% endfor %}

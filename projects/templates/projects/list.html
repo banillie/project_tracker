@@ -6,7 +6,18 @@
         <div class="row">
             <h1>Projects Page</h1>
             <p><a href="{%  url 'projects:create' %}">Create New Project Entry</a></p>
-            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>
+            <p>
+                This tab provides a list of all the projects and programmes we have engaged with thus far: currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list of projects and programmes in the department, but more as a list of those we have recently engaged with (see Neil Nevil for a list of all projects and programmes across the DfT Portfolio).
+            </p>
+            <p>
+                The list below provides insight into the range of projects across model areas that have sought our advice and support. Click on a project to review our engagement and the types of issues they have asked us to help them address.
+            </p>
+
+            <p>
+                If you are looking for details on a particular project please use the search bar.
+            </p>
+
+{#            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>#}
             {% for instance in object_list %}
                 <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>
             {% endfor %}
