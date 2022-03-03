@@ -25,14 +25,16 @@ class ProjectForm(forms.ModelForm):
             "dft_group": forms.Select(attrs={'class': 'form-control'}),
             "abbreviation": forms.TextInput(attrs={'class': 'form-control'}),
             "tier": forms.Select(attrs={'class': 'form-control'}),
-            "stage_name": forms.Select(
-                attrs={
-                    'class': 'form-control',
-                    'label': 'Stage',
-                },
-            ),
+            "stage_name": forms.Select(attrs={'class': 'form-control'}),
             "scope": forms.Textarea(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(ProjectForm, self).__init__(*args, **kwargs)
+        self.fields['stage_name'].label = "Business Case Stage"
+        # self.fields['abbreviation'].label = "Project Abbreviation"
+        self.fields['dft_group'].label = "DfT Group"
+
 
     # # for adding data validation requirements
     # def clean(self, *args, **kwargs):
