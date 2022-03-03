@@ -1,4 +1,5 @@
 import os
+import json
 
 from project_tracker.settings import ROOT_DIR
 from engagements.models import Engagement, EngagementType, EngagementWorkStream, EngagementTopic
@@ -173,3 +174,7 @@ def test_merge_worktype_with_workstream() -> None:
                 topic, created = EngagementTopic.objects.get_or_create(topic=ws.work_stream)
                 engagement.topics.add(EngagementTopic.objects.get(topic=topic))
 
+
+def open_json_file(path: str):
+    with open(path, "r") as handle:
+        return json.load(handle)
