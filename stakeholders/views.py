@@ -13,8 +13,13 @@ from engagements.models import Engagement
 def stakeholders_create_view(request):
     form = StakeholderForm(request.POST or None)
     if form.is_valid():
-        form.save()
-        form = StakeholderForm()
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
+        return redirect(obj.get_absolute_url())
+        # form.save()
+        # # form = StakeholderForm()
+        # return redirect()
     context = {
         'form': form,
     }
