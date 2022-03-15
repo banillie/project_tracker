@@ -12,18 +12,19 @@ from engagements.models import Engagement
 @login_required
 def stakeholders_create_view(request):
     form = StakeholderForm(request.POST or None)
+    error_msg = None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        obj.save()
-        return redirect(obj.get_absolute_url())
-    else:
-
-        # form.save()
-        # # form = StakeholderForm()
-        # return redirect()
+        try:
+            obj.save()
+            return redirect(obj.get_absolute_url())
+        except:
+            # context['error_msg'] = 'Stakeholder already exists'
+            error_msg = 'Stakeholder already exists'
     context = {
         'form': form,
+        'error_msg': error_msg,
     }
     return render(request, "stakeholders/create.html", context)
 

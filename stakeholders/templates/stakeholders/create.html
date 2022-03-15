@@ -7,6 +7,7 @@
     <div class="container-fluid">
         <div class="row">
             <h4>{% if form.instance.pk %}Edit Details{% else %}Create Stakeholder Entry{% endif%}</h4>
+
             <div class="form-group">
                 <form method="POST" novalidate> {% csrf_token %}
                     <div class="row mt-2">
