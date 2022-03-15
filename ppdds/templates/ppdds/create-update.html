@@ -7,6 +7,9 @@
     <div class="container-fluid">
         <div class="row">
             <h4>{% if form.instance.pk %}Edit Details{% else %}Create PPDD Colleague Entry{% endif%}</h4>
+            {% if error_msg is not None %}
+                <h5>PPDD colleague with this name already exists</h5>
+            {% endif %}
             <div class="form-group">
                 <form method="POST" novalidate> {% csrf_token %}
                     <div class="row mt-2">

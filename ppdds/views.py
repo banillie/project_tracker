@@ -1,6 +1,7 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.core.exceptions import ObjectDoesNotExist
+from django.db import IntegrityError
 
 from .forms import PPDDForm
 
@@ -12,17 +13,19 @@ from projects.models import Project
 @login_required
 def ppdds_create_view(request):
     form = PPDDForm(request.POST or None)
-    context = {
-        'form': form,
-    }
-    # if form.is_valid():
-    #     form.save()
-    #     form = PPDDForm()
+    error_msg = None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        obj.save()
-        return redirect(obj.get_absolute_url())
+        try:
+            obj.save()
+            return redirect(obj.get_absolute_url())
+        except IntegrityError:  # slug field set to unique
+            error_msg = 'PPDD colleague already exists'
+    context = {
+        'form': form,
+        'error_msg': error_msg
+    }
     return render(request, "ppdds/create-update.html", context)
 
 

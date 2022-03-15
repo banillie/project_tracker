@@ -1,6 +1,7 @@
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 from projects.models import Project
 from .forms import StakeholderForm
@@ -19,8 +20,7 @@ def stakeholders_create_view(request):
         try:
             obj.save()
             return redirect(obj.get_absolute_url())
-        except:
-            # context['error_msg'] = 'Stakeholder already exists'
+        except IntegrityError:  # slug field set to unique
             error_msg = 'Stakeholder already exists'
     context = {
         'form': form,
