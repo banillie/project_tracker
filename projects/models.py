@@ -98,6 +98,7 @@ class Project(models.Model):
 def project_pre_save(sender, instance, *args, **kwargs):
     # print('pre-save')
     if instance.slug is None:
+        # instance.slug = slugify(instance.title)
         slugify_instance_title(instance, save=False)
 
 
@@ -107,6 +108,7 @@ pre_save.connect(project_pre_save, sender=Project)
 def project_post_save(sender, instance, created, *args, **kwargs):
     # print('post-save')
     if created:
+        # instance.slug = slugify(instance.title)
         slugify_instance_title(instance, save=True)
 
 

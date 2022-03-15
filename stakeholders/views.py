@@ -17,6 +17,8 @@ def stakeholders_create_view(request):
         obj.user = request.user
         obj.save()
         return redirect(obj.get_absolute_url())
+    else:
+
         # form.save()
         # # form = StakeholderForm()
         # return redirect()
