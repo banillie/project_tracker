@@ -57,9 +57,7 @@ class Stage(models.Model):
 
 class Project(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
-    name = models.CharField(
-        max_length=120, null=False, unique=True
-    )  # names are unique. title?
+    name = models.CharField(max_length=120, null=False, unique=True)
     slug = models.SlugField(blank=True, null=True, unique=True)
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)
@@ -68,7 +66,7 @@ class Project(models.Model):
     tier = models.ForeignKey(Tier, blank=True, null=True, on_delete=models.SET_NULL)
     stage = models.CharField(max_length=20, blank=True, null=True)
     stage_name = models.ForeignKey(Stage, on_delete=models.SET_NULL, null=True, blank=True)
-    scope = models.TextField(max_length=200, blank=True, null=True)
+    scope = models.TextField(max_length=2000, blank=True, null=True)
     live = models.BooleanField(default=True, null=False)  # active?
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
