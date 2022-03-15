@@ -7,12 +7,12 @@ def slugify_instance_title(instance, save=False, new_slug=None):
         slug = new_slug
     else:
         slug = slugify(instance.name)
-    Klass = instance.__class__
-    qs = Klass.objects.filter(slug=slug).exclude(id=instance.id)
-    if qs.exists():
-        rand_int = random.randint(300000, 500000)
-        slug = f"{slug}-{rand_int}"
-        return slugify_instance_title(instance, save=save, new_slug=slug)
+    # Klass = instance.__class__
+    # qs = Klass.objects.filter(slug=slug).exclude(id=instance.id)
+    # if qs.exists():
+    #     rand_int = random.randint(300000, 500000)
+    #     slug = f"{slug}-{rand_int}"
+    #     return slugify_instance_title(instance, save=save, new_slug=slug)
     instance.slug = slug
     if save:
         instance.save()

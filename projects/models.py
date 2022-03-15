@@ -60,7 +60,7 @@ class Project(models.Model):
     name = models.CharField(
         max_length=120, null=False, unique=True
     )  # names are unique. title?
-    slug = models.SlugField(blank=True, null=True)  # unique = true
+    slug = models.SlugField(blank=True, null=True, unique=True)
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
     abbreviation = models.CharField(max_length=20, null=False)
     governance = models.CharField(max_length=20, blank=True, null=True)

@@ -3,6 +3,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
 from django.urls import reverse
 from django.contrib.auth.decorators import login_required
+from django.db import IntegrityError
 
 from engagements.models import Engagement
 from stakeholders.models import Stakeholder
@@ -106,14 +107,19 @@ def project_update_view(request, slug=None):
 @login_required
 def project_create_view(request):
     form = ProjectForm(request.POST or None)
-    context = {
-        'form': form,
-    }
+    error_msg = None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        obj.save()
-        return redirect(obj.get_absolute_url())
+        try:
+            obj.save()
+            return redirect(obj.get_absolute_url())
+        except IntegrityError:  # slug field set to unique
+            error_msg = 'Project already exists'
+    context = {
+        'form': form,
+        'error_msg': error_msg,
+    }
     return render(request, "projects/create-update.html", context)
 
 
