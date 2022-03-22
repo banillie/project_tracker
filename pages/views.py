@@ -4,6 +4,7 @@ import os
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import user_passes_test
+from django.contrib.auth.decorators import login_required
 from django.conf import settings
 from projects.models import Project
 from stakeholders.models import Stakeholder
@@ -39,7 +40,7 @@ def search_view(request):
     else:
         return render(request, "search.html", {})
 
-
+@login_required
 # @user_passes_test(lambda u: u.is_superuser)  # only for super users removing for now.
 def download_master(request):
     today = datetime.date.today()
