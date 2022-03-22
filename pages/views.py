@@ -40,7 +40,7 @@ def search_view(request):
         return render(request, "search.html", {})
 
 
-@user_passes_test(lambda u: u.is_superuser)  # only for super users.
+# @user_passes_test(lambda u: u.is_superuser)  # only for super users removing for now.
 def download_master(request):
     today = datetime.date.today()
     file_name = f"engagement_tracker_master_{today}.xlsx"
