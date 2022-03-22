@@ -49,5 +49,5 @@ def download_master(request):
     with open(save_path, "rb") as excel:
         data = excel.read()
         response = HttpResponse(data, content_type="application/vnd.ms-excel")  # what's content type
-        response["Content-Disposition"] = f"attachment; filename={save_path}"
+        response["Content-Disposition"] = f"attachment; filename={file_name}"
         return response
