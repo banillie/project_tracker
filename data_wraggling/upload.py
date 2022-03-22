@@ -186,7 +186,7 @@ from openpyxl import load_workbook, Workbook
 #         return json.load(handle)
 
 
-def excel_download():
+def excel_download(output: str) -> None:
     wb = Workbook()
 
     ws = wb.create_sheet("Engagements")  # Engagement output
@@ -274,4 +274,4 @@ def excel_download():
 
     wb.remove(wb["Sheet"])
 
-    wb.save("outputdata.xlsx")
+    wb.save(output)

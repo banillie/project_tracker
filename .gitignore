@@ -114,6 +114,7 @@ venv.bak/
 #other
 data/
 static/
+media/downloads/*
 
 .do/
 .github/

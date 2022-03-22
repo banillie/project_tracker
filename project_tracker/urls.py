@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.urls import include, path
 
 from accounts.views import login_view, logout_view, register_view
-from pages.views import home_view, search_view
+from pages.views import home_view, search_view, download_master
 
 
 urlpatterns = [
@@ -30,6 +30,7 @@ urlpatterns = [
     path("engagements/", include("engagements.urls")),
 
     path("", home_view, name="home"),
+    path("download/", download_master, name="download"),
     path("admin/", admin.site.urls),
     path("login/", login_view),
     path("logout/", logout_view),
