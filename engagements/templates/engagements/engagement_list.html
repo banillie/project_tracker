@@ -40,10 +40,25 @@
                             <a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a>
                         </td>
                         <td>
-                            {{ instance.projects }}</td>
-                        <td>{{ instance.stakeholders }}</td>
-                        <td>{{ instance.ppdds }}</td>
-                        <td>{{ instance.topics }}</td>
+                            {% for project in instance.projects.all %}
+                                <ul>{{ project.name }}</ul>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for stakeholder in instance.stakeholders.all %}
+                                <ul>{{ stakeholder.first_name }} {{ stakeholder.last_name }}</ul>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for ppdd in instance.ppdds.all %}
+                                <ul>{{ ppdd.first_name }} {{ ppdd.last_name }}</ul>
+                            {% endfor %}
+                        </td>
+                        <td>
+                            {% for topic in instance.topics.all %}
+                                <ul>{{ topic }}</ul>
+                            {% endfor %}
+                        </td>
                     </tr>
                 {% endfor %}
                 </tbody>
