@@ -2,6 +2,12 @@
 
 {% block content %}
 
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    </script>
+
     <div class="container-fluid">
         <div class="row">
             <h1>Engagements Page</h1>
@@ -13,9 +19,35 @@
                 If you are looking for an engagement with a particular person or project please use the search bar.
             </p>
 {#            <p>Engagements Lists. There are {{ object_list|length }} engagements. The date these engagements took place are listed below.</p>#}
-            {% for instance in object_list %}
-                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a></p>
-            {% endfor %}
+{#            {% for instance in object_list %}#}
+{#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a></p>#}
+{#            {% endfor %}#}
+            <table class="display" id="table_id">
+                <thead>
+                    <tr>
+                        <th>Date</th>
+                        <th>Projects</th>
+                        <th>Stakeholders</th>
+                        <th>PPDD colleagues</th>
+                        <th>Topic</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for instance in object_list %}
+                    {#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>#}
+                    <tr>
+                        <td>
+                            <a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a>
+                        </td>
+                        <td>
+                            {{ instance.projects }}</td>
+                        <td>{{ instance.stakeholders }}</td>
+                        <td>{{ instance.ppdds }}</td>
+                        <td>{{ instance.topics }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
