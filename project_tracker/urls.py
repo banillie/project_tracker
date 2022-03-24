@@ -37,4 +37,7 @@ urlpatterns = [
     path("register/", register_view),
     # path("hx/search/", hx_search_view),
     path("search/", search_view, name="search"),
-] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+urlpatterns + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+urlpatterns + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
