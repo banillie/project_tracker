@@ -10,17 +10,16 @@
     <div class="container-fluid">
         <div class="row">
             <h1>Stakeholder Page</h1>
-            <p><a href="{% url 'stakeholders:create' %}">Create New Stakeholder Entry</a></p>
             <p>
-                This tab contains a list of the various project team stakeholders we have engaged with, who are embedded
-                in various projects around the department. Thus far {{ object_list|length }}. This list helps PPDD
-                identify key team members we have or need to engage with should we need to contact a project team
-                (please also see Project Tab)
+                This page contains a list of the various project team stakeholders we have engaged with, who are embedded in various projects around the department. Thus far {{ object_list|length }}. This list helps to identify key team members we have or need to engage with should we need to contact a project team.
             </p>
             <p>
-                If you are looking for the details of a particular stakeholder please use the search bar.
+                If you are looking for the details of a particular stakeholder please use the search bar (below, right). If you need to create a new stakeholder entry you can do so using the button below.
             </p>
-            {#            <p>Stakeholder Lists. There are {{ object_list|length }} Stakeholders. These are listed below in alphabetical order (by surname):</p>#}
+            <p>
+                <a href="{% url 'stakeholders:create' %}" class="btn btn-primary">Create New Stakeholder Entry</a>
+            </p>
+
             <table class="display" id="table_id">
                 <thead>
                     <tr>
