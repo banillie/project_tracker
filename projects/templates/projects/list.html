@@ -2,6 +2,11 @@
 
 {% block content %}
 
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    </script>
     <div class="container-fluid">
         <div class="row">
             <h1>Projects Page</h1>
@@ -18,9 +23,47 @@
             </p>
 
 {#            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>#}
-            {% for instance in object_list %}
-                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>
-            {% endfor %}
+{#            {% for instance in object_list %}#}
+{#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>#}
+{#            {% endfor %}#}
+            <table class="display" id="table_id">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Abbreviation</th>
+                        <th>Type</th>
+                        <th>Tier</th>
+                        <th>Group</th>
+                        <th>Stage</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for instance in object_list %}
+                    <tr>
+                        <td>
+                            <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>
+                        </td>
+                        <td>{{ instance.abbreviation }}</td>
+                        <td>{{ instance.type }}</td>
+                        <td>
+                            {% if instance.tier %}
+                                {{ instance.tier }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if instance.dft_group %}
+                                {{ instance.dft_group }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if instance.stage_name %}
+                                {{ instance.stage_name }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
