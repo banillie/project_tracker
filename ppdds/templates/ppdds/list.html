@@ -2,6 +2,11 @@
 
 {% block content %}
 
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    </script>
     <div class="container-fluid">
         <div class="row">
             <h1>PPDD Colleague Page</h1>
@@ -15,9 +20,31 @@
                 If you are looking for details on a particular ppdd colleague please use the search bar.
             </p>
 {#            <p>PPDD List. There are {{ object_list|length }} recorded PPDD colleagues. These are listed below in alphabetical order (by surname):</p>#}
-            {% for instance in object_list %}
-                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>
-            {% endfor %}
+{#            {% for instance in object_list %}#}
+{#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>#}
+{#            {% endfor %}#}
+            <table class="display" id="table_id">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Role</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for instance in object_list %}
+                    <tr>
+                        <td>
+                            <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a>
+                        </td>
+                        <td>
+                            {% if instance.role %}
+                                {{ instance.role }}
+                            {% endif %}
+                        </td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
         </div>
     </div>
 
