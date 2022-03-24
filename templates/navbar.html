@@ -12,10 +12,10 @@
             <a class="btn btn-danger btn-lg" class="nav-link" href="/engagements/">Engagements</a>
         </ul>
     {% if request.user.is_authenticated %}
-        <form class="d-flex" method="POST" action="{% url 'search' %}">{% csrf_token %}
-            <input class="form-control me-2" type="search" placeholder="Search" name="searched">
-            <button class="btn btn-success">Search</button>
-        </form>
+{#        <form class="d-flex" method="POST" action="{% url 'search' %}">{% csrf_token %}#}
+{#            <input class="form-control me-2" type="search" placeholder="Search" name="searched">#}
+{#            <button class="btn btn-success">Search</button>#}
+{#        </form>#}
         <a class="btn btn-primary" class="nav-link" href="/logout/">Log Out</a>
     {% else %}
         <a class="btn btn-primary" class="nav-link" href="/login/">Log In</a>
