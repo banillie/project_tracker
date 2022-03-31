@@ -7,6 +7,7 @@ class ProjectAdmin(SimpleHistoryAdmin):
     # list_display = ['name', 'slug', 'timestamp', 'updated']
     fields = ['name', 'slug', 'abbreviation', 'type', 'tier', 'dft_group', 'stage_name']
     list_display = ['name', 'abbreviation', 'type', 'tier', 'dft_group']
+    ordering = ['name', ]
     search_fields = ['name', 'type', 'tier__type', 'abbreviation', 'dft_group__name']
 
 
