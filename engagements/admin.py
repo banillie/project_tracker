@@ -28,25 +28,7 @@ class EngagementAdmin(SimpleHistoryAdmin):
     def get_topics(self, obj):
         return ",\n".join([t.topic for t in obj.topics.all()])
 
-# class EngagementAdmin(SimpleHistoryAdmin):
-#     form = select2_modelform(Engagement)
-#     list_display = ['date']
-
 
 admin.site.register(Engagement, EngagementAdmin)
 admin.site.register(EngagementTopic)
 
-
-"""from .models import Engagement
-
-from django.contrib import admin
-from easy_select2 import select2_modelform
-
-# admin.site.register(Engagement)
-# admin.site.register(EngagementProjects)
-
-PollForm = select2_modelform(Engagement, attrs={'width': '250px'})
-
-
-class PollAdmin(admin.ModelAdmin):
-    form = PollForm"""
