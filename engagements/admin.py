@@ -10,7 +10,7 @@ class EngagementAdmin(SimpleHistoryAdmin):
     form = select2_modelform(Engagement)
     # fields = ['date', 'projects', 'stakeholders']
     list_display = ['date', 'get_projects', 'get_stakeholders', 'get_topics']
-    ordering = ['date', ]
+    ordering = ['-date', ]
     search_fields = [
         'date',
         'projects__name',
