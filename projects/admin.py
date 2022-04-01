@@ -5,8 +5,10 @@ from simple_history.admin import SimpleHistoryAdmin
 
 class ProjectAdmin(SimpleHistoryAdmin):
     # list_display = ['name', 'slug', 'timestamp', 'updated']
-    list_display = ['name', 'updated']
-    search_fields = ['name', 'type', 'governance']
+    fields = ['name', 'slug', 'abbreviation', 'type', 'tier', 'dft_group', 'stage_name']
+    list_display = ['name', 'abbreviation', 'type', 'tier', 'dft_group']
+    ordering = ['name', ]
+    search_fields = ['name', 'type', 'tier__type', 'abbreviation', 'dft_group__name']
 
 
 admin.site.register(Project, ProjectAdmin)
