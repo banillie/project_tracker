@@ -40,8 +40,13 @@ def search_view(request):
     else:
         return render(request, "search.html", {})
 
+
 @login_required
-# @user_passes_test(lambda u: u.is_superuser)  # only for super users removing for now.
+def download_view(request, *args, **kwargs):
+    return render(request, "download.html")
+
+
+# @user_passes_test(lambda u: u.is_superuser)
 def download_master(request):
     today = datetime.date.today()
     file_name = f"engagement_tracker_master_{today}.xlsx"
