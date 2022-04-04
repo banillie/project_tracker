@@ -1,5 +1,6 @@
 import datetime
 import os
+import tempfile
 
 from django.http import HttpResponse
 from django.shortcuts import render
@@ -50,10 +51,12 @@ def download_view(request, *args, **kwargs):
 def download_master(request):
     today = datetime.date.today()
     file_name = f"engagement_tracker_master_{today}.xlsx"
-    save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # need to create media root
-    excel_download(save_path)
-    with open(save_path, "rb") as excel:
-        data = excel.read()
-        response = HttpResponse(data, content_type="application/vnd.ms-excel")  # what's content type
-        response["Content-Disposition"] = f"attachment; filename={file_name}"
-        return response
+    # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # need to create media root
+    with tempfile.TemporaryDirectory() as tmpdir:
+        save_path = os.path.join(tmpdir, file_name)
+        excel_download(save_path)
+        with open(save_path, "rb") as excel:
+            data = excel.read()
+            response = HttpResponse(data, content_type="application/vnd.ms-excel")  # what's content type
+            response["Content-Disposition"] = f"attachment; filename={file_name}"
+            return response
