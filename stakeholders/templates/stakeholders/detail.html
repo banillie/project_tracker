@@ -4,36 +4,49 @@
 
     <div class="container-fluid">
         <div class="row">
+            <h2>Stakeholder details</h2>
+        </div>
+        <div class="row">
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <h4>Stakeholder details</h4>
-                <p><font size="+1"><b>Name: </b>{{ object.first_name }} {{object.last_name}}</font></p>
-                <p><font size="+1"><b>Organisation: </b>{{ object.organisation }}</font></p>
-                <p><font size="+1"><b>DfT Group: </b>{{ object.dft_group }}</font></p>
-                <p><font size="+1"><b>Team: </b>{{ object.team }}</font></p>
-                <p><font size="+1"><b>Role: </b>{{ object.role }}</font></p>
+                <p>
+                    <b>Name: </b>
+                    {{ object.first_name }} {{object.last_name}}
+                </p>
+                <p>
+                    <b>Organisation: </b>
+                    {{ object.organisation }}
+                </p>
+                <p>
+                    <b>DfT Group: </b>
+                    {{ object.dft_group }}
+                </p>
+                <p><b>Team: </b>
+                    {{ object.team }}
+                </p>
+                <p>
+                    <b>Role: </b>{{ object.role }}
+                </p>
 
                 <p>
                 <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
-                {#        <a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}delete">Delete</a>#}
-                {#        <a class="btn btn-primary" role="button" href="{% url "projects:list" %}">Return</a>#}
                 </p>
 
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <h4>Engagements</h4>
+                <b>Engagements</b>
                 {% if engagement_list %}
                     {% for object in engagement_list %}
-                        <p><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></p>
+                        <li><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></li>
                     {% endfor %}
                 {% else %}
                     <p>None so far...</p>
                 {% endif %}
             </div>
             <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <h4>Associated Projects</h4>
+                <b>Associated Projects</b>
                 {% if project_list %}
                     {% for object in project_list %}
-                        <p><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></p>
+                        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
                     {% endfor %}
                 {% else %}
                     <p>None so far...</p>
