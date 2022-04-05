@@ -1,3 +1,5 @@
+import operator
+
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.http import HttpResponse, Http404
@@ -35,23 +37,19 @@ def project_delete_view(request, slug):
 @login_required
 def project_detail_view(request, slug):
     obj = get_object_or_404(Project, slug=slug)
-    # hx_url = reverse("projects:hx-detail", kwargs={"slug": slug})
-    # print(hx_url)
-    engage_qs = Engagement.objects.filter(projects__slug=slug)
+    engage_qs = Engagement.objects.filter(projects__slug=slug).order_by('-date')
     stake_qs = []
     for x in engage_qs.all().values('stakeholders').distinct():
         try:
             stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
         except ObjectDoesNotExist:
             pass
+    stake_qs_ordered = list(set(sorted(stake_qs, key=operator.attrgetter('last_name')))) # remove repeats
     context = {
         "object": obj,
         "engagement_list": engage_qs,
-        "stakeholder_list": stake_qs,
+        "stakeholder_list": stake_qs_ordered,
     }
-    # context = {
-    #     "hx_url": hx_url,
-    # }
     return render(request, "projects/detail.html", context)
 
 
