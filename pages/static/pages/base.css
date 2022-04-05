@@ -9,4 +9,9 @@ body {
   font-family: "Poppins";
 }
 
+pre {
+  font-family: "Poppins";
+  white-space: pre-wrap;
+}
+
 /*# sourceMappingURL=base.css.map */
