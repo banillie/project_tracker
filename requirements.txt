@@ -10,12 +10,14 @@ dateparser==1.1.0
 delegator.py==0.1.1
 Django==3.2
 django-bootstrap-form==3.4
+django_cors_headers
 django-crispy-forms==1.13.0
 django-dotenv==1.4.2
 django-easy-select2==1.5.7
 django-environ==0.8.1
 django-htmx==1.6.0
 django-multiselectfield==0.1.12
+djangorestframework
 django-simple-history==3.0.0
 django-storages==1.12.3
 et-xmlfile==1.1.0
@@ -59,3 +61,4 @@ typing_extensions==4.0.1
 tzdata==2021.5
 tzlocal==4.1
 urllib3==1.26.7
+

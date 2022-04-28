@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'simple_history',
     # own
+    'api',
     'projects',
     'project_tracker',
     'stakeholders',
@@ -102,7 +103,7 @@ WSGI_APPLICATION = 'project_tracker.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3_api',
     }
 }
 

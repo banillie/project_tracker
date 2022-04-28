@@ -33,6 +33,7 @@ urlpatterns = [
     path("download/", download_view, name="download"),
     path("download_master/", download_master, name="download_master"),
     path("admin/", admin.site.urls),
+    path("api/", include('api.urls')),
     path("login/", login_view),
     path("logout/", logout_view),
     path("register/", register_view),
