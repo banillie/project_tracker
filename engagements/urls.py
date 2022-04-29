@@ -7,11 +7,13 @@ from .views import (
     EngagementCreateView,
     EngagementUpdateView,
     # engagement_create_view,
+    EngagementDetailAPIView
 )
 
 app_name = "engagements"
 urlpatterns = [
     path("", engagement_list_view, name="engagement-list"),
+    path("<int:pk>/", EngagementDetailAPIView.as_view()),
     # path("create/", engagement_create_view, name="engagement-create"),
     path("create/", login_required(EngagementCreateView.as_view()), name="engagement-create"),
     path("<int:id>/", engagement_detail_view, name="engagement-detail"),

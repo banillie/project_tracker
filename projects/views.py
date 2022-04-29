@@ -7,10 +7,41 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
+from rest_framework import generics
+
 from engagements.models import Engagement
 from stakeholders.models import Stakeholder
 from .forms import ProjectForm
 from .models import Project
+from .serializers import ProjectSerializer
+
+
+class ProjectListAPIView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+
+class ProjectCreateAPIView(generics.CreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+
+    # additional context in save
+    def perform_create(self, serializer):
+        # serializer.save(user=self.request.user)
+        print(serializer)
+        serializer.save()
+        # send a Django signal.
+
+
+class ProjectDetailAPIView(generics.RetrieveAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    # lookup_field = 'pk'
+
+    # get queryset(): # custom qs
+
+
+project_api_detail_view = ProjectDetailAPIView.as_view()
 
 
 @login_required

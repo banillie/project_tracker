@@ -7,11 +7,17 @@ from .views import (
     project_delete_view,
     project_list_view,
     project_search_view,
+    ProjectDetailAPIView,
+    ProjectCreateAPIView,
+    ProjectListAPIView,
 )
 
 app_name = 'projects'
 urlpatterns = [
-    path("", project_list_view, name='list'),
+    # path("", project_list_view, name='list'),
+    path('', ProjectCreateAPIView.as_view()),
+    path("<int:pk>/", ProjectDetailAPIView.as_view()),
+    path('list/', ProjectListAPIView.as_view()),
     # path("search/", project_search_view, name='search'),
     path("create/", project_create_view, name='create'),
     # path("hx/<slug:slug>/", project_detail_hx_view, name='hx-detail'),

@@ -3,9 +3,24 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
+
 from easy_select2 import select2_modelform
+from rest_framework import generics
+
 from .models import Engagement
 from .forms import EngagementForm
+from .serializers import EngagementSerializer
+
+
+class EngagementDetailAPIView(generics.RetrieveAPIView):
+    queryset = Engagement.objects.all()
+    serializer_class = EngagementSerializer
+    # lookup_field = 'pk'
+
+    # get queryset(): # custom qs
+
+
+project_api_detail_view = EngagementDetailAPIView.as_view()
 
 
 # @login_required

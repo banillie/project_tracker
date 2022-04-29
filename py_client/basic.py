@@ -1,15 +1,22 @@
 import requests
 
+TYPE_CHOICES = [
+    ("Project", "PROJECT"),
+    ("Programme", "PROGRAMME"),
+    ("Portfolio", "PORTFOLIO"),
+]
+
+
 # endpoint = "https://httpbin.org/anything"
 endpoint ="http://localhost:8000/api/"
 # endpoint = "https://httpbin.org/status/200/"
 
 
-get_response = requests.get(
-    endpoint,
-    params={"abc": 123},
-    json={"query": "Hello World"}
-    )  # HTTPs request
+get_response = requests.post(endpoint, json={
+    "name": 'api project 4',
+    "type": 'Project',
+    "abbreviation": 'apip 4',
+    })  # HTTPs request
 
 # print(get_response.text)
 # print(get_response.status_code)

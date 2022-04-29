@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'storages',
     'crispy_forms',
     'simple_history',
+    'rest_framework',
     # own
     'api',
     'projects',

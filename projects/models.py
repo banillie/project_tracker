@@ -74,6 +74,9 @@ class Project(models.Model):
 
     objects = ProjectManager()
 
+    def sluggy_slug(self):
+        return f"sluggy_{self.slug}"
+
     def get_absolute_url(self):
         return reverse("projects:detail", kwargs={"slug": self.slug})
 
