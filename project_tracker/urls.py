@@ -24,19 +24,18 @@ from pages.views import home_view, search_view, download_master, download_view
 
 
 urlpatterns = [
+    path("", home_view, name="home"),
+
+    path("api/", include('api.urls')),
+
     path("projects/", include("projects.urls")),
     path("stakeholders/", include("stakeholders.urls")),
     path("ppdds/", include("ppdds.urls")),
     path("engagements/", include("engagements.urls")),
 
-    path("", home_view, name="home"),
     path("download/", download_view, name="download"),
     path("download_master/", download_master, name="download_master"),
     path("admin/", admin.site.urls),
-
-    path("api/", include('api.urls')),
-    path("api/projects/", include('projects.urls')),
-    path("api/engagements/", include('engagements.urls')),
 
     path("login/", login_view),
     path("logout/", logout_view),
