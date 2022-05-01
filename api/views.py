@@ -55,7 +55,7 @@ from engagements.serializers import EngagementSerializer
 #     #
 #     return Response(data)
 
-@api_view(["POST"])
+@api_view(["POST", "GET"])
 def api_home(request, *args, **kwargs):
     serializer = ProjectSerializer(data=request.data)
     if serializer.is_valid(raise_exception=True):

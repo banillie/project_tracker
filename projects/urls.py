@@ -6,10 +6,6 @@ from .views import (
     project_update_view,
     project_delete_view,
     project_list_view,
-    project_search_view,
-    ProjectDetailAPIView,
-    ProjectCreateAPIView,
-    ProjectListAPIView,
 )
 
 app_name = 'projects'

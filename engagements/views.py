@@ -12,6 +12,11 @@ from .forms import EngagementForm
 from .serializers import EngagementSerializer
 
 
+class EngagementListAPIView(generics.ListAPIView):
+    queryset = Engagement.objects.all()
+    serializer_class = EngagementSerializer
+
+
 class EngagementDetailAPIView(generics.RetrieveAPIView):
     queryset = Engagement.objects.all()
     serializer_class = EngagementSerializer

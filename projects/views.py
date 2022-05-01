@@ -16,12 +16,7 @@ from .models import Project
 from .serializers import ProjectSerializer
 
 
-class ProjectListAPIView(generics.ListAPIView):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-
-
-class ProjectCreateAPIView(generics.CreateAPIView):
+class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
 
@@ -41,7 +36,12 @@ class ProjectDetailAPIView(generics.RetrieveAPIView):
     # get queryset(): # custom qs
 
 
-project_api_detail_view = ProjectDetailAPIView.as_view()
+# class ProjectListAPIView(generics.ListAPIView):
+#     """
+#     Not using. Using ListCreateAPIView instead.
+#     """
+#     queryset = Project.objects.all()
+#     serializer_class = ProjectSerializer
 
 
 @login_required
