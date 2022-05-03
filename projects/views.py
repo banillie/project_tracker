@@ -7,7 +7,7 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from rest_framework import generics
+from rest_framework import authentication, generics, mixins, permissions
 
 from engagements.models import Engagement
 from stakeholders.models import Stakeholder
@@ -16,9 +16,14 @@ from .models import Project
 from .serializers import ProjectSerializer
 
 
+# permissions. new kind of permission based of user permissions.
+# but also permission declared on view -> problematic.
+
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    authentication_classes = [authentication.SessionAuthentication]
+    permission_classes = [permissions.DjangoModelPermissions]   # look at different permission classes
 
     # additional context in save
     def perform_create(self, serializer):
@@ -36,20 +41,53 @@ class ProjectDetailAPIView(generics.RetrieveAPIView):
     # get queryset(): # custom qs
 
 
-# class ProjectListAPIView(generics.ListAPIView):
-#     """
-#     Not using. Using ListCreateAPIView instead.
-#     """
-#     queryset = Project.objects.all()
-#     serializer_class = ProjectSerializer
+class ProjectUpdateAPIView(generics.UpdateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    lookup_field = "pk"
+
+    def perform_update(self, serializer):
+        instance = serializer.save()
+        # option to do something similar to perform create?
+
+    # get queryset(): # custom qs
+
+
+class ProjectDestroyAPIView(generics.DestroyAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    lookup_field = "pk"
+
+    def perform_destroy(self, instance):
+        super().perform_destroy(instance)
+
+
+# did to learn about mixings.
+class ProjectMixinView(
+    mixins.CreateModelMixin,
+    mixins.ListModelMixin,  # provides ability to declare qs and serializer_class
+    mixins.RetrieveModelMixin,
+    generics.GenericAPIView,
+):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    lookup_field = "pk"
+
+    def get(self, request, *args, **kwargs):  # HTTP -> get
+        print(args, kwargs)
+        pk = kwargs.get("pk")
+        if pk is not None:
+            return self.retrieve(request, *args, **kwargs)
+        return self.list(request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        return self.create(request, *args, **kwargs)
 
 
 @login_required
 def project_list_view(request):
-    queryset = Project.objects.all().order_by('name')
-    context = {
-        "object_list": queryset
-    }
+    queryset = Project.objects.all().order_by("name")
+    context = {"object_list": queryset}
     return render(request, "projects/list.html", context)
 
 
@@ -58,7 +96,7 @@ def project_delete_view(request, slug):
     obj = get_object_or_404(Project, slug=slug)  # handles page not found.
     if request.method == "POST":
         obj.delete()  # confirming delete
-        return redirect('../../')
+        return redirect("../../")
     context = {
         "object": obj,
     }
@@ -68,14 +106,16 @@ def project_delete_view(request, slug):
 @login_required
 def project_detail_view(request, slug):
     obj = get_object_or_404(Project, slug=slug)
-    engage_qs = Engagement.objects.filter(projects__slug=slug).order_by('-date')
+    engage_qs = Engagement.objects.filter(projects__slug=slug).order_by("-date")
     stake_qs = []
-    for x in engage_qs.all().values('stakeholders').distinct():
+    for x in engage_qs.all().values("stakeholders").distinct():
         try:
-            stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+            stake_qs.append(Stakeholder.objects.get(pk=x["stakeholders"]))
         except ObjectDoesNotExist:
             pass
-    stake_qs_ordered = list(set(sorted(stake_qs, key=operator.attrgetter('last_name')))) # remove repeats
+    stake_qs_ordered = list(
+        set(sorted(stake_qs, key=operator.attrgetter("last_name")))
+    )  # remove repeats
     context = {
         "object": obj,
         "engagement_list": engage_qs,
@@ -108,7 +148,7 @@ def project_detail_view(request, slug):
 
 @login_required
 def project_search_view(request):
-    query = request.GET.get('query')
+    query = request.GET.get("query")
     qs = Project.objects.search(query=query)
     context = {
         "object_list": qs,
@@ -121,12 +161,12 @@ def project_update_view(request, slug=None):
     obj = get_object_or_404(Project, slug=slug)
     form = ProjectForm(request.POST or None, instance=obj)
     context = {
-        'form': form,
+        "form": form,
         # 'object': obj,
     }
     if form.is_valid():
         form.save()
-        return redirect('../')
+        return redirect("../")
         # context['message'] = 'Date Saved'
     # if request.htmx:
     #     return render(request, "projects/partials/forms.html", context)
@@ -144,16 +184,9 @@ def project_create_view(request):
             obj.save()
             return redirect(obj.get_absolute_url())
         except IntegrityError:  # slug field set to unique
-            error_msg = 'Project already exists'
+            error_msg = "Project already exists"
     context = {
-        'form': form,
-        'error_msg': error_msg,
+        "form": form,
+        "error_msg": error_msg,
     }
     return render(request, "projects/create-update.html", context)
-
-
-
-
-
-
-

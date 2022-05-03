@@ -3,9 +3,9 @@ import requests
 endpoint ="http://localhost:8000/api/projects/"
 
 data = {
-    "name": "wouldn't it be nice",
+    "name": "teleology",
     "type": "Project",
-    "abbreviation": "wibn",
+    "abbreviation": "TELE",
 }
 get_response = requests.post(endpoint, json=data)
 
