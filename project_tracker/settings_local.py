@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'simple_history',
     'rest_framework',
+    'rest_framework.authtoken'
     # own
     'api',
     'projects',

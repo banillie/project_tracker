@@ -13,17 +13,22 @@ from engagements.models import Engagement
 from stakeholders.models import Stakeholder
 from .forms import ProjectForm
 from .models import Project
+from .permissions import IsStaffEditorPermission
 from .serializers import ProjectSerializer
 
 
 # permissions. new kind of permission based of user permissions.
 # but also permission declared on view -> problematic.
+# different types of permissions for each inherent view
 
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     authentication_classes = [authentication.SessionAuthentication]
-    permission_classes = [permissions.DjangoModelPermissions]   # look at different permission classes
+    permission_classes = [
+        permissions.IsAuthenticatedOrReadOnly,  # permissions.IsAdminUser equates to staff and could also be used.
+        IsStaffEditorPermission,
+    ]   # look at different permission classes
 
     # additional context in save
     def perform_create(self, serializer):
