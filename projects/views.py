@@ -9,6 +9,8 @@ from django.db import IntegrityError
 
 from rest_framework import authentication, generics, mixins, permissions
 
+from api.authentication import TokenAuthentication
+
 from engagements.models import Engagement
 from stakeholders.models import Stakeholder
 from .forms import ProjectForm
@@ -24,7 +26,10 @@ from .serializers import ProjectSerializer
 class ProjectListCreateAPIView(generics.ListCreateAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    authentication_classes = [authentication.SessionAuthentication]
+    authentication_classes = [
+        authentication.SessionAuthentication,
+        TokenAuthentication,
+    ]
     permission_classes = [
         permissions.IsAuthenticatedOrReadOnly,  # permissions.IsAdminUser equates to staff and could also be used.
         IsStaffEditorPermission,

@@ -1,6 +1,6 @@
-from django.urls import path
-
 from django.urls import include, path
+
+from rest_framework.authtoken.views import obtain_auth_token
 
 from . import views
 
@@ -14,6 +14,7 @@ from projects.views import (
 from engagements.views import EngagementDetailAPIView, EngagementListAPIView
 
 urlpatterns = [
+    path('auth/', obtain_auth_token),
     path("", views.api_home),  # localhost8000/api
     path("projects/", ProjectListCreateAPIView.as_view()),
     path("projects/<int:pk>/", ProjectDetailAPIView.as_view()),
