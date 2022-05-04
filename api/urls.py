@@ -9,13 +9,16 @@ from projects.views import (
     ProjectDetailAPIView,
     ProjectUpdateAPIView,
     ProjectDestroyAPIView,
-    ProjectMixinView,
+    # ProjectMixinView,
 )
 from engagements.views import EngagementDetailAPIView, EngagementListAPIView
 
 urlpatterns = [
     path('auth/', obtain_auth_token),
     path("", views.api_home),  # localhost8000/api
+
+    path('v2/', include('project_tracker.routers')),
+
     path("projects/", ProjectListCreateAPIView.as_view()),
     path("projects/<int:pk>/", ProjectDetailAPIView.as_view()),
     path("projects/<int:pk>/delete/", ProjectDestroyAPIView.as_view()),

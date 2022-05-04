@@ -2,20 +2,16 @@ import operator
 
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
-from django.http import HttpResponse, Http404
-from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.db import IntegrityError
 
-from rest_framework import authentication, generics, mixins, permissions
-
-from api.authentication import TokenAuthentication
+from rest_framework import generics, mixins, permissions
 
 from engagements.models import Engagement
 from stakeholders.models import Stakeholder
 from .forms import ProjectForm
 from .models import Project
-from .permissions import IsStaffEditorPermission
+from api.mixins import StaffEditorPermissionMixin
 from .serializers import ProjectSerializer
 
 
@@ -23,17 +19,24 @@ from .serializers import ProjectSerializer
 # but also permission declared on view -> problematic.
 # different types of permissions for each inherent view
 
-class ProjectListCreateAPIView(generics.ListCreateAPIView):
+class ProjectListCreateAPIView(
+    StaffEditorPermissionMixin,
+    generics.ListCreateAPIView
+):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    authentication_classes = [
-        authentication.SessionAuthentication,
-        TokenAuthentication,
-    ]
-    permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,  # permissions.IsAdminUser equates to staff and could also be used.
-        IsStaffEditorPermission,
-    ]   # look at different permission classes
+    # handled in settings
+    # authentication_classes = [
+    #     authentication.SessionAuthentication,
+    #     TokenAuthentication,
+    # ]
+
+    # permissions.IsAdminUser equates to staff and could also be used.
+    # look at different permission classes
+    # permission_classes = [
+    #     permissions.IsAuthenticatedOrReadOnly,
+    #     IsStaffEditorPermission,
+    # ]
 
     # additional context in save
     def perform_create(self, serializer):
@@ -43,7 +46,10 @@ class ProjectListCreateAPIView(generics.ListCreateAPIView):
         # send a Django signal.
 
 
-class ProjectDetailAPIView(generics.RetrieveAPIView):
+class ProjectDetailAPIView(
+    StaffEditorPermissionMixin,
+    generics.RetrieveAPIView
+):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     # lookup_field = 'pk'
@@ -51,7 +57,10 @@ class ProjectDetailAPIView(generics.RetrieveAPIView):
     # get queryset(): # custom qs
 
 
-class ProjectUpdateAPIView(generics.UpdateAPIView):
+class ProjectUpdateAPIView(
+    StaffEditorPermissionMixin,
+    generics.UpdateAPIView
+):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     lookup_field = "pk"
@@ -63,7 +72,10 @@ class ProjectUpdateAPIView(generics.UpdateAPIView):
     # get queryset(): # custom qs
 
 
-class ProjectDestroyAPIView(generics.DestroyAPIView):
+class ProjectDestroyAPIView(
+    StaffEditorPermissionMixin,
+    generics.DestroyAPIView
+):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
     lookup_field = "pk"
@@ -73,25 +85,25 @@ class ProjectDestroyAPIView(generics.DestroyAPIView):
 
 
 # did to learn about mixings.
-class ProjectMixinView(
-    mixins.CreateModelMixin,
-    mixins.ListModelMixin,  # provides ability to declare qs and serializer_class
-    mixins.RetrieveModelMixin,
-    generics.GenericAPIView,
-):
-    queryset = Project.objects.all()
-    serializer_class = ProjectSerializer
-    lookup_field = "pk"
-
-    def get(self, request, *args, **kwargs):  # HTTP -> get
-        print(args, kwargs)
-        pk = kwargs.get("pk")
-        if pk is not None:
-            return self.retrieve(request, *args, **kwargs)
-        return self.list(request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        return self.create(request, *args, **kwargs)
+# class ProjectMixinView(
+#     mixins.CreateModelMixin,
+#     mixins.ListModelMixin,  # provides ability to declare qs and serializer_class
+#     mixins.RetrieveModelMixin,
+#     generics.GenericAPIView,
+# ):
+#     queryset = Project.objects.all()
+#     serializer_class = ProjectSerializer
+#     lookup_field = "pk"
+#
+#     def get(self, request, *args, **kwargs):  # HTTP -> get
+#         print(args, kwargs)
+#         pk = kwargs.get("pk")
+#         if pk is not None:
+#             return self.retrieve(request, *args, **kwargs)
+#         return self.list(request, *args, **kwargs)
+#
+#     def post(self, request, *args, **kwargs):
+#         return self.create(request, *args, **kwargs)
 
 
 @login_required
