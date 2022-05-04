@@ -19,8 +19,8 @@ urlpatterns = [
 
     path('v2/', include('project_tracker.routers')),
 
-    path("projects/", ProjectListCreateAPIView.as_view()),
-    path("projects/<int:pk>/", ProjectDetailAPIView.as_view()),
+    path("projects/", ProjectListCreateAPIView.as_view(), name='project-list'),
+    path("projects/<slug>/", ProjectDetailAPIView.as_view(), name='project-detail'),
     path("projects/<int:pk>/delete/", ProjectDestroyAPIView.as_view()),
     path("projects/<int:pk>/update/", ProjectUpdateAPIView.as_view()),
     # path('projects/list/', ProjectListAPIView.as_view()),

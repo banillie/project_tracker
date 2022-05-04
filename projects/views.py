@@ -20,11 +20,13 @@ from .serializers import ProjectSerializer
 # different types of permissions for each inherent view
 
 class ProjectListCreateAPIView(
+    generics.ListCreateAPIView,
     StaffEditorPermissionMixin,
-    generics.ListCreateAPIView
 ):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
+    # lookup_field = 'slug'
+
     # handled in settings
     # authentication_classes = [
     #     authentication.SessionAuthentication,
@@ -38,12 +40,12 @@ class ProjectListCreateAPIView(
     #     IsStaffEditorPermission,
     # ]
 
-    # additional context in save
-    def perform_create(self, serializer):
-        # serializer.save(user=self.request.user)
-        print(serializer)
-        serializer.save()
-        # send a Django signal.
+    # # option to provide additional context in save
+    # def perform_create(self, serializer):
+    #     # serializer.save(user=self.request.user)
+    #     print(serializer)
+    #     serializer.save()
+    #     # send a Django signal.
 
 
 class ProjectDetailAPIView(
@@ -51,8 +53,9 @@ class ProjectDetailAPIView(
     generics.RetrieveAPIView
 ):
     queryset = Project.objects.all()
+    # could change the Serializer to a DetailSerializer
     serializer_class = ProjectSerializer
-    # lookup_field = 'pk'
+    lookup_field = 'slug'
 
     # get queryset(): # custom qs
 
@@ -68,8 +71,6 @@ class ProjectUpdateAPIView(
     def perform_update(self, serializer):
         instance = serializer.save()
         # option to do something similar to perform create?
-
-    # get queryset(): # custom qs
 
 
 class ProjectDestroyAPIView(
