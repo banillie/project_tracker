@@ -1,11 +1,14 @@
 from django import forms
 
 from .models import Project, Stage
+from .validators import validate_name, validate_abb
 
 
 class ProjectForm(forms.ModelForm):
     # name = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 1}))
     # scope = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 50, 'rows': 20}))
+    name = forms.CharField(validators=[validate_name])
+    abbreviation = forms.CharField(validators=[validate_abb])
 
     class Meta:
         model = Project

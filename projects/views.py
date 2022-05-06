@@ -25,14 +25,14 @@ class ProjectListCreateAPIView(
 ):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    # lookup_field = 'slug'
+    lookup_field = 'slug'
 
     # handled in settings
     # authentication_classes = [
     #     authentication.SessionAuthentication,
     #     TokenAuthentication,
     # ]
-
+    #
     # permissions.IsAdminUser equates to staff and could also be used.
     # look at different permission classes
     # permission_classes = [
@@ -40,12 +40,12 @@ class ProjectListCreateAPIView(
     #     IsStaffEditorPermission,
     # ]
 
-    # # option to provide additional context in save
-    # def perform_create(self, serializer):
-    #     # serializer.save(user=self.request.user)
-    #     print(serializer)
-    #     serializer.save()
-    #     # send a Django signal.
+    # option to provide additional context in save
+    def perform_create(self, serializer):
+        # serializer.save(user=self.request.user)
+        print(serializer)
+        serializer.save()
+        # send a Django signal.
 
 
 class ProjectDetailAPIView(
@@ -111,6 +111,8 @@ class ProjectDestroyAPIView(
 def project_list_view(request):
     queryset = Project.objects.all().order_by("name")
     context = {"object_list": queryset}
+    for instance in queryset:
+        print(instance.get_absolute_url())
     return render(request, "projects/list.html", context)
 
 
@@ -199,17 +201,17 @@ def project_update_view(request, slug=None):
 @login_required
 def project_create_view(request):
     form = ProjectForm(request.POST or None)
-    error_msg = None
+    # error_msg = None
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
-        try:
-            obj.save()
-            return redirect(obj.get_absolute_url())
-        except IntegrityError:  # slug field set to unique
-            error_msg = "Project already exists"
+        # try:
+        obj.save()
+        return redirect(obj.get_absolute_url())
+        # except IntegrityError:  # slug field set to unique
+        #     error_msg = "Project already exists"
     context = {
         "form": form,
-        "error_msg": error_msg,
+        # "error_msg": error_msg,
     }
     return render(request, "projects/create-update.html", context)

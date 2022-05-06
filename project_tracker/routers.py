@@ -6,6 +6,6 @@ from projects.viewsets import ProjectGenericViewSet
 router = DefaultRouter()
 router.register('projects', ProjectGenericViewSet, basename='projects')
 
-print(router.urls)
+# print(router.urls)
 
 urlpatterns = router.urls

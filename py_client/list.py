@@ -1,5 +1,6 @@
 import requests
 from getpass import getpass
+import json
 
 auth_endpoint ="http://localhost:8000/api/auth/"
 username = input("What is your user name?\n")
@@ -20,5 +21,9 @@ if auth_response.status_code == 200:
     endpoint ="http://localhost:8000/api/projects/"
 
     get_response = requests.get(endpoint, headers=headers)
+
+    # save_path = "api.json"
+    # with open(save_path, "w") as write_file:
+    #     json.dump(get_response.json(), write_file)
 
     print(get_response.json())

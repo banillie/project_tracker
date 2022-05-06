@@ -48,6 +48,12 @@ class ProjectSerializer(serializers.ModelSerializer):
     #     # rest_framework reverse is different to django reverse
     #     return reverse("project-detail", kwargs={"pk": obj.pk}, request=request)
 
+    # def validate_name(self, value):
+    #     qs = Project.objects.filter(name__exact=value)
+    #     if qs.exists():
+    #         raise serializers.ValidationError(f"{value} is already a project name")
+    #     return value
+
     def get_my_slug(self, obj):
         if not hasattr(obj, 'id'):
             return None
