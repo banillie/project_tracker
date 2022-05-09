@@ -50,9 +50,17 @@ class EngagementCreateView(CreateView):
     # success_url = reverse_lazy('engagement-form')
     template_name = "engagements/engagement_create.html"
 
+    # def form_valid(self, form):
+    #     # print(form.cleaned_data)
+    #     return super().form_valid(form)
+
     def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
+        form.instance.user = self.request.user
+        form.save()
+        return super(EngagementCreateView, self).form_valid(form)
+
+
+
 
 
 class EngagementUpdateView(UpdateView):

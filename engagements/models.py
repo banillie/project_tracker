@@ -8,7 +8,7 @@ from django.db.models import Q
 
 from simple_history.models import HistoricalRecords
 
-User = settings.AUTH_USER_MODEL
+User = settings.AUTH_USER_MODEL   # default user model
 
 
 # class EngagementQuerySet(models.QuerySet):
@@ -60,6 +60,7 @@ class EngagementTopic(models.Model):
 
 
 class Engagement(models.Model):
+    # blank=False default=1
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     date = models.DateField()
     projects = models.ManyToManyField(Project)
