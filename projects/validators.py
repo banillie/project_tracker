@@ -1,7 +1,8 @@
 from rest_framework import serializers
 from django import forms
-
 from .models import Project
+
+# DRF also has UniqueValidator option.
 
 
 def validate_name(value):
@@ -16,3 +17,5 @@ def validate_abb(value):
     if qs.exists():
         raise forms.ValidationError("This abbreviation is being use by another project.")
     return value
+
+

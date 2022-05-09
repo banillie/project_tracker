@@ -12,6 +12,7 @@ class ProjectSerializer(serializers.ModelSerializer):
         lookup_field='slug',
     )
     # cost = serializers.IntegerField(write_only=True)
+    created_by = serializers.CharField(source='user', read_only=True)
 
     class Meta:
         model = Project
@@ -24,7 +25,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             'tier',
             'abbreviation',
             'dft_group',
-            # 'cost',
+            'created_by',
             'scope',
             'my_slug',
             'slug',
