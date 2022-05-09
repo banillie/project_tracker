@@ -11,7 +11,7 @@ from engagements.models import Engagement
 from stakeholders.models import Stakeholder
 from .forms import ProjectForm
 from .models import Project
-from api.mixins import StaffEditorPermissionMixin
+from api.mixins import StaffEditorPermissionMixin, UserQuerySetMixin
 from .serializers import ProjectSerializer
 
 
@@ -20,8 +20,9 @@ from .serializers import ProjectSerializer
 # different types of permissions for each inherent view
 
 class ProjectListCreateAPIView(
-    generics.ListCreateAPIView,
+    # UserQuerySetMixin,
     StaffEditorPermissionMixin,
+    generics.ListCreateAPIView,
 ):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
@@ -41,11 +42,19 @@ class ProjectListCreateAPIView(
     # ]
 
     # option to provide additional context in save
-    def perform_create(self, serializer):
-        # serializer.save(user=self.request.user)
-        print(serializer)
-        serializer.save()
+    # def perform_create(self, serializer):
+    #     # serializer.save(user=self.request.user)
+    #     print(serializer)
+    #     serializer.save()
         # send a Django signal.
+
+    # def get_queryset(self, *args, **kwargs):
+    #     qs = super().get_queryset(*args, **kwargs)
+    #     request = self.request
+    #     user = request.user
+    #     if not user.is_authenticated:
+    #         return Project.objects.none()
+    #     return qs.filter(user=user)
 
 
 class ProjectDetailAPIView(

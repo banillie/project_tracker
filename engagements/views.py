@@ -60,9 +60,6 @@ class EngagementCreateView(CreateView):
         return super(EngagementCreateView, self).form_valid(form)
 
 
-
-
-
 class EngagementUpdateView(UpdateView):
     model = Engagement
     form_class = EngagementForm
@@ -75,7 +72,7 @@ class EngagementUpdateView(UpdateView):
         return get_object_or_404(Engagement, id=id_)
 
     def form_valid(self, form):
-        print(form.cleaned_data)
+        # print(form.cleaned_data)
         return super().form_valid(form)
 
 
