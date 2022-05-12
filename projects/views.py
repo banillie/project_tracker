@@ -120,8 +120,8 @@ class ProjectDestroyAPIView(
 def project_list_view(request):
     queryset = Project.objects.all().order_by("name")
     context = {"object_list": queryset}
-    for instance in queryset:
-        print(instance.get_absolute_url())
+    # for instance in queryset:
+    #     print(instance.get_absolute_url())
     return render(request, "projects/list.html", context)
 
 

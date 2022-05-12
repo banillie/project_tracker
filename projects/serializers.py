@@ -17,6 +17,8 @@ class ProjectSerializer(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = [
+            'created_by',
+            # 'user',
             'url',
             'pk',
             'id',
@@ -25,7 +27,6 @@ class ProjectSerializer(serializers.ModelSerializer):
             'tier',
             'abbreviation',
             'dft_group',
-            'created_by',
             'scope',
             'my_slug',
             'slug',
