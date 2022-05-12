@@ -12,7 +12,7 @@ from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from engagements.models import Engagement
 
-from data_wraggling.upload import excel_download
+from data_wraggling.upload import excel_download_pbi
 
 
 def home_view(request, *args, **kwargs):
@@ -48,6 +48,20 @@ def download_view(request, *args, **kwargs):
 
 
 # @user_passes_test(lambda u: u.is_superuser)
+# @login_required
+# def download_master(request):
+#     today = datetime.date.today()
+#     file_name = f"engagement_tracker_master_{today}.xlsx"
+#     # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
+#     with tempfile.TemporaryDirectory() as tmpdir:
+#         save_path = os.path.join(tmpdir, file_name)
+#         excel_download(save_path)
+#         with open(save_path, "rb") as excel:
+#             data = excel.read()
+#             response = HttpResponse(data, content_type="application/vnd.ms-excel")
+#             response["Content-Disposition"] = f"attachment; filename={file_name}"
+#             return response
+
 @login_required
 def download_master(request):
     today = datetime.date.today()
@@ -55,7 +69,7 @@ def download_master(request):
     # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
     with tempfile.TemporaryDirectory() as tmpdir:
         save_path = os.path.join(tmpdir, file_name)
-        excel_download(save_path)
+        excel_download_pbi(save_path)
         with open(save_path, "rb") as excel:
             data = excel.read()
             response = HttpResponse(data, content_type="application/vnd.ms-excel")

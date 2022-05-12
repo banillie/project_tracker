@@ -28,7 +28,6 @@ urlpatterns = [
     path("stakeholders/", include("stakeholders.urls")),
     path("ppdds/", include("ppdds.urls")),
     path("engagements/", include("engagements.urls")),
-
     path("", home_view, name="home"),
     path("download/", download_view, name="download"),
     path("download_master/", download_master, name="download_master"),

@@ -186,13 +186,110 @@ from openpyxl import load_workbook, Workbook
 #         return json.load(handle)
 
 
-def excel_download(output: str) -> None:
-    wb = Workbook()
+# def excel_download(output: str) -> None:
+#     wb = Workbook()
+#
+#     ws = wb.create_sheet("Engagements")  # Engagement output
+#     fields_all = [f.name for f in Engagement._meta.get_fields()]
+#     remove = ['id',
+#               'user']  # fields currently not reqired for user
+#     fields = [x for x in fields_all if x not in remove]
+#
+#     for x, f in enumerate(fields):
+#         ws.cell(row=1, column=x + 1).value = f.upper()
+#         for i, p in enumerate(Engagement.objects.all().order_by('-date')):  # order by date
+#             try:
+#                 ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+#                 if isinstance(getattr(p, f), datetime.date):
+#                     ws.cell(row=i + 2, column=x + 1).number_format = "dd/mm/yy"
+#             except ValueError:
+#                 m2m_list = []
+#                 attribute_list = getattr(p, f).all()  # for many-to-many model instance fields.
+#                 for y in attribute_list:
+#                     m2m_list.append(str(y))
+#                 ws.cell(row=i + 2, column=x + 1).value = ', '.join(m2m_list)
+#
+#     ws = wb.create_sheet("Projects")  # Project output
+#     fields_all = [f.name for f in Project._meta.get_fields()]
+#     remove = [
+#         "engagement",
+#         "id",
+#         "user",
+#         "slug",
+#         "governance",
+#         "stage",
+#         "live",
+#         "timestamp",
+#         "updated",
+#     ]  # fields currently not reqired for user
+#     fields = [x for x in fields_all if x not in remove]
+#
+#     for x, f in enumerate(fields):
+#         ws.cell(row=1, column=x + 1).value = f.upper()
+#         for i, p in enumerate(Project.objects.all()):
+#             val = getattr(p, f)
+#             try:
+#                 ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+#             except ValueError:
+#                 if val is not None:
+#                     ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
+#                 else:
+#                     ''
+#
+#     ws = wb.create_sheet("Stakeholders")  # Stakeholder output
+#     fields_all = [f.name for f in Stakeholder._meta.get_fields()]
+#     remove = ['engagement',
+#               'id',
+#               'user',
+#               'slug',
+#               'group',
+#               'live'] # fields currently not reqired for user
+#     fields = [x for x in fields_all if x not in remove]
+#
+#     for x, f in enumerate(fields):
+#         ws.cell(row=1, column=x + 1).value = f.upper()
+#         for i, p in enumerate(Stakeholder.objects.all().order_by('last_name')):
+#             try:
+#                 ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+#             except ValueError:
+#                 ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
+#
+#     ws = wb.create_sheet("PPDD")  # PPDD output
+#     fields_all = [f.name for f in PPDD._meta.get_fields()]
+#     remove = ['engagement',
+#               'id',
+#               'user',
+#               'slug',
+#               'tele_no',
+#               'live']  # fields currently not reqired for user
+#     fields = [x for x in fields_all if x not in remove]
+#
+#     for x, f in enumerate(fields):
+#         ws.cell(row=1, column=x + 1).value = f.upper()
+#         for i, p in enumerate(PPDD.objects.all().order_by('last_name')):
+#             try:
+#                 ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+#             except ValueError:
+#                 ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
+#
+#     wb.remove(wb["Sheet"])
+#
+#     wb.save(output)
 
+
+def excel_download_pbi(output: str) -> None:
+    wb = Workbook()
     ws = wb.create_sheet("Engagements")  # Engagement output
     fields_all = [f.name for f in Engagement._meta.get_fields()]
-    remove = ['id',
-              'user']  # fields currently not reqired for user
+    remove = [
+        # 'id',
+        'user',
+        'projects',
+        'stakeholders',
+        'ppdds',
+        'topics',
+        'summary',
+        ]
     fields = [x for x in fields_all if x not in remove]
 
     for x, f in enumerate(fields):
@@ -213,7 +310,7 @@ def excel_download(output: str) -> None:
     fields_all = [f.name for f in Project._meta.get_fields()]
     remove = [
         "engagement",
-        "id",
+        # "id",
         "user",
         "slug",
         "governance",
@@ -221,6 +318,7 @@ def excel_download(output: str) -> None:
         "live",
         "timestamp",
         "updated",
+        "scope"
     ]  # fields currently not reqired for user
     fields = [x for x in fields_all if x not in remove]
 
