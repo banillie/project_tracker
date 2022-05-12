@@ -306,6 +306,16 @@ def excel_download_pbi(output: str) -> None:
                     m2m_list.append(str(y))
                 ws.cell(row=i + 2, column=x + 1).value = ', '.join(m2m_list)
 
+    ws = wb.create_sheet('Engagement_Topics')
+    et_qs = Engagement.objects.raw(
+        'SELECT * FROM engagements_engagement_topics'
+    )
+    for x, f in enumerate(et_qs):
+        ws.cell(row=x + 2, column=1).value = f.id
+        ws.cell(row=x + 2, column=2).value = f.engagement_id
+        ws.cell(row=x + 2, column=3).value = f.engagementtopic_id
+
+
     ws = wb.create_sheet("Projects")  # Project output
     fields_all = [f.name for f in Project._meta.get_fields()]
     remove = [
