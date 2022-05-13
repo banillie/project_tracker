@@ -314,6 +314,7 @@ def excel_download_pbi(output: str) -> None:
         ws.cell(row=x + 2, column=1).value = f.id
         ws.cell(row=x + 2, column=2).value = f.engagement_id
         ws.cell(row=x + 2, column=3).value = f.engagementtopic_id
+        ws.cell(row=x + 2, column=4).value = str(EngagementTopic.objects.get(pk=f.engagementtopic_id))
 
 
     ws = wb.create_sheet("Projects")  # Project output
