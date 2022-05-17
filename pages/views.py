@@ -65,7 +65,7 @@ def download_view(request, *args, **kwargs):
 @login_required
 def download_master(request):
     today = datetime.date.today()
-    file_name = f"engagement_tracker_master_{today}.xlsx"
+    file_name = f"ppdd_engagement_tracker_pbi_data_{today}.xlsx"
     # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
     with tempfile.TemporaryDirectory() as tmpdir:
         save_path = os.path.join(tmpdir, file_name)

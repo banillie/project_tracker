@@ -314,8 +314,35 @@ def excel_download_pbi(output: str) -> None:
         ws.cell(row=x + 2, column=1).value = f.id
         ws.cell(row=x + 2, column=2).value = f.engagement_id
         ws.cell(row=x + 2, column=3).value = f.engagementtopic_id
-        ws.cell(row=x + 2, column=4).value = str(EngagementTopic.objects.get(pk=f.engagementtopic_id))
+        ws.cell(row=x + 2, column=4).value = str(EngagementTopic.objects.get(id=f.engagementtopic_id))
 
+    ws.cell(row=1, column=1).value = 'ID'
+    ws.cell(row=1, column=2).value = 'ENGAGEMENT ID'
+    ws.cell(row=1, column=3).value = 'ENGAGEMENT_TOPIC ID'
+    ws.cell(row=1, column=4).value = 'ENGAGEMENT_TOPIC NAME'
+
+    ws = wb.create_sheet('Engagement_Projects')
+    ep_qs = Engagement.objects.raw(
+        'SELECT * FROM engagements_engagement_projects'
+    )
+    for x, ep in enumerate(ep_qs):
+        ws.cell(row=x + 2, column=1).value = ep.id
+        ws.cell(row=x + 2, column=2).value = ep.engagement_id
+        ws.cell(row=x + 2, column=3).value = ep.project_id
+        instance = Project.objects.get(id=ep.project_id)
+        ws.cell(row=x + 2, column=4).value = str(instance)
+        ws.cell(row=x + 2, column=5).value = str(instance.tier)
+        ws.cell(row=x + 2, column=6).value = str(instance.type)
+        ws.cell(row=x + 2, column=7).value = str(instance.dft_group)
+
+
+    ws.cell(row=1, column=1).value = 'ID'
+    ws.cell(row=1, column=2).value = 'ENGAGEMENT ID'
+    ws.cell(row=1, column=3).value = 'PROJECT ID'
+    ws.cell(row=1, column=4).value = 'PROJECT NAME'
+    ws.cell(row=1, column=5).value = 'PROJECT TIER'
+    ws.cell(row=1, column=6).value = 'PROJECT TYPE'
+    ws.cell(row=1, column=7).value = 'PROJECT GROUP'
 
     ws = wb.create_sheet("Projects")  # Project output
     fields_all = [f.name for f in Project._meta.get_fields()]
