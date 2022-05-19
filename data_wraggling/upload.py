@@ -292,6 +292,8 @@ def excel_download_pbi(output: str) -> None:
         ]
     fields = [x for x in fields_all if x not in remove]
 
+    print(fields)
+
     for x, f in enumerate(fields):
         ws.cell(row=1, column=x + 1).value = f.upper()
         for i, p in enumerate(Engagement.objects.all().order_by('-date')):  # order by date
