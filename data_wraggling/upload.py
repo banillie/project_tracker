@@ -280,33 +280,44 @@ from openpyxl import load_workbook, Workbook
 def excel_download_pbi(output: str) -> None:
     wb = Workbook()
     ws = wb.create_sheet("Engagements")  # Engagement output
-    fields_all = [f.name for f in Engagement._meta.get_fields()]
-    remove = [
-        # 'id',
-        'user',
-        'projects',
-        'stakeholders',
-        'ppdds',
-        'topics',
-        'summary',
-        ]
-    fields = [x for x in fields_all if x not in remove]
 
-    print(fields)
+    e_qs = Engagement.objects.raw(
+        'SELECT * FROM engagements_engagement'
+    )
+    for x, f in enumerate(e_qs):
+        ws.cell(row=x + 2, column=1).value = f.id
+        ws.cell(row=x + 2, column=2).value = f.date
+        ws.cell(row=x + 2, column=2).number_format = "dd/mm/yy"
 
-    for x, f in enumerate(fields):
-        ws.cell(row=1, column=x + 1).value = f.upper()
-        for i, p in enumerate(Engagement.objects.all().order_by('-date')):  # order by date
-            try:
-                ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
-                if isinstance(getattr(p, f), datetime.date):
-                    ws.cell(row=i + 2, column=x + 1).number_format = "dd/mm/yy"
-            except ValueError:
-                m2m_list = []
-                attribute_list = getattr(p, f).all()  # for many-to-many model instance fields.
-                for y in attribute_list:
-                    m2m_list.append(str(y))
-                ws.cell(row=i + 2, column=x + 1).value = ', '.join(m2m_list)
+    ws.cell(row=1, column=1).value = 'ENGAGEMENT_ID'
+    ws.cell(row=1, column=2).value = 'DATE'
+
+
+    ## Different method. Keep in case useful to refer to later
+    # fields_all = [f.name for f in Engagement._meta.get_fields()]
+    # remove = [
+    #     # 'id',
+    #     'user',
+    #     'projects',
+    #     'stakeholders',
+    #     'ppdds',
+    #     'topics',
+    #     'summary',
+    #     ]
+    # fields = [x for x in fields_all if x not in remove]
+    # for x, f in enumerate(fields):
+    #     ws.cell(row=1, column=x + 1).value = f.upper()
+    #     for i, p in enumerate(Engagement.objects.all().order_by('-date')):  # order by date
+    #         try:
+    #             ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+    #             if isinstance(getattr(p, f), datetime.date):
+    #                 ws.cell(row=i + 2, column=x + 1).number_format = "dd/mm/yy"
+    #         except ValueError:
+    #             m2m_list = []
+    #             attribute_list = getattr(p, f).all()  # for many-to-many model instance fields.
+    #             for y in attribute_list:
+    #                 m2m_list.append(str(y))
+    #             ws.cell(row=i + 2, column=x + 1).value = ', '.join(m2m_list)
 
     ws = wb.create_sheet('Engagement_Topics')
     et_qs = Engagement.objects.raw(
