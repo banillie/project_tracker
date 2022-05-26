@@ -20,7 +20,7 @@ from django.conf.urls.static import static
 from django.urls import include, path
 
 from accounts.views import login_view, logout_view, register_view
-from pages.views import home_view, search_view, download_master, download_view
+from pages.views import home_view, search_view, download_master, download_view, mi_view
 
 
 urlpatterns = [
@@ -31,6 +31,7 @@ urlpatterns = [
     path("", home_view, name="home"),
     path("download/", download_view, name="download"),
     path("download_master/", download_master, name="download_master"),
+    path("mi/", mi_view, name='mi'),
     path("admin/", admin.site.urls),
     path("login/", login_view),
     path("logout/", logout_view),

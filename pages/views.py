@@ -75,3 +75,7 @@ def download_master(request):
             response = HttpResponse(data, content_type="application/vnd.ms-excel")
             response["Content-Disposition"] = f"attachment; filename={file_name}"
             return response
+
+
+def mi_view(request, *args, **kwargs):
+    return render(request, "mi.html")
