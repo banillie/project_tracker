@@ -52,6 +52,7 @@ INSTALLED_APPS = [
     'crispy_forms',
     'simple_history',
     # own
+    'api',
     'projects',
     'project_tracker',
     'stakeholders',
