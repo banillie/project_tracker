@@ -27,6 +27,7 @@ urlpatterns = [
     path("", home_view, name="home"),
 
     path("api/", include("api.urls")),
+    path("api/projects/", include('projects.urls')),
 
     path("projects/", include("projects.urls")),
     path("stakeholders/", include("stakeholders.urls")),

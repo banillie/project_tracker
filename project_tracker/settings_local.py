@@ -45,12 +45,15 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_htmx',
+
     # third party
     'multiselectfield',
     'easy_select2',
     'storages',
     'crispy_forms',
     'simple_history',
+    'rest_framework',
+
     # own
     'api',
     'projects',

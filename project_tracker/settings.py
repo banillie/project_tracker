@@ -49,7 +49,7 @@ else:
 SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 # SECURITY WARNING: It's recommended that you use this when
 # running in production. The URL will be known once you first deploy
@@ -83,6 +83,7 @@ INSTALLED_APPS = [
     'storages',
     'crispy_forms',
     'simple_history',
+    'rest_framework',
 
     # own
     'api',
