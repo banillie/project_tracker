@@ -22,6 +22,12 @@ class ProjectDetailAPIView(generics.RetrieveAPIView):
     # lookup_field = 'pk'
 
 
+class ProjectListAPIView(generics.ListAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectSerializer
+    # lookup_field = 'pk'
+
+
 @login_required
 def project_list_view(request):
     queryset = Project.objects.all().order_by('name')
