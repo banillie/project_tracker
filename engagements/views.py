@@ -7,14 +7,19 @@ from django.contrib.auth.decorators import login_required
 from rest_framework import generics
 
 from easy_select2 import select2_modelform
-from .models import Engagement
+from .models import Engagement, EngagementTopic
 from .forms import EngagementForm
-from .serializers import EngagementSerializer
+from .serializers import EngagementSerializer, EngagementTopicSerializer
 
 
 class EngagementListAPIView(generics.ListAPIView):
     queryset = Engagement.objects.all()
     serializer_class = EngagementSerializer
+
+
+class EngagementTopicListAPIView(generics.ListAPIView):
+    queryset = EngagementTopic.objects.all()
+    serializer_class = EngagementTopicSerializer
 
 
 # @login_required
