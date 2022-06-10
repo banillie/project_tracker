@@ -25,7 +25,6 @@ class ProjectDetailAPIView(generics.RetrieveAPIView):
 class ProjectListAPIView(generics.ListAPIView):
     queryset = Project.objects.all()
     serializer_class = ProjectSerializer
-    # lookup_field = 'pk'
 
 
 @login_required

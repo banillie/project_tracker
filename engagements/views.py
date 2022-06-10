@@ -3,9 +3,18 @@ from django.urls import reverse_lazy
 from django.views.generic import UpdateView
 from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
+
+from rest_framework import generics
+
 from easy_select2 import select2_modelform
 from .models import Engagement
 from .forms import EngagementForm
+from .serializers import EngagementSerializer
+
+
+class EngagementListAPIView(generics.ListAPIView):
+    queryset = Engagement.objects.all()
+    serializer_class = EngagementSerializer
 
 
 # @login_required
