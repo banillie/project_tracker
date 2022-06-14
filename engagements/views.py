@@ -45,8 +45,10 @@ class EngagementCreateView(CreateView):
     template_name = "engagements/engagement_create.html"
 
     def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
+        # return super().form_valid(form)
+        form.instance.user = self.request.user
+        form.save()
+        return super(EngagementCreateView, self).form_valid(form)
 
 
 class EngagementUpdateView(UpdateView):
