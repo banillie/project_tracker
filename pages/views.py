@@ -12,7 +12,7 @@ from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from engagements.models import Engagement
 
-from data_wraggling.upload import excel_download_pbi
+from data_wraggling.upload import excel_download_pbi, excel_download
 
 
 def home_view(request, *args, **kwargs):
@@ -47,25 +47,24 @@ def download_view(request, *args, **kwargs):
     return render(request, "download.html")
 
 
-# @user_passes_test(lambda u: u.is_superuser)
-# @login_required
-# def download_master(request):
-#     today = datetime.date.today()
-#     file_name = f"engagement_tracker_master_{today}.xlsx"
-#     # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
-#     with tempfile.TemporaryDirectory() as tmpdir:
-#         save_path = os.path.join(tmpdir, file_name)
-#         excel_download(save_path)
-#         with open(save_path, "rb") as excel:
-#             data = excel.read()
-#             response = HttpResponse(data, content_type="application/vnd.ms-excel")
-#             response["Content-Disposition"] = f"attachment; filename={file_name}"
-#             return response
+@login_required
+def download_master_all(request):
+    today = datetime.date.today()
+    file_name = f"ppdd_engagement_tracker_data_{today}_full_output.xlsx"
+    # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
+    with tempfile.TemporaryDirectory() as tmpdir:
+        save_path = os.path.join(tmpdir, file_name)
+        excel_download(save_path)
+        with open(save_path, "rb") as excel:
+            data = excel.read()
+            response = HttpResponse(data, content_type="application/vnd.ms-excel")
+            response["Content-Disposition"] = f"attachment; filename={file_name}"
+            return response
 
 @login_required
 def download_master(request):
     today = datetime.date.today()
-    file_name = f"ppdd_engagement_tracker_pbi_data_{today}.xlsx"
+    file_name = f"ppdd_engagement_tracker_data_{today}_pbi.xlsx"
     # save_path = os.path.join(settings.MEDIA_ROOT, 'downloads', file_name)  # not using media root.
     with tempfile.TemporaryDirectory() as tmpdir:
         save_path = os.path.join(tmpdir, file_name)
