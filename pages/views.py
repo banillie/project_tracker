@@ -77,5 +77,6 @@ def download_master(request):
             return response
 
 
+@login_required
 def mi_view(request, *args, **kwargs):
     return render(request, "mi.html")
