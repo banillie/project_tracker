@@ -55,10 +55,12 @@ def ppdds_detail_view(request, slug):
     project_qs = []
     for x in engage_qs.all().values('projects').distinct():
         try:
-            project_qs.append(Project.objects.get(pk=x['projects']))
+            p = Project.objects.get(pk=x['projects'])
+            if p not in project_qs:  # remove repeats
+                project_qs.append(p)
         except ObjectDoesNotExist:
             pass
-    project_qs_ordered = list(set(sorted(project_qs, key=operator.attrgetter('name'))))  # remove repeats
+    project_qs_ordered = sorted(project_qs, key=operator.attrgetter('name'))
     context = {
         "object": obj,
         "engagement_list": engage_qs,

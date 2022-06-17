@@ -55,10 +55,12 @@ def project_detail_view(request, slug):
     stake_qs = []
     for x in engage_qs.all().values('stakeholders').distinct():
         try:
-            stake_qs.append(Stakeholder.objects.get(pk=x['stakeholders']))
+            sh = Stakeholder.objects.get(pk=x['stakeholders'])
+            if sh not in stake_qs:  # remove repeats
+                stake_qs.append(sh)
         except ObjectDoesNotExist:
             pass
-    stake_qs_ordered = list(set(sorted(stake_qs, key=operator.attrgetter('last_name')))) # remove repeats
+    stake_qs_ordered = sorted(stake_qs, key=operator.attrgetter('last_name'))
     context = {
         "object": obj,
         "engagement_list": engage_qs,
