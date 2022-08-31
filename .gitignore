@@ -121,3 +121,5 @@ media/downloads/*
 .github/
 project_tracker/cdn
 .idea
+commands.md
+notes.md

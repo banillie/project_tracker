@@ -1,4 +1,4 @@
-run-dev:
+dev-run:
 	python manage.py runserver --settings=project_tracker.settings_local
 
 dev-shell:
@@ -13,11 +13,24 @@ dev-makemigrations:
 dev-migrate:
 	python manage.py migrate --settings=project_tracker.settings_local
 
-start-sql-proxy:
-	./cloud_sql_proxy -instances="dft-ppd-prt-projectengtracker:europe-west1:tracker"=tcp:5432
-
-open-sql-proxy:
-	export GOOGLE_CLOUD_PROJECT=dft-ppd-prt-projectengtracker
-	export USE_CLOUD_SQL_AUTH_PROXY=true
+proxy-run:
 	python manage.py runserver
+
+proxy-sql-start:
+    /home/will/cloud_sql_proxy -instances=dft-ppd-prt-projectengtracker:europe-west1:tracker=tcp:6543
+
+proxy-sql-set:
+    export GOOGLE_CLOUD_PROJECT=dft-ppd-prt-projectengtracker
+	export USE_CLOUD_SQL_AUTH_PROXY=true
+
+proxy-migrate:
+	python manage.py migrate
+
+proxy-collectstatic:
+	python manage.py collectstatic
+
+
+
+
+
 

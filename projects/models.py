@@ -14,8 +14,8 @@ TYPE_CHOICES = [
     ("Project", "PROJECT"),
     ("Programme", "PROGRAMME"),
     ("Portfolio", "PORTFOLIO"),
+    ("Department", "DEPARTMENT")
 ]
-
 
 User = settings.AUTH_USER_MODEL
 

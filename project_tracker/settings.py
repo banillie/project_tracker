@@ -144,14 +144,15 @@ if os.getenv('GAE_APPLICATION', None):
         }
     }
 else:
+    print('This is the proxy')
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.postgresql',
             'HOST': '127.0.0.1',
-            'PORT': '5432',
-            'USER': env('USER_NAME'),
-            'PASSWORD': env('GCP_DB_PASSWORD'),
-            'NAME': env('DB_NAME'),
+            'PORT': '6543',
+            'USER': env('LOCAL_USER_NAME'),
+            'PASSWORD': env('LOCAL_GCP_DB_PASSWORD'),
+            'NAME': env('LOCAL_DB_NAME'),
         }
     }
 
