@@ -16,9 +16,6 @@ dev-migrate:
 proxy-run:
 	python manage.py runserver
 
-proxy-sql-start:
-    /home/will/cloud_sql_proxy -instances=dft-ppd-prt-projectengtracker:europe-west1:tracker=tcp:6543
-
 proxy-sql-set:
     export GOOGLE_CLOUD_PROJECT=dft-ppd-prt-projectengtracker
 	export USE_CLOUD_SQL_AUTH_PROXY=true
