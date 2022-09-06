@@ -200,7 +200,7 @@ def excel_download_pbi(output: str) -> None:
     )
     for x, f in enumerate(u_qs):
         ws.cell(row=x + 2, column=1).value = f.id
-        ws.cell(row=x + 2, column=2).value = f.username
+        ws.cell(row=x + 2, column=2).value = f.first_name + ' ' + f.last_name
     ws.cell(row=1, column=1).value = 'USER_ID'
     ws.cell(row=1, column=2).value = 'USERNAME'
 
