@@ -5,6 +5,8 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.translation import ugettext as _
 
+from .forms import SignUpForm
+
 
 @login_required
 def change_password_view(request):
@@ -24,7 +26,7 @@ def change_password_view(request):
 
 
 def register_view(request):
-    form = UserCreationForm(request.POST or None)
+    form = SignUpForm(request.POST or None)
     if form.is_valid():
         form.save()
         return redirect('/login')
