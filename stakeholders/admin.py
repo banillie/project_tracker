@@ -3,7 +3,6 @@ from simple_history.admin import SimpleHistoryAdmin
 
 from .models import Stakeholder, StakeholderOrg, DFTGroup
 
-
 class StakeholderAdmin(SimpleHistoryAdmin):
     # list_display = ['name', 'slug', 'timestamp', 'updated']
     fields = ['user', 'first_name', 'last_name', 'slug', 'organisation', 'dft_group', 'team', 'role']
