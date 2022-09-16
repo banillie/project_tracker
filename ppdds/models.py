@@ -44,7 +44,8 @@ class PPDD(models.Model):
     last_name = models.CharField(max_length=40)
     slug = models.SlugField(blank=True, null=True, unique=True)
     team = models.CharField(max_length=100, blank=True, null=True)
-    division = models.ForeignKey(PPDDDivison, on_delete=models.SET_NULL, null=True, blank=True)
+    division = models.ForeignKey(PPDDDivison, on_delete=models.SET_NULL, null=True, blank=True)  # could make unique
+    # true. Not essential at this time though.
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)  # active?

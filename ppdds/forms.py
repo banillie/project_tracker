@@ -14,12 +14,14 @@ class PPDDForm(forms.ModelForm):
         fields = [
             "first_name",
             "last_name",
+            "division",
             "role",
             "tele_no",
         ]
         widgets = {
             "first_name": forms.TextInput(attrs={'class': 'form-control'}),
             "last_name": forms.TextInput(attrs={'class': 'form-control'}),
+            "division": forms.Select(attrs={'class': 'form-control'}),
             "role": forms.TextInput(attrs={'class': 'form-control'}),
             "tele_no": forms.TextInput(attrs={'class': 'form-control'}),
         }

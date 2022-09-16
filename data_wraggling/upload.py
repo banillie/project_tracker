@@ -194,16 +194,56 @@ def excel_download_pbi(output: str) -> None:
                 else:
                     pass
 
+    ws = wb.create_sheet("PPDD")  # PPDD output
+    ppdd_qs = PPDD.objects.raw('SELECT * FROM ppdds_ppdd')
+    for x, f in enumerate(ppdd_qs):
+        ws.cell(row=x + 2, column=1).value = f.id
+        ws.cell(row=x + 2, column=2).value = f.first_name + ' ' + f.last_name
+        ws.cell(row=x + 2, column=3).value = str(f.division)
+        ws.cell(row=x + 2, column=4).value = f.team
+        ws.cell(row=x + 2, column=5).value = f.role
+
+    ws.cell(row=1, column=1).value = 'ID'
+    ws.cell(row=1, column=2).value = 'NAME'
+    ws.cell(row=1, column=3).value = 'DIVISION'
+    ws.cell(row=1, column=4).value = 'TEAM'
+    ws.cell(row=1, column=5).value = 'ROLE'
+
+    ## previous method for extracting data.
+    # fields_all = [f.name for f in PPDD._meta.get_fields()]
+    # remove = ['engagement',
+    #           'id',
+    #           'user',
+    #           'slug',
+    #           'tele_no',
+    #           'live']  # fields currently not reqired for user
+    # fields = [x for x in fields_all if x not in remove]
+    #
+    # for x, f in enumerate(fields):
+    #     ws.cell(row=1, column=x + 1).value = f.upper()
+    #     for i, p in enumerate(PPDD.objects.all().order_by('last_name')):
+    #         try:
+    #             ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+    #         except ValueError:
+    #             ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
+
     ws = wb.create_sheet("User")
     u_qs = User.objects.raw(
         'SELECT * FROM auth_user'
     )
     for x, f in enumerate(u_qs):
         ws.cell(row=x + 2, column=1).value = f.id
-        ws.cell(row=x + 2, column=2).value = f.first_name + ' ' + f.last_name
+        user_name = f.first_name + ' ' + f.last_name
+        ws.cell(row=x + 2, column=2).value = user_name
+        ## work around until extend user model with custom fields.
+        for v in ppdd_qs:
+            ppdd_name = v.first_name + ' ' + v.last_name
+            if ppdd_name == user_name:
+                ws.cell(row=x + 2, column=3).value = str(v.division)
+
     ws.cell(row=1, column=1).value = 'USER_ID'
     ws.cell(row=1, column=2).value = 'USERNAME'
-
+    ws.cell(row=1, column=3).value = 'DIVISION'
 
     ws = wb.create_sheet("Stakeholders")  # Stakeholder output
     fields_all = [f.name for f in Stakeholder._meta.get_fields()]
@@ -218,24 +258,6 @@ def excel_download_pbi(output: str) -> None:
     for x, f in enumerate(fields):
         ws.cell(row=1, column=x + 1).value = f.upper()
         for i, p in enumerate(Stakeholder.objects.all().order_by('last_name')):
-            try:
-                ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
-            except ValueError:
-                ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
-
-    ws = wb.create_sheet("PPDD")  # PPDD output
-    fields_all = [f.name for f in PPDD._meta.get_fields()]
-    remove = ['engagement',
-              'id',
-              'user',
-              'slug',
-              'tele_no',
-              'live']  # fields currently not reqired for user
-    fields = [x for x in fields_all if x not in remove]
-
-    for x, f in enumerate(fields):
-        ws.cell(row=1, column=x + 1).value = f.upper()
-        for i, p in enumerate(PPDD.objects.all().order_by('last_name')):
             try:
                 ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
             except ValueError:

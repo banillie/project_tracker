@@ -12,6 +12,9 @@
                     <b>Name: </b>{{ object.first_name }} {{object.last_name}}
                 </p>
                 <p>
+                    <b>Division: </b>{{ object.division }}
+                </p>
+                <p>
                     <b>Role: </b>{{ object.role }}
                 </p>
                  <p><a class="btn btn-primary" role="button" href="{{ object.get_absolute_url }}update">Update</a></p>
