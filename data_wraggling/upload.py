@@ -47,6 +47,7 @@ def excel_download(output: str) -> None:
         "engagement",
         # "id",
         # "user",
+        "type",
         "slug",
         "governance",
         "stage",
