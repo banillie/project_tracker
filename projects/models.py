@@ -55,11 +55,19 @@ class Stage(models.Model):
         return self.name
 
 
+class Type(models.Model):
+    name = models.CharField(max_length=60)
+
+    def __str__(self):
+        return self.name
+
+
 class Project(models.Model):
     user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
     name = models.CharField(max_length=120, null=False, unique=True)
     slug = models.SlugField(blank=True, null=True, unique=True)
     type = models.CharField(max_length=20, null=False, choices=TYPE_CHOICES)
+    sort = models.ForeignKey(Type, verbose_name='Type', on_delete=models.SET_NULL, null=True, blank=False)
     abbreviation = models.CharField(max_length=20, null=False)
     governance = models.CharField(max_length=20, blank=True, null=True)
     dft_group = models.ForeignKey(DFTGroup, on_delete=models.SET_NULL, null=True, blank=True)

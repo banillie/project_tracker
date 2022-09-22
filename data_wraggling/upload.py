@@ -155,7 +155,7 @@ def excel_download_pbi(output: str) -> None:
         instance = Project.objects.get(id=ep.project_id)
         ws.cell(row=x + 2, column=4).value = str(instance)
         ws.cell(row=x + 2, column=5).value = str(instance.tier)
-        ws.cell(row=x + 2, column=6).value = str(instance.type)
+        ws.cell(row=x + 2, column=6).value = str(instance.sort)
         ws.cell(row=x + 2, column=7).value = str(instance.dft_group)
 
     ws.cell(row=1, column=1).value = 'ID'
@@ -167,32 +167,51 @@ def excel_download_pbi(output: str) -> None:
     ws.cell(row=1, column=7).value = 'PROJECT GROUP'
 
     ws = wb.create_sheet("Projects")  # Project output
-    fields_all = [f.name for f in Project._meta.get_fields()]
-    remove = [
-        "engagement",
-        # "id",
-        "user",
-        "slug",
-        "governance",
-        "stage",
-        "live",
-        "timestamp",
-        "updated",
-        "scope"
-    ]  # fields currently not reqired for user
-    fields = [x for x in fields_all if x not in remove]
+    projects_qs = Project.objects.raw('SELECT * FROM projects_project')
+    for x, f in enumerate(projects_qs):
+        ws.cell(row=x + 2, column=1).value = f.abbreviation
+        ws.cell(row=x + 2, column=2).value = str(f.dft_group)
+        ws.cell(row=x + 2, column=3).value = f.id
+        ws.cell(row=x + 2, column=4).value = f.name
+        ws.cell(row=x + 2, column=5).value = str(f.stage_name)
+        ws.cell(row=x + 2, column=6).value = str(f.tier)
+        ws.cell(row=x + 2, column=7).value = str(f.sort)
 
-    for x, f in enumerate(fields):
-        ws.cell(row=1, column=x + 1).value = f.upper()
-        for i, p in enumerate(Project.objects.all()):
-            val = getattr(p, f)
-            try:
-                ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
-            except ValueError:
-                if val is not None:
-                    ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
-                else:
-                    pass
+    ws.cell(row=1, column=1).value = 'ABBREVIATION'
+    ws.cell(row=1, column=2).value = 'DFT_GROUP'
+    ws.cell(row=1, column=3).value = 'ID'
+    ws.cell(row=1, column=4).value = 'NAME'
+    ws.cell(row=1, column=5).value = 'STAGE_NAME'
+    ws.cell(row=1, column=6).value = 'TIER'
+    ws.cell(row=1, column=7).value = 'TYPE'
+
+    ## old method
+    # fields_all = [f.name for f in Project._meta.get_fields()]
+    # remove = [
+    #     "engagement",
+    #     # "id",
+    #     "user",
+    #     "slug",
+    #     "governance",
+    #     "stage",
+    #     "live",
+    #     "timestamp",
+    #     "updated",
+    #     "scope"
+    # ]  # fields currently not required for user
+    # fields = [x for x in fields_all if x not in remove]
+    #
+    # for x, f in enumerate(fields):
+    #     ws.cell(row=1, column=x + 1).value = f.upper()
+    #     for i, p in enumerate(Project.objects.all()):
+    #         val = getattr(p, f)
+    #         try:
+    #             ws.cell(row=i + 2, column=x + 1).value = getattr(p, f)
+    #         except ValueError:
+    #             if val is not None:
+    #                 ws.cell(row=i + 2, column=x + 1).value = str(getattr(p, f))
+    #             else:
+    #                 pass
 
     ws = wb.create_sheet("PPDD")  # PPDD output
     ppdd_qs = PPDD.objects.raw('SELECT * FROM ppdds_ppdd')

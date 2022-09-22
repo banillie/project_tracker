@@ -11,7 +11,7 @@ class ProjectForm(forms.ModelForm):
         model = Project
         fields = [
             "name",
-            "type",
+            "sort",
             "abbreviation",
             "tier",
             "stage_name",
@@ -21,7 +21,7 @@ class ProjectForm(forms.ModelForm):
         # filter = ["name", "type"]
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'}),
-            "type": forms.Select(attrs={'class': 'form-control'}),
+            "sort": forms.Select(attrs={'class': 'form-control'}),
             "dft_group": forms.Select(attrs={'class': 'form-control'}),
             "abbreviation": forms.TextInput(attrs={'class': 'form-control'}),
             "tier": forms.Select(attrs={'class': 'form-control'}),
@@ -34,7 +34,7 @@ class ProjectForm(forms.ModelForm):
         self.fields['stage_name'].label = "Business Case Stage"
         # self.fields['abbreviation'].label = "Project Abbreviation"
         self.fields['dft_group'].label = "DfT Group"
-
+        # self.fields['sort'].label = "Type"
 
     # # for adding data validation requirements
     # def clean(self, *args, **kwargs):
