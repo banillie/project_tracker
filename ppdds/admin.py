@@ -1,8 +1,7 @@
 from django.contrib import admin
 from simple_history.admin import SimpleHistoryAdmin
 
-from .models import PPDD, PPDDDivison
-
+from .models import PPDD, PPDDDivison, Comment
 
 
 class PPDDAdmin(SimpleHistoryAdmin):
@@ -16,5 +15,10 @@ class PPDDAdmin(SimpleHistoryAdmin):
         return obj
 
 
+class CommentsAdmin(SimpleHistoryAdmin):
+    list_display = ['user', 'timestamp']
+
+
 admin.site.register(PPDD, PPDDAdmin)
 admin.site.register(PPDDDivison, SimpleHistoryAdmin)
+admin.site.register(Comment, CommentsAdmin)

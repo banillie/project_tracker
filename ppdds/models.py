@@ -66,6 +66,15 @@ class PPDD(models.Model):
         ordering = ('first_name',)
 
 
+class Comment(models.Model):
+    user = models.ForeignKey(User, blank=True, null=True, on_delete=models.SET_NULL)
+    ideas = models.TextField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    def save(self, *arg, **kwargs):
+        super().save(*arg, **kwargs)
+
+
 def ppdd_pre_save(sender, instance, *args, **kwargs):
     if instance.slug is None:
         slugify_instance_title(instance, save=False)

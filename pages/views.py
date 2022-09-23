@@ -3,7 +3,7 @@ import os
 import tempfile
 
 from django.http import HttpResponse
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
 from django.conf import settings
@@ -11,16 +11,29 @@ from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
 from engagements.models import Engagement
+from .forms import CommentForm
 
 from data_wraggling.upload import excel_download_pbi, excel_download
 
 
 def home_view(request, *args, **kwargs):
-    # print(request.user)
-    my_context = {
-        "my_text": "Welcome to the home page for the PPDD Project Tracker Tool.",
+    form = CommentForm(request.POST or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
+        return redirect("/")
+    context = {
+        'form': form,
     }
-    return render(request, "home.html", my_context)
+    return render(request, "home.html", context)
+
+
+    # def form_valid(self, form):
+    #     # return super().form_valid(form)
+    #     form.instance.user = self.request.user
+    #     form.save()
+    #     return super(EngagementCreateView, self).form_valid(form)
 
 
 def search_view(request):
