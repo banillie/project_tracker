@@ -2,6 +2,7 @@ import datetime
 import os
 import tempfile
 
+from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import user_passes_test
@@ -17,16 +18,39 @@ from data_wraggling.upload import excel_download_pbi, excel_download
 
 
 def home_view(request, *args, **kwargs):
-    form = CommentForm(request.POST or None)
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.user = request.user
-        obj.save()
-        return redirect("/")
-    context = {
-        'form': form,
-    }
-    return render(request, "home.html", context)
+    args = {}
+    if request.method == 'POST':
+        form = CommentForm(request.POST or None)
+        if form.is_valid():
+            obj = form.save(commit=False)
+            obj.user = request.user
+            obj.save()
+            return redirect("/")
+        else:
+            args['form'] = form
+    else:
+        form = CommentForm()
+        args['form'] = form
+    return render(request, "home.html", args)
+
+
+    # if form.is_valid():
+    #     try:
+    #         form.clean(user=request.user)
+    #         obj = form.save(commit=False)
+    #         obj.user = request.user
+    #         obj.save()
+    #     except ValidationError:
+    #         print(form)
+    #         context = {
+    #             'form': form,
+    #         }
+    #         return render(request, "home.html", context)
+    # context = {
+    #     # 'error_msg': error_msg,
+    #     'form': form,
+    # }
+    # return render(request, "home.html", context)
 
 
     # def form_valid(self, form):

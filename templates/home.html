@@ -35,10 +35,13 @@
     <section>
 
         <form method="post" novalidate>{% csrf_token %}
+            {% if error_msg is not None %}
+                <h5>You need to be logged in to post an idea</h5>
+            {% endif %}
             <p>
                 If you have any ideas about how to improve this tool please post them to us below!
             </p>
-            {{ form.ideas|as_crispy_field}}
+            {{ form|crispy}}
             <br>
                 <input class="btn btn-primary" type="submit" value="Send">
         </form>
