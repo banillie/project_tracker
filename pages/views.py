@@ -2,16 +2,12 @@ import datetime
 import os
 import tempfile
 
-from django.core.exceptions import ValidationError
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
-from django.contrib.auth.decorators import user_passes_test
 from django.contrib.auth.decorators import login_required
-from django.conf import settings
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
-from engagements.models import Engagement
 from .forms import CommentForm
 
 from data_wraggling.upload import excel_download_pbi, excel_download
@@ -19,45 +15,16 @@ from data_wraggling.upload import excel_download_pbi, excel_download
 
 def home_view(request, *args, **kwargs):
     args = {}
-    if request.method == 'POST':
-        form = CommentForm(request.POST or None)
-        if form.is_valid():
-            obj = form.save(commit=False)
-            obj.user = request.user
-            obj.save()
-            return redirect("/")
-        else:
-            args['form'] = form
+    form = CommentForm(request.POST or None, request=request.user)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.user = request.user
+        obj.save()
+        return redirect("/")
     else:
-        form = CommentForm()
         args['form'] = form
+    args['form'] = form
     return render(request, "home.html", args)
-
-
-    # if form.is_valid():
-    #     try:
-    #         form.clean(user=request.user)
-    #         obj = form.save(commit=False)
-    #         obj.user = request.user
-    #         obj.save()
-    #     except ValidationError:
-    #         print(form)
-    #         context = {
-    #             'form': form,
-    #         }
-    #         return render(request, "home.html", context)
-    # context = {
-    #     # 'error_msg': error_msg,
-    #     'form': form,
-    # }
-    # return render(request, "home.html", context)
-
-
-    # def form_valid(self, form):
-    #     # return super().form_valid(form)
-    #     form.instance.user = self.request.user
-    #     form.save()
-    #     return super(EngagementCreateView, self).form_valid(form)
 
 
 def search_view(request):
