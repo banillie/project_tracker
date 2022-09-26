@@ -6,6 +6,12 @@
 
 {% block content %}
 
+    <script>
+    $(document).ready( function () {
+        $('#table_id').DataTable();
+    } );
+    </script>
+
     <section class="hero">
     <div class="container">
       <div class="left-col">
@@ -33,7 +39,6 @@
     </div>
   </section>
     <section>
-
         <form method="post" novalidate>{% csrf_token %}
             {% if error_msg is not None %}
                 <h5>You need to be logged in to post an idea</h5>
@@ -43,8 +48,31 @@
             </p>
             {{ form|crispy}}
             <br>
-                <input class="btn btn-primary" type="submit" value="Send">
+                <p>
+                    <input class="btn btn-primary" type="submit" value="Send">
+                </p>
         </form>
+
+
+            <div>
+                <p>Ideas already posted by PPDD colleagues.</p>
+            <table class="display" id="table_id">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Idea</th>
+                    </tr>
+                </thead>
+                    <tbody>
+                    {% for instance in object_list %}
+                        <tr>
+                            <td>{{ instance.user }}</td>
+                            <td>{{ instance.ideas }}</td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+            </table>
+        </div>
 
     </section>
 

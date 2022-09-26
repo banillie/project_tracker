@@ -17,7 +17,7 @@ class CommentForm(forms.ModelForm):
     def clean(self, *args, **kwargs):
         user = self.request
         if user.is_anonymous:
-            raise forms.ValidationError("You must be logged in")
+            raise forms.ValidationError("You must be logged in to post an idea. Please log in.")
 
 
 

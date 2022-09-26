@@ -7,24 +7,31 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from projects.models import Project
 from stakeholders.models import Stakeholder
-from ppdds.models import PPDD
+from ppdds.models import PPDD, Comment
 from .forms import CommentForm
 
 from data_wraggling.upload import excel_download_pbi, excel_download
 
 
 def home_view(request, *args, **kwargs):
-    args = {}
+    context = {}
     form = CommentForm(request.POST or None, request=request.user)
+    queryset = Comment.objects.all().order_by('timestamp')
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
         return redirect("/")
     else:
-        args['form'] = form
-    args['form'] = form
-    return render(request, "home.html", args)
+        context = {
+            "object_list": queryset,
+            "form": form,
+        }
+    context = {
+        "object_list": queryset,
+        "form": form,
+    }
+    return render(request, "home.html", context)
 
 
 def search_view(request):
