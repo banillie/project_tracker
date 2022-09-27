@@ -14,7 +14,7 @@ from data_wraggling.upload import excel_download_pbi, excel_download
 
 
 def home_view(request, *args, **kwargs):
-    context = {}
+    # context = {}
     form = CommentForm(request.POST or None, request=request.user)
     queryset = Comment.objects.all().order_by('timestamp')
     if form.is_valid():
@@ -22,11 +22,11 @@ def home_view(request, *args, **kwargs):
         obj.user = request.user
         obj.save()
         return redirect("/")
-    else:
-        context = {
-            "object_list": queryset,
-            "form": form,
-        }
+    # else:
+    #     context = {
+    #         "object_list": queryset,
+    #         "form": form,
+    #     }
     context = {
         "object_list": queryset,
         "form": form,
