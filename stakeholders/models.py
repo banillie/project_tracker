@@ -3,6 +3,8 @@ from django.db import models
 from django.db.models import Q
 from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
+from django.utils.text import slugify
+
 from ppdds.utils import slugify_instance_title
 from simple_history.models import HistoricalRecords
 
@@ -56,6 +58,7 @@ class Stakeholder(models.Model):
     role = models.CharField(max_length=100, blank=True, null=True)
     tele_no = models.CharField(max_length=1000, blank=True, null=True)
     live = models.BooleanField(default=True)
+    my_dft_url = models.URLField(null=True, blank=True, unique=True)
     history = HistoricalRecords()
 
     objects = StakeholderManager()
@@ -68,8 +71,14 @@ class Stakeholder(models.Model):
         # would be good to understand the reverse in more detail.
         return reverse("stakeholders:update", kwargs={"slug": self.slug})
 
-    def save(self, *arg, **kwargs):
-        super().save(*arg, **kwargs)
+    def save(self, *args, **kwargs):
+        if self.my_dft_url is None and self.organisation.name == 'DfT(c)':
+            print(self.organisation)
+            self.my_dft_url = "https://intranet.dft.gov.uk/users/" + slugify(self.first_name + ' ' + self.last_name)
+        else:
+            pass
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

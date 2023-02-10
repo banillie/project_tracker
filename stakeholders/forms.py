@@ -4,13 +4,6 @@ from .models import Stakeholder, DFTGroup
 
 
 class StakeholderForm(forms.ModelForm):
-    # first_name = forms.CharField(max_length=40)
-    # last_name = forms.CharField(max_length=40)
-    # organisation = forms.CharField(max_length=60)
-    # group = forms.CharField(max_length=100)
-    # team = forms.CharField(max_length=100, required=False)
-    # role = forms.CharField(max_length=100, required=False)
-    # tele_no = forms.CharField(max_length=1000, required=False)
 
     class Meta:
         model = Stakeholder
@@ -23,6 +16,7 @@ class StakeholderForm(forms.ModelForm):
             "team",
             "role",
             "tele_no",
+            "my_dft_url"
         ]
 
         widgets = {
@@ -34,6 +28,11 @@ class StakeholderForm(forms.ModelForm):
             "team": forms.TextInput(attrs={'class': 'form-control'}),
             "role": forms.TextInput(attrs={'class': 'form-control'}),
             "tele_no": forms.TextInput(attrs={'class': 'form-control'}),
+            "my_dft_url": forms.URLInput(attrs={'class': 'form-control'}),
         }
+
+    def __init__(self, *args, **kwargs):
+        super(StakeholderForm, self).__init__(*args, **kwargs)
+        self.fields['my_dft_url'].label = "MyDfT Contact Link (automatically created if left blank)"
 
 

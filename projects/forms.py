@@ -4,9 +4,6 @@ from .models import Project, Stage
 
 
 class ProjectForm(forms.ModelForm):
-    # name = forms.CharField(widget=forms.Textarea(attrs={'cols': 50, 'rows': 1}))
-    # scope = forms.CharField(required=False, widget=forms.Textarea(attrs={'cols': 50, 'rows': 20}))
-
     class Meta:
         model = Project
         fields = [
@@ -18,7 +15,6 @@ class ProjectForm(forms.ModelForm):
             "scope",
             "dft_group"
         ]
-        # filter = ["name", "type"]
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'}),
             "sort": forms.Select(attrs={'class': 'form-control'}),

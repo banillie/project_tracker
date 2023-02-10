@@ -16,6 +16,12 @@
                     <b>Organisation: </b>
                     {{ object.organisation }}
                 </p>
+                    {% if object.organisation.name == "DfT(c)" %}
+                        <p>
+                            <b>MyDfT Contact Link: </b>
+                            <a href="{{ object.my_dft_url }}">{{ object.my_dft_url }}</a>
+                        </p>
+                    {% endif %}
                 <p>
                     <b>DfT Group: </b>
                     {{ object.dft_group }}

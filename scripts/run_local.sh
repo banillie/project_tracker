@@ -1,0 +1,1 @@
+DJANGO_SETTINGS_MODULE=project_tracker.settings_local python manage.py runserver

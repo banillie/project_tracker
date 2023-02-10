@@ -18,10 +18,6 @@ def excel_download(output: str) -> None:
 
     ws = wb.create_sheet("Engagements")  # Engagement output
     fields_all = [f.name for f in Engagement._meta.get_fields()]
-    # remove = ['id',
-    #           'user'
-    #           ] # fields currently not required for user
-    # fields = [x for x in fields_all if x not in remove]
 
     for x, f in enumerate(fields_all):
         ws.cell(row=1, column=x + 1).value = f.upper()
