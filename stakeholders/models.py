@@ -73,7 +73,6 @@ class Stakeholder(models.Model):
 
     def save(self, *args, **kwargs):
         if self.my_dft_url is None and self.organisation.name == 'DfT(c)':
-            print(self.organisation)
             self.my_dft_url = "https://intranet.dft.gov.uk/users/" + slugify(self.first_name + ' ' + self.last_name)
         else:
             pass
