@@ -1,7 +1,7 @@
 import factory
 from django.contrib.auth.models import User
 from engagements.models import Engagement, EngagementTopic
-from projects.models import Tier, Stage, Type, Project
+from projects.models import Tier, Stage, Type, Project, TYPE_CHOICES
 from stakeholders.models import DFTGroup, Stakeholder, StakeholderOrg
 from ppdds.models import PPDD
 
@@ -11,9 +11,11 @@ class GenericModelFactory(factory.django.DjangoModelFactory):
 
     name = factory.Faker('word')
 
-class TierFactory(GenericModelFactory):
+class TierFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Tier
+
+    type = factory.Faker('word')
 
 class StageFactory(GenericModelFactory):
     class Meta:
@@ -47,8 +49,8 @@ class ProjectFactory(factory.django.DjangoModelFactory):
 
     user = factory.SubFactory(UserFactory)
     name = factory.Sequence(lambda n: f'Project {n}')
-    type = 'Type'
-    sort = factory.SubFactory(TypeFactory)
+    type = factory.Iterator([choice[1] for choice in TYPE_CHOICES])
+    # sort = factory.SubFactory(TypeFactory)
     abbreviation = factory.Sequence(lambda n: f'ABBR{n}')
     governance = 'Governance'
     dft_group = factory.SubFactory(DfTGroupFactory)
@@ -66,7 +68,6 @@ class StakeholderFactory(factory.django.DjangoModelFactory):
     user = factory.SubFactory(UserFactory)
     first_name = factory.Faker('first_name')
     last_name = factory.Faker('last_name')
-    # slug = factory.Sequence(lambda n: f'stakeholder-{n}')
     organisation = factory.SubFactory(StakeholderOrgFactory)
     group = factory.Faker('word')
     dft_group = factory.SubFactory(DfTGroupFactory)
