@@ -1,9 +1,8 @@
 from django.test import TestCase, Client
 from django.contrib.auth.models import User
 from django.urls import reverse
-# from django.utils.decorators import login_required
-# from engagements.views import engagement_list_view, engagement_create_view, engagement_detail_view, engagement_delete_view, \
-#     EngagementUpdateView
+
+from test_factory.factories import EngagementFactory
 
 class EngagementURLTest(TestCase):
     @classmethod
@@ -22,25 +21,26 @@ class EngagementURLTest(TestCase):
         self.client.login(username='testuser', password='testpassword')
         response = self.client.get(reverse('engagements:engagement-create'))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'engagement_create.html')
+        self.assertTemplateUsed(response, 'engagements/engagement_create.html')
 
     def test_engagement_detail_url(self):
+        engagement = EngagementFactory()
         self.client.login(username='testuser', password='testpassword')
-        engagement_id = 1  # Replace with a valid engagement ID
-        response = self.client.get(reverse('engagements:engagement-detail', args=[engagement_id]))
+        response = self.client.get(reverse('engagements:engagement-detail', kwargs={"id": engagement.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'engagement_detail.html')
+        self.assertTemplateUsed(response, 'engagements/engagement_detail.html')
 
     def test_engagement_delete_url(self):
-        engagement_id = 1  # Replace with a valid engagement ID
-        response = self.client.get(reverse('engagements:engagement-delete', args=[engagement_id]))
+        engagement = EngagementFactory()
+        self.client.login(username='testuser', password='testpassword')
+        response = self.client.get(reverse('engagements:engagement-delete', kwargs={"id": engagement.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'engagement_delete.html')
+        self.assertTemplateUsed(response, 'engagements/engagement_delete.html')
 
     def test_engagement_update_url(self):
-        engagement_id = 1  # Replace with a valid engagement ID
+        engagement = EngagementFactory()
         self.client.login(username='testuser', password='testpassword')
-        response = self.client.get(reverse('engagements:engagement-update', args=[engagement_id]))
+        response = self.client.get(reverse('engagements:engagement-update', kwargs={"id": engagement.id}))
         self.assertEqual(response.status_code, 200)
-        self.assertTemplateUsed(response, 'engagement_update.html')
+        self.assertTemplateUsed(response, 'engagements/engagement_create.html')
 

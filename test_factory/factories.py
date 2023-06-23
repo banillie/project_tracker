@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from engagements.models import Engagement, EngagementTopic
 from projects.models import Tier, Stage, Type, Project, TYPE_CHOICES
 from stakeholders.models import DFTGroup, Stakeholder, StakeholderOrg
-from ppdds.models import PPDD
+from ppdds.models import PPDD, PPDDDivison
 
 class GenericModelFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -21,6 +21,12 @@ class StageFactory(GenericModelFactory):
     class Meta:
         model = Stage
 
+class EngagementTopicFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = EngagementTopic
+
+    topic = factory.Faker('word')
+
 class TypeFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Type
@@ -34,6 +40,10 @@ class DfTGroupFactory(GenericModelFactory):
 class StakeholderOrgFactory(GenericModelFactory):
     class Meta:
         model = StakeholderOrg
+
+class PPDDDivisonFactory(GenericModelFactory):
+    class Meta:
+        model = PPDDDivison
 
 class UserFactory(factory.django.DjangoModelFactory):
     class Meta:
@@ -60,7 +70,6 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     scope = factory.Faker('text', max_nb_chars=2000)
     live = True
     
-
 class StakeholderFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Stakeholder
@@ -77,34 +86,50 @@ class StakeholderFactory(factory.django.DjangoModelFactory):
     live = True
     my_dft_url = factory.Faker('url')
 
+class PPDDFactory(factory.django.DjangoModelFactory):
+    class Meta:
+        model = PPDD
+
+    user = factory.SubFactory(UserFactory)
+    first_name = factory.Faker('first_name')
+    last_name = factory.Faker('last_name')
+    slug = factory.Sequence(lambda n: f'slug{n}')
+    team = factory.Faker('word')
+    division = factory.SubFactory(PPDDDivisonFactory)
+    role = factory.Faker('job')
+    tele_no = factory.Faker('phone_number')
+    live = True
 
 class EngagementFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Engagement
 
     user = factory.SubFactory(UserFactory)
-    date = factory.Faker('date')
-    summary = factory.Faker('text')
-    projects = factory.SubFactory(ProjectFactory)
-    # projects = factory.SubFactoryList(ProjectFactory, size=1)  # Adjust size as needed
-    # stakeholders = factory.SubFactoryList(StakeholderFactory, size=1)
+    date = factory.Faker('date_object')
+    summary = factory.Faker('text', max_nb_chars=2000)
 
-    # project = Project.objects.create(name='Test Project')
-    # stakeholder = Stakeholder.objects.create(
-    #     first_name='Terry',
-    #     last_name='Jacks',
-    #     organisation=StakeholderOrg.objects.create(name='DfT(c)'),
-    # )
-    # ppdd = PPDD.objects.create(first_name='Jimmy', last_name='Jones')
-    # topic = EngagementTopic.objects.create(topic='Test Topic')
-    #
-    # Engagement.objects.create(
-    #     user=user,
-    #     date=date.today(),
-    #     summary='Test Summary'
-    # )
-    # engagement = Engagement.objects.first()
-    # engagement.projects.add(project)
-    # engagement.stakeholders.add(stakeholder)
-    # engagement.ppdds.add(ppdd)
-    # engagement.topics.add(topic)
+    @factory.post_generation
+    def create_projects(self, create, extracted, **kwargs):
+        # Always create a project using ProjectFactory
+        project = ProjectFactory()
+        self.projects.add(project)
+        
+        # Use the ProjectFactory to create a list of projects
+        # projects = ProjectFactory.create_batch(3)
+        # for project in projects:
+        #     self.projects.add(project)
+
+    @factory.post_generation
+    def create_stakeholders(self, create, extracted, **kwargs):
+        stakeholder = StakeholderFactory()
+        self.stakeholders.add(stakeholder)
+
+    @factory.post_generation
+    def create_ppdds(self, create, extracted, **kwargs):
+        ppdd = PPDDFactory()
+        self.ppdds.add(ppdd)
+
+    @factory.post_generation
+    def create_topics(self, create, extracted, **kwargs):
+        topic = EngagementTopicFactory()
+        self.topics.add(topic)

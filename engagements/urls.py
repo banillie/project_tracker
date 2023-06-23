@@ -16,5 +16,5 @@ urlpatterns = [
     path("create/", login_required(EngagementCreateView.as_view()), name="engagement-create"),
     path("<int:id>/", engagement_detail_view, name="engagement-detail"),
     path("<int:id>/delete/", engagement_delete_view, name="engagement-delete"),
-    path("<int:id>/update/", login_required(EngagementUpdateView.as_view()), name="engagement-create"),
+    path("<int:id>/update/", login_required(EngagementUpdateView.as_view()), name="engagement-update"),
 ]
