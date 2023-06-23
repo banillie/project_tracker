@@ -59,7 +59,7 @@ class ProjectFactory(factory.django.DjangoModelFactory):
     live = True
     
 
-class StakeholderFactory():
+class StakeholderFactory(factory.django.DjangoModelFactory):
     class Meta:
         model = Stakeholder
 
