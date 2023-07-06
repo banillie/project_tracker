@@ -1,0 +1,54 @@
+{% load crispy_forms_tags %}
+
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-body">
+            <form
+            action="."
+            method="POST"
+            hx-post="{{  hx_create_project_url }}"
+            hx-target="#create-new-project-hx-container"
+            hx-swap="outerHTML">
+
+            {% csrf_token %}
+            {{ project_form.as_p }}
+                <p></p>
+            <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                something
+        </form>
+
+	  </div>
+	</div>
+    </div>
+</div>
+
+{{ form.media.css }}
+{#    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>#}
+{#    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>#}
+{{ form.media.js }}
+
+{#<style>#}
+{#    .select2-container {#}
+{#      z-index: 10000;#}
+{#    }#}
+{#</style>#}
+
+
+<script>
+function closeModal() {
+    var container = document.getElementById("create-project-modal")
+    var backdrop = document.getElementById("modal-backdrop")
+    var modal = document.getElementById("modal")
+
+    modal.classList.remove("show")
+    backdrop.classList.remove("show")
+
+    setTimeout(function() {
+		container.removeChild(backdrop)
+		container.removeChild(modal)
+	}, 200)
+}
+</script>

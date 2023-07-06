@@ -1,16 +1,16 @@
 from django.shortcuts import render, get_object_or_404, redirect
-from django.urls import reverse_lazy
+from django.urls import reverse
+from django.http import Http404
 from django.views.generic import UpdateView
-from django.views.generic.edit import CreateView
 from django.contrib.auth.decorators import login_required
 
 from rest_framework import generics
 
-from easy_select2 import select2_modelform
 from .models import Engagement, EngagementTopic
 from .forms import EngagementForm
 from .serializers import EngagementSerializer, EngagementTopicSerializer
 
+from projects.forms import ProjectForm
 
 class EngagementListAPIView(generics.ListAPIView):
     queryset = Engagement.objects.all()
@@ -22,33 +22,52 @@ class EngagementTopicListAPIView(generics.ListAPIView):
     serializer_class = EngagementTopicSerializer
 
 
-# @login_required
-# def engagement_create_view(request):
-#     form = EngagementForm(request.POST or None)
-#     context = {
-#         'form': form,
-#     }
-#     if form.is_valid():
-#         obj = form.save(commit=False)
-#         obj.user = request.user
-#         obj.save()
-#         return redirect(obj.get_absolute_url())
-#     return render(request, "engagements/engagement_create.html", context)
+@login_required
+def engagement_create_view(request):
+    form = EngagementForm(request.POST or None)
+    project_form = ProjectForm(request.POST or None)
+    context = {
+        "hx_create_project_url": reverse("engagements:hx-project-create"),
+        'form': form,
+        "project_form": project_form,
+    }
+    if form.is_valid():
+        form.instance.user = request.user
+        obj = form.save()
+        return redirect(obj.get_absolute_url())
+    return render(request, "engagements/engagement_create.html", context)
 
 
-class EngagementCreateView(CreateView):
-    model = Engagement
-    form_class = EngagementForm
-    # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
-    # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
-    # success_url = reverse_lazy('engagement-form')
-    template_name = "engagements/engagement_create.html"
+def engagement_create_project_hx_view(request):
 
-    def form_valid(self, form):
-        # return super().form_valid(form)
-        form.instance.user = self.request.user
-        form.save()
-        return super(EngagementCreateView, self).form_valid(form)
+    if not request.htmx:
+        return Http404
+
+    project_form = ProjectForm(request.POST or None)
+    context = {
+        "hx_create_project_url": reverse("engagements:hx-project-create"),
+        "project_form": project_form,
+    }
+    if project_form.is_valid():
+        project_form.save()
+        context["form"] = EngagementForm()
+        # context['constituencies'] = obj.constituency.get_queryset()
+        return render(request, "engagements/partials/hx_create_project_partial.html", context)
+    return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
+
+# class EngagementCreateView(CreateView):
+#     model = Engagement
+#     form_class = EngagementForm
+#     # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
+#     # form_class = select2_modelform(Engagement, attrs={'class': 'form-control'})
+#     # success_url = reverse_lazy('engagement-form')
+#     template_name = "engagements/engagement_create.html"
+#
+#     def form_valid(self, form):
+#         # return super().form_valid(form)
+#         form.instance.user = self.request.user
+#         form.save()
+#         return super(EngagementCreateView, self).form_valid(form)
 
 
 class EngagementUpdateView(UpdateView):
@@ -65,19 +84,6 @@ class EngagementUpdateView(UpdateView):
     def form_valid(self, form):
         print(form.cleaned_data)
         return super().form_valid(form)
-
-
-# @login_required
-# def engagement_create_view(request):
-#     form = EngagementForm(request.POST or None)
-#     # form = EngagementForm(request.POST or None)
-#     if form.is_valid():
-#         form.save()
-#         form = EngagementForm()
-#     context = {
-#         'form': form,
-#     }
-#     return render(request, "engagements/engagement_create.html", context)
 
 
 @login_required
@@ -107,20 +113,6 @@ def engagement_detail_view(request, id):
         "topic_list": topic_queryset,
     }
     return render(request, "engagements/engagement_detail.html", context)
-
-
-# @login_required
-# def engagement_update_view(request, id):
-#     obj = get_object_or_404(Engagement, id=id)
-#     form = EngagementForm(request.POST or None, instance=obj)
-#     if form.is_valid():
-#         form.save()
-#         # form.save_m2m()
-#         return redirect('../')
-#     context = {
-#         'form': form
-#     }
-#     return render(request, "engagements/engagement_create.html", context)
 
 
 def engagement_delete_view(request, id):

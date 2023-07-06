@@ -29,10 +29,6 @@ class EngagementForm(forms.ModelForm):
         widget=Select2Multiple(select2attrs={'width': '100%'}),
         label='Engagement Topics'
     )
-    # engagement_workstreams = forms.ModelMultipleChoiceField(
-    #     queryset=EngagementWorkStream.objects.all(),
-    #     widget=Select2Multiple(select2attrs={'width': '100%'}),
-    # )
     summary = forms.CharField(
         widget=forms.Textarea,
         required=False,
