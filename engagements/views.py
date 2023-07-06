@@ -12,6 +12,7 @@ from .serializers import EngagementSerializer, EngagementTopicSerializer
 
 from projects.forms import ProjectForm
 from stakeholders.forms import StakeholderForm
+from ppdds.forms import PPDDForm
 
 class EngagementListAPIView(generics.ListAPIView):
     queryset = Engagement.objects.all()
@@ -34,6 +35,7 @@ def engagement_create_update_view(request, id=None):
     context = {
         "hx_create_project_url": reverse("engagements:hx-project-create"),
         "hx_create_stakeholder_url": reverse("engagements:hx-stakeholder-create"),
+        "hx_create_ppdd_url": reverse("engagements:hx-ppdd-create"),
         'form': form,
         # "project_form": project_form,
     }
@@ -96,6 +98,32 @@ def engagement_create_stakeholder_hx_view(request):
         return render(request, "engagements/partials/hx_create_stakeholder_partial.html", context)
     return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
 
+
+def engagement_create_ppdd_hx_view(request):
+    if not request.htmx:
+        return Http404
+
+    referring_url = request.META.get("HTTP_REFERER")  # path request is coming from.
+    ref_url_list = referring_url.rstrip("/").split(
+        "/"
+    )  # rstrip because inconsistent trailing slashes
+    create_update = ref_url_list[-1]
+
+    ppdd_form = PPDDForm(request.POST or None)
+    context = {
+        "hx_create_ppdd_url": reverse("engagements:hx-ppdd-create"),
+        "ppdd_form": ppdd_form,
+    }
+    if ppdd_form.is_valid():
+        ppdd_form.save()
+        if create_update == "update":
+            engagement_id = ref_url_list[-2]
+            instance = Engagement.objects.get(pk=engagement_id)
+            context["form"] = EngagementForm(instance=instance)
+        else:
+            context["form"] = EngagementForm()
+        return render(request, "engagements/partials/hx_create_ppdd_partial.html", context)
+    return render(request, "engagements/partials/hx_create_ppdd_modal_form.html", context)
 
 # class EngagementCreateView(CreateView):
 #     model = Engagement

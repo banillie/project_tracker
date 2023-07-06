@@ -1,0 +1,44 @@
+{% load crispy_forms_tags %}
+
+<div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
+<div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
+	<div class="modal-dialog modal-dialog-centered">
+	  <div class="modal-content">
+		<div class="modal-body">
+            <form
+            action="."
+            method="POST"
+            hx-post="{{ hx_create_ppdd_url }}"
+            hx-target="#create-new-ppdd-hx-container"
+            hx-swap="outerHTML">
+
+            {% csrf_token %}
+            {{ ppdd_form.as_p }}
+                <p></p>
+            <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
+            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+        </form>
+
+	  </div>
+	</div>
+    </div>
+</div>
+
+{#{{ form.media.css }}#}
+{#{{ form.media.js }}#}
+
+<script>
+function closeModal() {
+    var container = document.getElementById("create-ppdd-modal")
+    var backdrop = document.getElementById("modal-backdrop")
+    var modal = document.getElementById("modal")
+
+    modal.classList.remove("show")
+    backdrop.classList.remove("show")
+
+    setTimeout(function() {
+		container.removeChild(backdrop)
+		container.removeChild(modal)
+	}, 200)
+}
+</script>

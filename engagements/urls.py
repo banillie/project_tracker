@@ -7,6 +7,7 @@ from .views import (
     engagement_create_update_view,
     engagement_create_project_hx_view,
     engagement_create_stakeholder_hx_view,
+    engagement_create_ppdd_hx_view,
 )
 
 app_name = "engagements"
@@ -25,5 +26,10 @@ urlpatterns = [
         "create-new-stakeholder/",
         engagement_create_stakeholder_hx_view,
         name="hx-stakeholder-create",
+    ),
+    path(
+        "create-new-ppdd/",
+        engagement_create_ppdd_hx_view,
+        name="hx-ppdd-create",
     ),
 ]
