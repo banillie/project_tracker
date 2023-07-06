@@ -8,12 +8,12 @@
             <form
             action="."
             method="POST"
-            hx-post="{{  hx_create_project_url }}"
-            hx-target="#create-new-project-hx-container"
+            hx-post="{{ hx_create_stakeholder_url }}"
+            hx-target="#create-new-stakeholder-hx-container"
             hx-swap="outerHTML">
 
             {% csrf_token %}
-            {{ project_form.as_p }}
+            {{ stakeholder_form.as_p }}
                 <p></p>
             <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
             <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
@@ -38,7 +38,7 @@
 
 <script>
 function closeModal() {
-    var container = document.getElementById("create-project-modal")
+    var container = document.getElementById("create-stakeholder-modal")
     var backdrop = document.getElementById("modal-backdrop")
     var modal = document.getElementById("modal")
 

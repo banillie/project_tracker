@@ -7,6 +7,7 @@ from .views import (
     EngagementUpdateView,
     engagement_create_view,
     engagement_create_project_hx_view,
+    engagement_create_stakeholder_hx_view,
 )
 
 app_name = "engagements"
@@ -16,5 +17,6 @@ urlpatterns = [
     path("<int:id>/", engagement_detail_view, name="engagement-detail"),
     path("<int:id>/delete/", engagement_delete_view, name="engagement-delete"),
     path("<int:id>/update/", login_required(EngagementUpdateView.as_view()), name="engagement-update"),
-    path("create-new-project/", engagement_create_project_hx_view, name="hx-project-create")
+    path("create-new-project/", engagement_create_project_hx_view, name="hx-project-create"),
+    path("create-new-stakeholder/", engagement_create_stakeholder_hx_view, name="hx-stakeholder-create")
 ]

@@ -11,6 +11,7 @@ from .forms import EngagementForm
 from .serializers import EngagementSerializer, EngagementTopicSerializer
 
 from projects.forms import ProjectForm
+from stakeholders.forms import StakeholderForm
 
 class EngagementListAPIView(generics.ListAPIView):
     queryset = Engagement.objects.all()
@@ -25,11 +26,12 @@ class EngagementTopicListAPIView(generics.ListAPIView):
 @login_required
 def engagement_create_view(request):
     form = EngagementForm(request.POST or None)
-    project_form = ProjectForm(request.POST or None)
+    # project_form = ProjectForm(request.POST or None)
     context = {
         "hx_create_project_url": reverse("engagements:hx-project-create"),
+        "hx_create_stakeholder_url": reverse("engagements:hx-stakeholder-create"),
         'form': form,
-        "project_form": project_form,
+        # "project_form": project_form,
     }
     if form.is_valid():
         form.instance.user = request.user
@@ -39,7 +41,6 @@ def engagement_create_view(request):
 
 
 def engagement_create_project_hx_view(request):
-
     if not request.htmx:
         return Http404
 
@@ -49,11 +50,27 @@ def engagement_create_project_hx_view(request):
         "project_form": project_form,
     }
     if project_form.is_valid():
-        project_form.save()
+        instance = project_form.save()
         context["form"] = EngagementForm()
-        # context['constituencies'] = obj.constituency.get_queryset()
-        return render(request, "engagements/partials/hx_create_project_partial.html", context)
-    return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
+        return render(request, "engagements/partials/hx_create_stakeholder_partial.html", context)
+    return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
+
+
+def engagement_create_stakeholder_hx_view(request):
+    if not request.htmx:
+        return Http404
+
+    stakeholder_form = StakeholderForm(request.POST or None)
+    context = {
+        "hx_create_stakeholder_url": reverse("engagements:hx-stakeholder-create"),
+        "stakeholder_form": stakeholder_form,
+    }
+    if stakeholder_form.is_valid():
+        instance = stakeholder_form.save()
+        context["form"] = EngagementForm()
+        return render(request, "engagements/partials/hx_create_stakeholder_partial.html", context)
+    return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
+
 
 # class EngagementCreateView(CreateView):
 #     model = Engagement

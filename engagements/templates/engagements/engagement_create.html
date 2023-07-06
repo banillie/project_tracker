@@ -27,7 +27,8 @@
 
                             {% include "engagements/partials/hx_create_project_partial.html" %}
 
-                            {{ form.stakeholders|as_crispy_field }}
+                            {% include "engagements/partials/hx_create_stakeholder_partial.html" %}
+
                         </div>
                         <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
                             {{ form.ppdds|as_crispy_field }}
