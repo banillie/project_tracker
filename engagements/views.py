@@ -24,8 +24,12 @@ class EngagementTopicListAPIView(generics.ListAPIView):
 
 
 @login_required
-def engagement_create_view(request):
-    form = EngagementForm(request.POST or None)
+def engagement_create_update_view(request, id=None):
+    if id:
+        engagement_instance = Engagement.objects.get(pk=id)
+        form = EngagementForm(request.POST or None, instance=engagement_instance)
+    else:
+        form = EngagementForm(request.POST or None)
     # project_form = ProjectForm(request.POST or None)
     context = {
         "hx_create_project_url": reverse("engagements:hx-project-create"),
@@ -43,6 +47,11 @@ def engagement_create_view(request):
 def engagement_create_project_hx_view(request):
     if not request.htmx:
         return Http404
+    referring_url = request.META.get("HTTP_REFERER")  # path request is coming from.
+    ref_url_list = referring_url.rstrip("/").split(
+        "/"
+    )  # rstrip because inconsistent trailing slashes
+    create_update = ref_url_list[-1]
 
     project_form = ProjectForm(request.POST or None)
     context = {
@@ -50,15 +59,26 @@ def engagement_create_project_hx_view(request):
         "project_form": project_form,
     }
     if project_form.is_valid():
-        instance = project_form.save()
-        context["form"] = EngagementForm()
-        return render(request, "engagements/partials/hx_create_stakeholder_partial.html", context)
-    return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
+        project_form.save()
+        if create_update == "update":
+            engagement_id = ref_url_list[-2]
+            instance = Engagement.objects.get(pk=engagement_id)
+            context["form"] = EngagementForm(instance=instance)
+        else:
+            context["form"] = EngagementForm()
+        return render(request, "engagements/partials/hx_create_project_partial.html", context)
+    return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
 
 
 def engagement_create_stakeholder_hx_view(request):
     if not request.htmx:
         return Http404
+
+    referring_url = request.META.get("HTTP_REFERER")  # path request is coming from.
+    ref_url_list = referring_url.rstrip("/").split(
+        "/"
+    )  # rstrip because inconsistent trailing slashes
+    create_update = ref_url_list[-1]
 
     stakeholder_form = StakeholderForm(request.POST or None)
     context = {
@@ -66,8 +86,13 @@ def engagement_create_stakeholder_hx_view(request):
         "stakeholder_form": stakeholder_form,
     }
     if stakeholder_form.is_valid():
-        instance = stakeholder_form.save()
-        context["form"] = EngagementForm()
+        stakeholder_form.save()
+        if create_update == "update":
+            engagement_id = ref_url_list[-2]
+            instance = Engagement.objects.get(pk=engagement_id)
+            context["form"] = EngagementForm(instance=instance)
+        else:
+            context["form"] = EngagementForm()
         return render(request, "engagements/partials/hx_create_stakeholder_partial.html", context)
     return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
 
@@ -86,22 +111,22 @@ def engagement_create_stakeholder_hx_view(request):
 #         form.save()
 #         return super(EngagementCreateView, self).form_valid(form)
 
-
-class EngagementUpdateView(UpdateView):
-    model = Engagement
-    form_class = EngagementForm
-    # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
-    # success_url = reverse_lazy('engagement-form')
-    template_name = "engagements/engagement_create.html"
-
-    def get_object(self):
-        id_ = self.kwargs.get("id")
-        return get_object_or_404(Engagement, id=id_)
-
-    def form_valid(self, form):
-        print(form.cleaned_data)
-        return super().form_valid(form)
-
+#
+# class EngagementUpdateView(UpdateView):
+#     model = Engagement
+#     form_class = EngagementForm
+#     # form_class = select2_modelform(Engagement, attrs={'width': '100%'})
+#     # success_url = reverse_lazy('engagement-form')
+#     template_name = "engagements/engagement_create.html"
+#
+#     def get_object(self):
+#         id_ = self.kwargs.get("id")
+#         return get_object_or_404(Engagement, id=id_)
+#
+#     def form_valid(self, form):
+#         print(form.cleaned_data)
+#         return super().form_valid(form)
+#
 
 @login_required
 def engagement_list_view(request):
