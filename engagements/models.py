@@ -65,14 +65,9 @@ class Engagement(models.Model):
     projects = models.ManyToManyField(Project)
     stakeholders = models.ManyToManyField(Stakeholder)
     ppdds = models.ManyToManyField(PPDD)
-    # engagement_types = models.ManyToManyField(EngagementType, blank=True, null=True)
-    # engagement_workstreams = models.ManyToManyField(EngagementWorkStream, blank=True, null=True)
     topics = models.ManyToManyField(EngagementTopic)
     summary = models.TextField()
-    # follow_up_date = models.DateField(blank=True, null=True)  # not sure required.
     history = HistoricalRecords()
-
-    # objects = EngagementManager()
 
     def get_absolute_url(self):
         return reverse("engagements:engagement-detail", kwargs={"id": self.id})

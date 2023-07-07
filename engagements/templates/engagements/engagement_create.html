@@ -2,48 +2,40 @@
 
 {% load crispy_forms_tags %}
 
-    <title>
-        {% if form.instance.pk %}Edit engagement{{ form.instance }}
-        {% else %}Create engagement{% endif %}
-    </title>
+{#    <title>#}
+{#        {% if form.instance.pk %}Edit engagement{{ form.instance }}#}
+{#        {% else %}Create engagement{% endif %}#}
+{#    </title>#}
 
 {% block content %}
     <div class="container-fluid">
-        <div class="row">
-            <h4>{% if form.instance.pk %}Edit engagement{% else %}Create new engagement{% endif%}</h4>
-            <div class="form-group">
+{#        <div class="row">#}
+            <h4>{% if form.instance.pk %}Edit Engagement{% else %}Create New Engagement{% endif%}</h4>
+            <h6>Fields with asterix are mandatory</h6>
+{#            <div class="form-group">#}
                 <form method="post" novalidate>{% csrf_token %}
-                    <div class="row mt-1">
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+{#                    <div class="row mt-1">#}
+{#                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">#}
                             {{ form.date|as_crispy_field}}
-                            <script>
-                                $.noConflict();
-                                jQuery(document).ready(function($){
-                                    $("#id_date").datepicker({
-                                        format:'dd/mm/yyyy',
-                                    });
-                                });
-                            </script>
-
                             {% include "engagements/partials/hx_create_project_partial.html" %}
 
                             {% include "engagements/partials/hx_create_stakeholder_partial.html" %}
 
-                        </div>
-                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">
+{#                        </div>#}
+{#                        <div class="col-lg-6 col-md-6 col-sm-12 col-xs-12">#}
                             {% include "engagements/partials/hx_create_ppdd_partial.html" %}
                             {{ form.topics|as_crispy_field }}
-                        </div>
-                    </div>
-                    <div class="row mt-1">
-                        <div class="col-lg">
+{#                        </div>#}
+{#                    </div>#}
+{#                    <div class="row mt-1">#}
+{#                        <div class="col-lg">#}
                             {{ form.summary|as_crispy_field }}
-                        </div>
-                    </div>
+{#                        </div>#}
+{#                    </div>#}
                     <br><input class="btn btn-primary" type="submit" value="{% if form.instance.pk %}Save{% else %}Create{% endif %}">
                     <a class="btn btn-primary" href="../">Cancel</a></p>
                 </form>
-            </div>
-        </div>
+{#            </div>#}
+{#        </div>#}
     </div>
 {% endblock %}

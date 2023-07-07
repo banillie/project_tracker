@@ -10,38 +10,86 @@ from easy_select2 import select2_modelform_meta, Select2Multiple
 
 
 class EngagementForm(forms.ModelForm):
-    date = forms.DateField(input_formats=['%d/%m/%Y'])
     projects = forms.ModelMultipleChoiceField(
         queryset=Project.objects.all(),
-        widget=Select2Multiple(select2attrs={'width': '100%'})
+        widget=Select2Multiple(
+            select2attrs={
+                "width": "100%",
+                "placeholder": "Type and/or select project from list. If project not in database use create "
+                "new project button.",
+            }
+        ),
     )
     stakeholders = forms.ModelMultipleChoiceField(
         queryset=Stakeholder.objects.all(),
-        widget=Select2Multiple(select2attrs={'width': '100%'})
+        widget=Select2Multiple(
+            select2attrs={
+                "width": "100%",
+                "placeholder": "Type and/or select stakeholder from list. If stakeholder not in database use create "
+                               "new stakeholder button.",
+            }
+        ),
     )
     ppdds = forms.ModelMultipleChoiceField(
         queryset=PPDD.objects.all(),
-        widget=Select2Multiple(select2attrs={'width': '100%'}),
-        label='PPDD colleagues'
+        widget=Select2Multiple(
+            select2attrs={
+                "width": "100%",
+                "placeholder": "Type and/or select ppdd colleagues from list. If they are not in database use "
+                               "create new ppdd button.",
+            }
+        ),
+        label="PPDD Colleagues",
     )
     topics = forms.ModelMultipleChoiceField(
         queryset=EngagementTopic.objects.all(),
-        widget=Select2Multiple(select2attrs={'width': '100%'}),
-        label='Engagement Topics'
+        widget=Select2Multiple(
+            select2attrs={
+                "width": "100%",
+                "placeholder": "Type and/or select topic from list. Please contact admin if new topic type is required."
+            }
+        ),
+        label="Engagement Topics",
     )
-    summary = forms.CharField(
-        widget=forms.Textarea,
-        required=False,
-    )
+    # summary = forms.CharField(
+    #     widget=forms.Textarea,
+    #     required=False,
+    # )
 
     class Meta:
         model = Engagement
         fields = [
-            'date',
-            'projects',
-            'stakeholders',
-            'ppdds',
-            'topics',
-            'summary',
+            "date",
+            "projects",
+            "stakeholders",
+            "ppdds",
+            "topics",
+            "summary",
         ]
 
+        widgets = {
+            "date": forms.DateInput(
+                # date type expects an input in the format "%Y-%m-%d"
+                # but is then converted to local format ??
+                format="%Y-%m-%d",
+                attrs={"class": "form-control", "type": "date"},
+            ),
+            "summary": forms.Textarea(
+                attrs={
+                    "class": "form-control",
+                    "placeholder": "Enter a summary of meeting and any outcomes/actions arising from it.",
+                },
+            ),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(EngagementForm, self).__init__(*args, **kwargs)
+        # validation
+        self.fields["date"].required = True
+        self.fields["projects"].required = True
+        self.fields["stakeholders"].required = True
+        self.fields["ppdds"].required = True
+        self.fields["topics"].required = False
+        self.fields["summary"].required = True
+        # label
+        # self.fields["date"].label = "Date of Engagement"
