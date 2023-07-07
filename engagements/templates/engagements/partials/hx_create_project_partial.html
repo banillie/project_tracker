@@ -1,16 +1,22 @@
 {% load crispy_forms_tags %}
+
+ <style>
+       .create-new-project-hx-container{
+            display: flex;
+            flex-wrap: wrap; /* Allow items to wrap to the next line */
+        }
+    </style>
+
 <div id="create-new-project-hx-container">
-    {{ form.projects|as_crispy_field }}
-    <button
-	hx-get="{{ hx_create_project_url }}"
-	hx-target="#create-project-modal"
-	hx-trigger="click"
-    hx-swap="innerHTML"
-	_="on htmx:afterOnLoad wait 10ms then add .show to #modal then add
-	.show to #modal-backdrop">
-       Create New Project
-    </button>
- </div>
+{#   <div style="display: inline-block; width: 89%;">#}
+    <div class="project-field"i> {{ form.projects|as_crispy_field }} </div>
+{#   </div>#}
+{#   <div style="display: inline-block; width: 10%; text-align: right;">#}
+    <div class="add-project-button">
+        {% include "engagements/partials/hx_create_project_button.html" %}
+        </div>
+{#   </div>#}
+{# </div>#}
 
 <script type="text/javascript">
     document.body.addEventListener('htmx:afterSettle', async (event) => {

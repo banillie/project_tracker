@@ -1,12 +1,10 @@
-# not in use handled via form_class in engagement.views
-
 from django import forms
 
 from .models import Engagement, EngagementTopic
 from projects.models import Project
 from stakeholders.models import Stakeholder
 from ppdds.models import PPDD
-from easy_select2 import select2_modelform_meta, Select2Multiple
+from easy_select2 import Select2Multiple
 
 
 class EngagementForm(forms.ModelForm):
@@ -51,11 +49,6 @@ class EngagementForm(forms.ModelForm):
         ),
         label="Engagement Topics",
     )
-    # summary = forms.CharField(
-    #     widget=forms.Textarea,
-    #     required=False,
-    # )
-
     class Meta:
         model = Engagement
         fields = [

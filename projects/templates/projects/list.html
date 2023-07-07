@@ -9,7 +9,7 @@
     </script>
     <div class="container-fluid">
         <div class="row">
-            <h1>Projects Page</h1>
+            <h3>Projects Page</h3>
             <p>
                 This page provides a list of all the projects and programmes we have engaged with thus far: currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list of projects and programmes in the department, but more as a list of those we have engaged with (see Neil Nevil for a list of all projects and programmes across the DfT Portfolio).
             </p>
@@ -20,9 +20,11 @@
             <p>
                 If you are looking for details on a particular project please use the search bar (below, right). If you need to create a new project entry you can do so using the button below.
             </p>
-            <p>
-                <a href="{%  url 'projects:create' %}" class="btn btn-primary">Create New Project Entry</a>
-            </p>
+{#            <p>#}
+{#                <a href="{%  url 'engagements:hx-project-create' %}" class="btn btn-primary">Create New Project Entry</a>#}
+{#            </p>#}
+
+                <p>{% include "engagements/partials/hx_create_project_button.html" %}</p>
 
 {#            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>#}
 {#            {% for instance in object_list %}#}

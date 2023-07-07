@@ -1,0 +1,10 @@
+<button
+        class="btn btn-primary"
+        hx-get="{{ hx_create_project_url }}"
+        hx-target="#create-project-modal"
+        hx-trigger="click"
+        hx-swap="innerHTML"
+        _="on htmx:afterOnLoad wait 10ms then add .show to #modal then add
+	.show to #modal-backdrop">
+    Create New Project
+</button>

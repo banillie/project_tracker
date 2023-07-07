@@ -1,5 +1,6 @@
 import operator
 
+from django.urls import reverse
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -29,7 +30,8 @@ class ProjectListAPIView(generics.ListAPIView):
 def project_list_view(request):
     queryset = Project.objects.all().order_by('name')
     context = {
-        "object_list": queryset
+        "object_list": queryset,
+        "hx_create_project_url": reverse("engagements:hx-project-create"),
     }
     return render(request, "projects/list.html", context)
 
