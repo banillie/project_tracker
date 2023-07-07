@@ -10,10 +10,10 @@ class ProjectForm(forms.ModelForm):
             "name",
             "sort",
             "abbreviation",
+            "dft_group",
             "tier",
             "stage_name",
             "scope",
-            "dft_group"
         ]
         widgets = {
             "name": forms.TextInput(attrs={'class': 'form-control'}),
@@ -28,9 +28,15 @@ class ProjectForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['stage_name'].label = "Business Case Stage"
-        # self.fields['abbreviation'].label = "Project Abbreviation"
         self.fields['dft_group'].label = "DfT Group"
-        # self.fields['sort'].label = "Type"
+        # validation
+        self.fields['name'].required = True
+        self.fields['sort'].required = True
+        self.fields['abbreviation'].required = True
+        self.fields['dft_group'].required = True
+        self.fields['tier'].required = False
+        self.fields['stage_name'].required = False
+        self.fields['scope'].required = False
 
     # # for adding data validation requirements
     # def clean(self, *args, **kwargs):

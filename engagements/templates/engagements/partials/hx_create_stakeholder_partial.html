@@ -1,16 +1,23 @@
 {% load crispy_forms_tags %}
 <div id="create-new-stakeholder-hx-container">
-    {{ form.stakeholders|as_crispy_field }}
-    <button
-	hx-get="{{ hx_create_stakeholder_url }}"
-	hx-target="#create-stakeholder-modal"
-	hx-trigger="click"
-    hx-swap="innerHTML"
-	_="on htmx:afterOnLoad wait 10ms then add .show to #modal then add
-	.show to #modal-backdrop">
-       Create New Stakeholder
-    </button>
- </div>
+
+    <div class="d-flex justify-content-between align-items-end pt-2">
+        <div class="w-75">{{ form.stakeholders|as_crispy_field }}</div>
+        <div class="w-25 mx-2">
+            <button
+                    class="btn btn-primary"
+                    hx-get="{{ hx_create_stakeholder_url }}"
+                    hx-target="#create-stakeholder-modal"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    _="on htmx:afterOnLoad wait 10ms then add .show to #modal then add
+	                .show to #modal-backdrop">
+                Create New Stakeholder
+            </button>
+            </div>
+        </div>
+    </div>
+
 
 <script type="text/javascript">
     document.body.addEventListener('htmx:afterSettle', async (event) => {

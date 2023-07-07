@@ -5,6 +5,8 @@
 	<div class="modal-dialog modal-dialog-centered">
 	  <div class="modal-content">
 		<div class="modal-body">
+            <h4>Create New Scheme Entry</h4>
+            <h6>Fields with asterix are mandatory</h6>
             <form
             action="."
             method="POST"
@@ -13,7 +15,7 @@
             hx-swap="outerHTML">
 
             {% csrf_token %}
-            {{ project_form.as_p }}
+            {{ project_form|crispy}}
                 <p></p>
             <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
             <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>

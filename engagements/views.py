@@ -60,15 +60,19 @@ def engagement_create_project_hx_view(request):
         "hx_create_project_url": reverse("engagements:hx-project-create"),
         "project_form": project_form,
     }
-    if project_form.is_valid():
-        project_form.save()
-        if create_update == "update":
-            engagement_id = ref_url_list[-2]
-            instance = Engagement.objects.get(pk=engagement_id)
-            context["form"] = EngagementForm(instance=instance)
+    # form validation not showing.
+    if request.method == 'POST':
+        if project_form.is_valid():
+            project_form.save()
+            if create_update == "update":
+                engagement_id = ref_url_list[-2]
+                instance = Engagement.objects.get(pk=engagement_id)
+                context["form"] = EngagementForm(instance=instance)
+            else:
+                context["form"] = EngagementForm()
+            return render(request, "engagements/partials/hx_create_project_partial.html", context)
         else:
-            context["form"] = EngagementForm()
-        return render(request, "engagements/partials/hx_create_project_partial.html", context)
+            return render(request, "engagements/partials/hx_create_project_partial.html", context)
     return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
 
 
