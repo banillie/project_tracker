@@ -3,46 +3,47 @@
 {% block content %}
 
     <script>
-    $(document).ready( function () {
-        $('#table_id').DataTable();
-    } );
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
     </script>
     <div class="container-fluid">
         <div class="row">
             <h3>Projects Page</h3>
             <p>
-                This page provides a list of all the projects and programmes we have engaged with thus far: currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list of projects and programmes in the department, but more as a list of those we have engaged with (see Neil Nevil for a list of all projects and programmes across the DfT Portfolio).
-            </p>
+                This page provides a list of all the projects and programmes we have engaged with thus far:
+                currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list of
+                projects and programmes in the department, but more as a list of those we have engaged with (see Neil
+                Nevil for a list of all projects and programmes across the DfT Portfolio).
             <p>
-                The list below provides insight into the range of projects across model areas that have sought our advice and support. Click on a project to review our engagement and the types of issues they have asked us to help them address.
+                The list below provides insight into the range of projects across model areas that have sought our
+                advice and support. Click on a project to review our engagement and the types of issues they have asked
+                us to help them address.
             </p>
 
             <p>
-                If you are looking for details on a particular project please use the search bar (below, right). If you need to create a new project entry you can do so using the button below.
+                If you are looking for details on a particular project please use the search bar (below, right). If you
+                need to create a new project entry you can do so using the button below.
             </p>
-{#            <p>#}
-{#                <a href="{%  url 'engagements:hx-project-create' %}" class="btn btn-primary">Create New Project Entry</a>#}
-{#            </p>#}
+            <p>{% include "engagements/partials/hx_create_project_button.html" %}</p>
 
-                <p>{% include "engagements/partials/hx_create_project_button.html" %}</p>
-
-{#            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>#}
-{#            {% for instance in object_list %}#}
-{#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>#}
-{#            {% endfor %}#}
+            {#            <p>Project Lists. There are {{ object_list|length }} projects. These are listed below:</p>#}
+            {#            {% for instance in object_list %}#}
+            {#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></p>#}
+            {#            {% endfor %}#}
             <table class="display" id="table_id">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Abbreviation</th>
-                        <th>Type</th>
-                        <th>Tier</th>
-                        <th>Group</th>
-                        <th>Stage</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Abbreviation</th>
+                    <th>Type</th>
+                    <th>Tier</th>
+                    <th>Group</th>
+                    <th>Stage</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for instance in object_list %}
+                {% for instance in object_list %}
                     <tr>
                         <td>
                             <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>

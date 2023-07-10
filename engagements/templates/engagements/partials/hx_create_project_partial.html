@@ -4,7 +4,17 @@
     <div class="d-flex justify-content-between align-items-end pt-2">
         <div class="w-75">{{ form.projects|as_crispy_field }}</div>
         <div class="w-25 mx-2">
-            {% include "engagements/partials/hx_create_project_button.html" %}
+            <button
+                    class="btn btn-primary"
+                    hx-get="{{ hx_create_project_url }}"
+                    hx-target="#create-project-modal"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    _="on htmx:afterOnLoad wait 10ms then add .show to #modal then add
+	.show to #modal-backdrop">
+                Create New Project
+            </button>
+{#            {% include "engagements/partials/hx_create_project_button.html" %}#}
         </div>
     </div>
 </div>

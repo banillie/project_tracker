@@ -2,54 +2,48 @@
 
 <div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
 <div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
-	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content">
-		<div class="modal-body">
-            <h4>Create New Scheme Entry</h4>
-            <h6>Fields with asterix are mandatory</h6>
-            <form
-            action="."
-            method="POST"
-            hx-post="{{  hx_create_project_url }}"
-            hx-target="#create-new-project-hx-container"
-            hx-swap="outerHTML">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <h4>Create New Scheme Entry</h4>
+                <h6>Fields with asterix are mandatory</h6>
+                <form>
 
-            {% csrf_token %}
-            {{ project_form|crispy}}
-                <p></p>
-            <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
-            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-        </form>
+                    {% csrf_token %}
+                    {{ project_form|crispy }}
+                    <p></p>
+                    <button
+                            action="."
+                            method="POST"
+                            hx-post="{{ hx_create_project_url }}"
+                            hx-target="#create-new-project-hx-container"
+                            {#                    hx-swap="outerHTML"#}
+                            type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                    </button>
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </form>
 
-	  </div>
-	</div>
+            </div>
+        </div>
     </div>
 </div>
 
-{{ form.media.css }}
-{#    <script type="text/javascript" src="{% static 'admin/js/vendor/jquery/jquery.js' %}"></script>#}
-{#    <script type="text/javascript" src="{% static 'admin/js/jquery.init.js' %}"></script>#}
-{{ form.media.js }}
-
-{#<style>#}
-{#    .select2-container {#}
-{#      z-index: 10000;#}
-{#    }#}
-{#</style>#}
-
+{#{{ form.media.css }}#}
+{#{{ form.media.js }}#}
 
 <script>
-function closeModal() {
-    var container = document.getElementById("create-project-modal")
-    var backdrop = document.getElementById("modal-backdrop")
-    var modal = document.getElementById("modal")
+    function closeModal() {
+        var container = document.getElementById("create-project-modal")
+        var backdrop = document.getElementById("modal-backdrop")
+        var modal = document.getElementById("modal")
 
-    modal.classList.remove("show")
-    backdrop.classList.remove("show")
+        modal.classList.remove("show")
+        backdrop.classList.remove("show")
 
-    setTimeout(function() {
-		container.removeChild(backdrop)
-		container.removeChild(modal)
-	}, 200)
-}
+        setTimeout(function () {
+            container.removeChild(backdrop)
+            container.removeChild(modal)
+        }, 200)
+    }
 </script>
+

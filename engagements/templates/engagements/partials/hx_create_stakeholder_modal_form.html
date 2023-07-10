@@ -5,20 +5,20 @@
 	<div class="modal-dialog modal-dialog-centered">
 	  <div class="modal-content">
 		<div class="modal-body">
-            <form
-            action="."
-            method="POST"
-            hx-post="{{ hx_create_stakeholder_url }}"
-            hx-target="#create-new-stakeholder-hx-container"
-            hx-swap="outerHTML">
+            <form>
 
             {% csrf_token %}
-            {{ stakeholder_form.as_p }}
+            {{ stakeholder_form|crispy}}
                 <p></p>
-            <button type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
-            <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+            <button
+                    action="."
+                    method="POST"
+                    hx-post="{{ hx_create_stakeholder_url }}"
+                    hx-target="#create-new-stakeholder-hx-container"
+{#                    hx-swap="outerHTML">#}
+                    type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
+                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
         </form>
-
 	  </div>
 	</div>
     </div>
