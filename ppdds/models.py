@@ -5,6 +5,7 @@ from django.urls import reverse
 from django.db.models.signals import pre_save, post_save
 from .utils import slugify_instance_title
 
+from django.utils.text import slugify
 from simple_history.models import HistoricalRecords
 
 User = settings.AUTH_USER_MODEL
@@ -56,8 +57,14 @@ class PPDD(models.Model):
     def get_absolute_url(self):
         return reverse("ppdds:detail", kwargs={"slug": self.slug})
 
-    def save(self, *arg, **kwargs):
-        super().save(*arg, **kwargs)
+    ## requires change to model
+    # def save(self, *arg, **kwargs):
+    #     try:
+    #         self.my_dft_url = "https://intranet.dft.gov.uk/users/" + slugify(self.first_name + ' ' + self.last_name)
+    #     except:
+    #         pass
+    #     super().save(*args, **kwargs)
+
 
     def __str__(self):
         return self.first_name + ' ' + self.last_name

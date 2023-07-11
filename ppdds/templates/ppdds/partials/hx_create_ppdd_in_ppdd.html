@@ -36,7 +36,8 @@
                 <thead>
                 <tr>
                     <th>Name</th>
-                    <th>Role</th>
+                    <th>Team</th>
+                    <th>My DfT</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -46,8 +47,17 @@
                             <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a>
                         </td>
                         <td>
-                            {% if instance.role %}
-                                {{ instance.role }}
+                            {% if instance.team %}
+                                {{ instance.team }}
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if instance.organisation.name == "DfT(c)" %}
+                                {% if instance.my_dft_url %}
+                                    <p>
+                                        <a href="{{ instance.my_dft_url }}" target="_blank">My DfT Link</a>
+                                    </p>
+                                {% endif %}
                             {% endif %}
                         </td>
                     </tr>
