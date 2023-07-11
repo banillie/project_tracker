@@ -2,63 +2,6 @@
 
 {% block content %}
 
-    <script>
-    $(document).ready( function () {
-        $('#table_id').DataTable();
-    } );
-    </script>
-    <div class="container-fluid">
-        <div class="row">
-            <h1>Stakeholder Page</h1>
-            <p>
-                This page contains a list of the various project team stakeholders we have engaged with, who are embedded in various projects around the department. Thus far {{ object_list|length }}. This list helps to identify key team members we have or need to engage with should we need to contact a project team.
-            </p>
-            <p>
-                If you are looking for the details of a particular stakeholder please use the search bar (below, right). If you need to create a new stakeholder entry you can do so using the button below.
-            </p>
-            <p>
-                <a href="{% url 'stakeholders:create' %}" class="btn btn-primary">Create New Stakeholder Entry</a>
-            </p>
-
-            <table class="display" id="table_id">
-                <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Organisation</th>
-                        <th>DfT Group</th>
-                        <th>Team</th>
-                        <th>Role</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for instance in object_list %}
-                    {#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>#}
-                    <tr>
-                        <td>
-                            <a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a>
-                        </td>
-                        <td>{{ instance.organisation }}</td>
-                        <td>
-                            {% if instance.dft_group %}
-                                {{ instance.dft_group }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if instance.team %}
-                                {{ instance.team }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if instance.role %}
-                                {{ instance.role }}
-                            {% endif %}
-                        </td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
-        </div>
-    </div>
+    {% include "stakeholders/partials/hx_create_stakeholder_in_stakeholder_list.html" %}
 
 {% endblock %}

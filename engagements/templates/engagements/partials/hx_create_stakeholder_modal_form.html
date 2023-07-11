@@ -2,25 +2,34 @@
 
 <div id="modal-backdrop" class="modal-backdrop fade show" style="display:block;"></div>
 <div id="modal" class="modal fade show" tabindex="-1" style="display:block;">
-	<div class="modal-dialog modal-dialog-centered">
-	  <div class="modal-content">
-		<div class="modal-body">
-            <form>
-
-            {% csrf_token %}
-            {{ stakeholder_form|crispy}}
-                <p></p>
-            <button
-                    action="."
-                    method="POST"
-                    hx-post="{{ hx_create_stakeholder_url }}"
-                    hx-target="#create-new-stakeholder-hx-container"
-{#                    hx-swap="outerHTML">#}
-                    type="submit" class="btn btn-primary" onclick="closeModal()">Save</button>
-                <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
-        </form>
-	  </div>
-	</div>
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-body">
+                <form>
+                    {% csrf_token %}
+                    {{ stakeholder_form|crispy }}
+                    <p></p>
+                    {% if hx_create_stakeholder_url %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_create_stakeholder_url }}"
+                                hx-target="#create-new-stakeholder-hx-container"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
+                    {% elif hx_create_stakeholder_url_list %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_create_stakeholder_url_list }}"
+                                hx-target="#create-new-stakeholder-hx-container-s-list"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
+                    {% endif %}
+                    <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
+                </form>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -31,17 +40,17 @@
 
 
 <script>
-function closeModal() {
-    var container = document.getElementById("create-stakeholder-modal")
-    var backdrop = document.getElementById("modal-backdrop")
-    var modal = document.getElementById("modal")
+    function closeModal() {
+        var container = document.getElementById("create-stakeholder-modal")
+        var backdrop = document.getElementById("modal-backdrop")
+        var modal = document.getElementById("modal")
 
-    modal.classList.remove("show")
-    backdrop.classList.remove("show")
+        modal.classList.remove("show")
+        backdrop.classList.remove("show")
 
-    setTimeout(function() {
-		container.removeChild(backdrop)
-		container.removeChild(modal)
-	}, 200)
-}
+        setTimeout(function () {
+            container.removeChild(backdrop)
+            container.removeChild(modal)
+        }, 200)
+    }
 </script>

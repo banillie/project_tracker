@@ -3,7 +3,8 @@ import operator
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
-from django.db import IntegrityError
+from django.http import Http404
+from django.urls import  reverse
 
 from projects.models import Project
 from .forms import StakeholderForm
@@ -14,21 +15,36 @@ from engagements.models import Engagement
 
 @login_required
 def stakeholders_create_view(request):
-    form = StakeholderForm(request.POST or None)
-    error_msg = None
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.user = request.user
-        try:
-            obj.save()
-            return redirect(obj.get_absolute_url())
-        except IntegrityError:  # slug field set to unique
-            error_msg = 'Stakeholder already exists'
+    if not request.htmx:
+        return Http404
+
+    stakeholder_form = StakeholderForm(request.POST or None)
     context = {
-        'form': form,
-        'error_msg': error_msg,
+        "hx_create_stakeholder_url_list": reverse("stakeholders:create"),
+        "stakeholder_form": stakeholder_form,
     }
-    return render(request, "stakeholders/create.html", context)
+    if stakeholder_form.is_valid():
+        stakeholder_form.save()
+        queryset = Stakeholder.objects.all().order_by('last_name')
+        context["object_list"] = queryset
+        return render(request, "stakeholders/partials/hx_create_stakeholder_in_stakeholder_list.html", context)
+    return render(request, "engagements/partials/hx_create_stakeholder_modal_form.html", context)
+
+    # form = StakeholderForm(request.POST or None)
+    # error_msg = None
+    # if form.is_valid():
+    #     obj = form.save(commit=False)
+    #     obj.user = request.user
+    #     try:
+    #         obj.save()
+    #         return redirect(obj.get_absolute_url())
+    #     except IntegrityError:  # slug field set to unique
+    #         error_msg = 'Stakeholder already exists'
+    # context = {
+    #     'form': form,
+    #     'error_msg': error_msg,
+    # }
+    # return render(request, "stakeholders/create.html", context)
 
 
 @login_required
@@ -81,7 +97,8 @@ def stakeholder_delete_view(request, slug):
 def stakeholder_list_view(request):
     queryset = Stakeholder.objects.all().order_by('last_name')
     context = {
-        "object_list": queryset
+        "object_list": queryset,
+        "hx_create_stakeholder_url_list": reverse("stakeholders:create"),
     }
     return render(request, "stakeholders/list.html", context)
 

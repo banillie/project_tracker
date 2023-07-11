@@ -6,18 +6,26 @@
         <div class="modal-content">
             <div class="modal-body">
                 <form>
-
                     {% csrf_token %}
                     {{ ppdd_form|crispy }}
                     <p></p>
-                    <button
-                            action="."
-                            method="POST"
-                            hx-post="{{ hx_create_ppdd_url }}"
-                            hx-target="#create-new-ppdd-hx-container"
-                            {#                    hx-swap="outerHTML"#}
-                            type="submit" class="btn btn-primary" onclick="closeModal()">Save
-                    </button>
+                    {% if hx_create_ppdd_url %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_create_ppdd_url }}"
+                                hx-target="#create-new-ppdd-hx-container"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
+                    {% elif hx_create_ppdd_url_list %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_create_ppdd_url_list }}"
+                                hx-target="#create-new-ppdd-hx-container-ppdd-list"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
+                    {% endif %}
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
                 </form>
 

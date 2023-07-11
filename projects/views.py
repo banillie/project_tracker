@@ -132,10 +132,7 @@ def project_create_view(request):
     if project_form.is_valid():
         project_form.save()
         queryset = Project.objects.all().order_by('name')
-        context = {
-            "object_list": queryset,
-            "hx_create_project_url_list": reverse("projects:create"),
-        }
+        context["object_list"] = queryset
         return render(request, "projects/partials/hx_create_project_in_project_list.html", context)
     return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
 
