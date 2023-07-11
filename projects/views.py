@@ -1,6 +1,7 @@
 import operator
 
 from django.urls import reverse
+from django.http import Http404
 from django.core.exceptions import ObjectDoesNotExist
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
@@ -31,7 +32,7 @@ def project_list_view(request):
     queryset = Project.objects.all().order_by('name')
     context = {
         "object_list": queryset,
-        "hx_create_project_url": reverse("engagements:hx-project-create"),
+        "hx_create_project_url_list": reverse("projects:create"),
     }
     return render(request, "projects/list.html", context)
 
@@ -120,22 +121,39 @@ def project_update_view(request, slug=None):
 
 @login_required
 def project_create_view(request):
-    form = ProjectForm(request.POST or None)
-    error_msg = None
-    if form.is_valid():
-        obj = form.save(commit=False)
-        obj.user = request.user
-        try:
-            obj.save()
-            return redirect(obj.get_absolute_url())
-        except IntegrityError:  # slug field set to unique
-            error_msg = 'Project already exists'
-    context = {
-        'form': form,
-        'error_msg': error_msg,
-    }
-    return render(request, "projects/create-update.html", context)
+    if not request.htmx:
+        return Http404
 
+    project_form = ProjectForm(request.POST or None)
+    context = {
+        "hx_create_project_url_list": reverse("projects:create"),
+        "project_form": project_form,
+    }
+    if project_form.is_valid():
+        project_form.save()
+        queryset = Project.objects.all().order_by('name')
+        context = {
+            "object_list": queryset,
+            "hx_create_project_url_list": reverse("projects:create"),
+        }
+        return render(request, "projects/partials/hx_create_project_in_project_list.html", context)
+    return render(request, "engagements/partials/hx_create_project_modal_form.html", context)
+
+    # error_msg = None
+    # if form.is_valid():
+    #     obj = form.save(commit=False)
+    #     obj.user = request.user
+    #     try:
+    #         obj.save()
+    #         return redirect(obj.get_absolute_url())
+    #     except IntegrityError:  # slug field set to unique
+    #         error_msg = 'Project already exists'
+    # context = {
+    #     'form': form,
+    #     'error_msg': error_msg,
+    # }
+    # return render(request, "projects/create-update.html", context)
+    #
 
 
 
