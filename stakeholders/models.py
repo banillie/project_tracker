@@ -72,7 +72,7 @@ class Stakeholder(models.Model):
         return reverse("stakeholders:update", kwargs={"slug": self.slug})
 
     def save(self, *args, **kwargs):
-        if self.my_dft_url is None and self.organisation.name == 'DfT(c)':
+        if self.organisation.name == 'DfT(c)':
             self.my_dft_url = "https://intranet.dft.gov.uk/users/" + slugify(self.first_name + ' ' + self.last_name)
         else:
             pass

@@ -5,6 +5,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
+                <h4>Create New Scheme Entry</h4>
+                <h6>Fields with asterix are mandatory</h6>
                 <form>
                     {% csrf_token %}
                     {{ stakeholder_form|crispy }}
@@ -23,6 +25,14 @@
                                 method="POST"
                                 hx-post="{{ hx_create_stakeholder_url_list }}"
                                 hx-target="#create-new-stakeholder-hx-container-s-list"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
+                    {% elif hx_update_stakeholder_url %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_update_stakeholder_url }}"
+                                hx-target="#update-stakeholder-details-container"
                                 type="submit" class="btn btn-primary" onclick="closeModal()">Save
                         </button>
                     {% endif %}

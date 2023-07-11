@@ -34,9 +34,10 @@
                 <tr>
                     <th>Name</th>
                     <th>Organisation</th>
-                    <th>DfT Group</th>
-                    <th>Team</th>
-                    <th>Role</th>
+                    <th>My DfT Information</th>
+                    {#                    <th>DfT Group</th>#}
+                    {#                    <th>Team</th>#}
+                    {#                    <th>Role</th>#}
                 </tr>
                 </thead>
                 <tbody>
@@ -48,20 +49,29 @@
                         </td>
                         <td>{{ instance.organisation }}</td>
                         <td>
-                            {% if instance.dft_group %}
-                                {{ instance.dft_group }}
+                            {% if instance.organisation.name == "DfT(c)" %}
+                                {% if instance.my_dft_url %}
+                                    <p>
+                                        <a href="{{ instance.my_dft_url }}" target="_blank">My DfT Link</a>
+                                    </p>
+                                {% endif %}
                             {% endif %}
                         </td>
-                        <td>
-                            {% if instance.team %}
-                                {{ instance.team }}
-                            {% endif %}
-                        </td>
-                        <td>
-                            {% if instance.role %}
-                                {{ instance.role }}
-                            {% endif %}
-                        </td>
+                        {#                        <td>#}
+                        {#                            {% if instance.dft_group %}#}
+                        {#                                {{ instance.dft_group }}#}
+                        {#                            {% endif %}#}
+                        {#                        </td>#}
+                        {#                        <td>#}
+                        {#                            {% if instance.team %}#}
+                        {#                                {{ instance.team }}#}
+                        {#                            {% endif %}#}
+                        {#                        </td>#}
+                        {#                        <td>#}
+                        {#                            {% if instance.role %}#}
+                        {#                                {{ instance.role }}#}
+                        {#                            {% endif %}#}
+                        {#                        </td>#}
                     </tr>
                 {% endfor %}
                 </tbody>

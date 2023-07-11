@@ -2,63 +2,6 @@
 
 {% block content %}
 
-    <div class="container-fluid">
-        <div class="row">
-            <h2>Stakeholder details</h2>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <p>
-                    <b>Name: </b>
-                    {{ object.first_name }} {{object.last_name}}
-                </p>
-                <p>
-                    <b>Organisation: </b>
-                    {{ object.organisation }}
-                </p>
-                    {% if object.organisation.name == "DfT(c)" %}
-                        <p>
-                            <b>MyDfT Contact Link: </b>
-                            <a href="{{ object.my_dft_url }}">{{ object.my_dft_url }}</a>
-                        </p>
-                    {% endif %}
-                <p>
-                    <b>DfT Group: </b>
-                    {{ object.dft_group }}
-                </p>
-                <p><b>Team: </b>
-                    {{ object.team }}
-                </p>
-                <p>
-                    <b>Role: </b>{{ object.role }}
-                </p>
-
-                <p>
-                <a class="btn btn-primary" role="button" {% if object.get_update_url %} href={{ object.get_update_url }}>Update{% endif %}</a>
-                </p>
-
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <b>Engagements</b>
-                {% if engagement_list %}
-                    {% for object in engagement_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
-                {% endif %}
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <b>Associated Projects</b>
-                {% if project_list %}
-                    {% for object in project_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
-                {% endif %}
-            </div>
-        </div>
-    </div>
+    {% include "stakeholders/partials/hx_update_stakeholder.html" %}
 
 {% endblock %}

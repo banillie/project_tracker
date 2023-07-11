@@ -11,11 +11,11 @@ class StakeholderForm(forms.ModelForm):
             "first_name",
             "last_name",
             "organisation",
-            "group",
-            "dft_group",
-            "team",
-            "role",
-            "tele_no",
+            # "group",
+            # "dft_group",
+            # "team",
+            # "role",
+            # "tele_no",
             "my_dft_url"
         ]
 
@@ -23,11 +23,11 @@ class StakeholderForm(forms.ModelForm):
             "first_name": forms.TextInput(attrs={'class': 'form-control'}),
             "last_name": forms.TextInput(attrs={'class': 'form-control'}),
             "organisation": forms.Select(attrs={'class': 'form-control'}),
-            "group": forms.TextInput(attrs={'class': 'form-control'}),
-            "dft_group": forms.Select(attrs={'class': 'form-control'}),
-            "team": forms.TextInput(attrs={'class': 'form-control'}),
-            "role": forms.TextInput(attrs={'class': 'form-control'}),
-            "tele_no": forms.TextInput(attrs={'class': 'form-control'}),
+            # "group": forms.TextInput(attrs={'class': 'form-control'}),
+            # "dft_group": forms.Select(attrs={'class': 'form-control'}),
+            # "team": forms.TextInput(attrs={'class': 'form-control'}),
+            # "role": forms.TextInput(attrs={'class': 'form-control'}),
+            # "tele_no": forms.TextInput(attrs={'class': 'form-control'}),
             "my_dft_url": forms.URLInput(attrs={'class': 'form-control'}),
         }
 

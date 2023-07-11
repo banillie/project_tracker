@@ -8,71 +8,71 @@
         </div>
         <div class="row">
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
-                    <p>
-                        <b>Date:</b>
-                        <ul>
-                            <li>{{ object.date }}</li>
-                        </ul>
-                    </p>
-                        <p>
-                            <b>Project(s):</b>
-                                <ul>
-                                    {% for instance in project_list %}
-                                        <li><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></li>
-                                    {% endfor %}
-                                </ul>
-                        </p>
-                    <p>
-                        <b>Stakeholder(s):</b>
-                            <ul>
-                                {% for instance in stakeholder_list %}
-                                    <li>
-                                        <a href='{{ instance.get_absolute_url }}'>
-                                            {{ instance.first_name }} {{ instance.last_name }}
-                                            ({{ instance.organisation }})
-                                        </a>
-                                    </li>
-                                {% endfor %}
-                            </ul>
-                    </p>
+                <p>
+                    <b>Date:</b>
+                <ul>
+                    <li>{{ object.date }}</li>
+                </ul>
+                </p>
+                <p>
+                    <b>Project(s):</b>
+                <ul>
+                    {% for instance in project_list %}
+                        <li><a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a></li>
+                    {% endfor %}
+                </ul>
+                </p>
+                <p>
+                    <b>Stakeholder(s):</b>
+                <ul>
+                    {% for instance in stakeholder_list %}
+                        <li>
+                            <a href='{{ instance.get_absolute_url }}'>
+                                {{ instance.first_name }} {{ instance.last_name }}:
+                                {{ instance.organisation }}
+                            </a>
+                        </li>
+                    {% endfor %}
+                </ul>
+                </p>
             </div>
             <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">
                 <p>
                     <b>PPDD colleague(s):</b>
-                    <ul>
-                        {% for instance in ppdd_list %}
-                            <li>
-                                <a href='{{ instance.get_absolute_url }}'>
-                                    {{ instance.first_name }} {{ instance.last_name }}
-                                </a>
+                <ul>
+                    {% for instance in ppdd_list %}
+                        <li>
+                            <a href='{{ instance.get_absolute_url }}'>
+                                {{ instance.first_name }} {{ instance.last_name }}
+                            </a>
 
-                            </li>
-                        {% endfor %}
-                    </ul>
+                        </li>
+                    {% endfor %}
+                </ul>
                 </p>
                 <p>
                     <b>Engagement Topic(s):</b>
-                        <ul>
-                            {% for instance in topic_list %}
-                                <li><a>{{ instance }}</a></li>
-                            {% endfor %}
-                        </ul>
+                <ul>
+                    {% for instance in topic_list %}
+                        <li><a>{{ instance }}</a></li>
+                    {% endfor %}
+                </ul>
                 </p>
             </div>
         </div>
         <div class="row">
-{#            <div class="col-12">#}
-                <b>Summary:</b>
-                    <p>
-                        <pre>{{ object.summary }}</pre>
-                    </p>
-{#            </div>#}
-        </div>
+            {#            <div class="col-12">#}
+            <b>Summary:</b>
             <p>
-                <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
-                <a class="btn btn-primary" href="{{ object.get_absolute_url }}delete">Delete</a>
+            <pre>{{ object.summary }}</pre>
             </p>
+            {#            </div>#}
         </div>
+        <p>
+            <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
+            <a class="btn btn-primary" href="{{ object.get_absolute_url }}delete">Delete</a>
+        </p>
+    </div>
     </div>
 
 {% endblock %}

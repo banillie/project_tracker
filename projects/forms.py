@@ -29,6 +29,7 @@ class ProjectForm(forms.ModelForm):
         super(ProjectForm, self).__init__(*args, **kwargs)
         self.fields['stage_name'].label = "Business Case Stage"
         self.fields['dft_group'].label = "DfT Group"
+        self.fields['scope'].label = "Brief Outline Of Scope"
         # validation
         self.fields['name'].required = True
         self.fields['sort'].required = True
@@ -36,7 +37,7 @@ class ProjectForm(forms.ModelForm):
         self.fields['dft_group'].required = True
         self.fields['tier'].required = False
         self.fields['stage_name'].required = False
-        self.fields['scope'].required = False
+        self.fields['scope'].required = True
 
     # # for adding data validation requirements
     # def clean(self, *args, **kwargs):
