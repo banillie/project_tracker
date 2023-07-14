@@ -1,63 +1,36 @@
 <div id="update-stakeholder-details-container">
 
-    <div class="container-fluid">
-        <a href={% url "stakeholders:list" %}>Back to list of stakeholders</a>
-    <p></p>
-        <div class="row">
-            <h4>Stakeholder details</h4>
-        </div>
-        <div class="row">
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <p>
-                    <b>Name: </b>
-                    {{ object.first_name }} {{ object.last_name }}
-                </p>
-                {% if object.organisation.name == "DfT(c)" %}
-                    {% if object.my_dft_url %}
-                        <p>
-                            <a href="{{ object.my_dft_url }}" target="_blank">My DfT Link</a>
-                        </p>
-                    {% endif %}
-                {% else %}
-                    <p>
-                        <b>Organisation: </b>
-                        {{ object.organisation }}
-                    </p>
+    <div class="row">
+        <div class="col text-center">
+            {#            <h4><b>Name:#}
+            <h4><b>
+                {{ object.first_name }} {{ object.last_name }}
+            </b></h4>
+            {#    </p>#}
+            {% if object.organisation.name == "DfT(c)" %}
+                {% if object.my_dft_url %}
+                    {#            <p>#}
+                    <a class="btn btn-success" href="{{ object.my_dft_url }}" target="_blank">My DfT Link</a>
+                    {#            </p>#}
                 {% endif %}
-                <button
-                        class="btn btn-primary"
-                        hx-get="{{ hx_update_stakeholder_url }}"
-                        hx-target="#create-stakeholder-modal"
-                        hx-trigger="click"
-                        hx-swap="innerHTML"
-                        _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
+            {% else %}
+                {#                    <b>Organisation: </b>#}
+                ({{ object.organisation }})
+            {% endif %}
+            {#        </div>#}
+            {#        <div class="col text-end">#}
+            <button
+                    class="btn btn-primary"
+                    hx-get="{{ hx_update_stakeholder_url }}"
+                    hx-target="#create-stakeholder-modal"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
                 	.show to #modal-backdrop">
-                    Update Details
-                </button>
+                Update Details
+            </button>
 
-                </p>
-
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <b>Engagements</b>
-                {% if engagement_list %}
-                    {% for object in engagement_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
-                {% endif %}
-            </div>
-            <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">
-                <b>Associated Projects</b>
-                {% if project_list %}
-                    {% for object in project_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
-                {% endif %}
-            </div>
+            {#    </p>#}
         </div>
     </div>
 </div>

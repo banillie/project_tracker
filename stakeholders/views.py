@@ -43,19 +43,19 @@ def stakeholders_create_view(request, slug=None):
                 context,
             )
         else:
-            engage_qs = Engagement.objects.filter(stakeholders__slug=slug).order_by("-date")
-            project_qs = []
-            for x in engage_qs.all().values("projects").distinct():
-                try:
-                    p = Project.objects.get(pk=x["projects"])
-                    if p not in project_qs:  # remove repeats
-                        project_qs.append(p)
-                except ObjectDoesNotExist:
-                    pass
-            project_qs_ordered = sorted(project_qs, key=operator.attrgetter("name"))
+            # engage_qs = Engagement.objects.filter(stakeholders__slug=slug).order_by("-date")
+            # project_qs = []
+            # for x in engage_qs.all().values("projects").distinct():
+            #     try:
+            #         p = Project.objects.get(pk=x["projects"])
+            #         if p not in project_qs:  # remove repeats
+            #             project_qs.append(p)
+            #     except ObjectDoesNotExist:
+            #         pass
+            # project_qs_ordered = sorted(project_qs, key=operator.attrgetter("name"))
             context["object"] = obj
-            context["engagement_list"] = engage_qs
-            context["project_list"] = project_qs_ordered
+            # context["engagement_list"] = engage_qs
+            # context["project_list"] = project_qs_ordered
             return render(
                 request,
                 "stakeholders/partials/hx_update_stakeholder.html",
