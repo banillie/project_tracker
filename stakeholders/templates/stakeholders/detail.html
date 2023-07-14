@@ -10,35 +10,57 @@
     {#        }#}
     {#    </style>#}
 
-    <div class="container-md">
+    <div class="container-md p-5">
         <a href={% url "stakeholders:list" %}>Back to list of stakeholders</a>
-    <p></p>
-{#        <div class="text-center">#}
-{#            <h4>Stakeholder details</h4>#}
-{#        </div>#}
+        <p></p>
+        {#        <div class="text-center">#}
+        {#            <h4>Stakeholder details</h4>#}
+        {#        </div>#}
         <p></p>
         {% include "stakeholders/partials/hx_update_stakeholder.html" %}
         <p></p>
         <div class="row">
-            <div class="col text-center">
-                <b>Engagements</b>
+            <div class="col text-center p-4">
                 {% if engagement_list %}
-                    {% for object in engagement_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
+                    <p><b>{{ engagement_list.count }} Engagements:</b></p>
                 {% endif %}
+                <p>
+                    {#                    <b>Related Project(s):</b>#}
+                    {% for instance in engagement_list %}
+                        <a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a>{% if not forloop.last %};
+                    {% else %}.{% endif %}
+                    {% empty %}
+                        <b>No Engagements so far...</b>
+                    {% endfor %}
+                    {#                </p>#}
+                    {#                {% if engagement_list %}#}
+                    {#                    {% for object in engagement_list %}#}
+                    {#                        <li><a href="{{ object.get_absolute_url }}">{{ object.date }}</a></li>#}
+                    {#                    {% endfor %}#}
+                    {#                {% else %}#}
+                    {#                    <p>None so far...</p>#}
+                    {#                {% endif %}#}
             </div>
-            <div class="col text-center">
-                <b>Associated Projects</b>
+            <div class="col text-center p-4">
                 {% if project_list %}
-                    {% for object in project_list %}
-                        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>
-                    {% endfor %}
-                {% else %}
-                    <p>None so far...</p>
+                    <p><b>{{ project_list.count }} Projects:</b></p>
                 {% endif %}
+                {#                <p>#}
+                {#                    <b>Related Project(s):</b>#}
+                {% for instance in project_list %}
+                    <a href='{{ instance.get_absolute_url }}'>{{ instance.name }}</a>{% if not forloop.last %};
+                {% else %}.{% endif %}
+                {% empty %}
+                    <b>No Projects so far...</b>
+                {% endfor %}
+                {#                <b>Associated Projects</b>#}
+                {#                {% if project_list %}#}
+                {#                    {% for object in project_list %}#}
+                {#                        <li><a href="{{ object.get_absolute_url }}">{{ object.name }}</a></li>#}
+                {#                    {% endfor %}#}
+                {#                {% else %}#}
+                {#                    <p>None so far...</p>#}
+                {#                {% endif %}#}
             </div>
             {#        </div>#}
             {#        <div class="col-lg-4 col-md-4 col-sm-4 col-xs-12">#}
