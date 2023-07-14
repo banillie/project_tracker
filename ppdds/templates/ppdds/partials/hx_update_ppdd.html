@@ -1,0 +1,24 @@
+<div id="update-ppdd-details-container">
+    <div class="row">
+        <div class="col text-center">
+            <h4>
+                <b>
+                    {{ object.first_name }} {{ object.last_name }}
+                </b>
+            </h4>
+            {% if object.my_dft_url %}
+                <a class="btn btn-success" href="{{ object.my_dft_url }}" target="_blank">My DfT Link</a>
+            {% endif %}
+            <button
+                    class="btn btn-primary"
+                    hx-get="{{ hx_update_ppdd_url }}"
+                    hx-target="#create-ppdd-modal"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
+                	.show to #modal-backdrop">
+                Update Details
+            </button>
+        </div>
+    </div>
+</div>
