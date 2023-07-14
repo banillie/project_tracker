@@ -1,46 +1,34 @@
 {% extends 'base.html' %}
 
 {% block content %}
-
-    <script>
-    $(document).ready( function () {
-        $('#table_id').DataTable({
-            columnDefs: [ { type: 'date', 'targets': [0] } ],
-            order: [[ 0, 'desc' ]]
-            }
-        );
-    } );
-    </script>
-
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <h1>Engagements Page</h1>
+            <div class="row text-center p-3">
+                <h1>Engagements Page</h1>
+                <p>
+                    This contains a list of all engagements by date and helps illustrate our performance over
+                    time.
+                    If you are looking for any particular engagement please use the search bar (below, right).
+                    If you need to create a new engagement you can do so using the button below.
+                </p>
+            </div>
             <p>
-                This contains a list of all engagements by date and helps illustrate our performance over time.
-            </p>
-            <p>
-                If you are looking for any particular engagement please use the search bar (below, right). If you need to create a new engagement you can do so using the button below.
-            </p>
-{#            <p>Engagements Lists. There are {{ object_list|length }} engagements. The date these engagements took place are listed below.</p>#}
-{#            {% for instance in object_list %}#}
-{#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a></p>#}
-{#            {% endfor %}#}
-            <p>
-                <a href="{%  url 'engagements:engagement-create' %}" class="btn btn-primary">Create new Engagement</a>
+                <a href="{% url 'engagements:engagement-create' %}" class="btn btn-primary">Create new
+                    Engagement</a>
             </p>
 
             <table class="display" id="table_id">
                 <thead>
-                    <tr>
-                        <th>Date</th>
-                        <th>Projects</th>
-                        <th>Stakeholders</th>
-                        <th>PPDD colleagues</th>
-                        <th>Topic</th>
-                    </tr>
+                <tr>
+                    <th>Date</th>
+                    <th>Projects</th>
+                    <th>Stakeholders</th>
+                    <th>PPDD colleagues</th>
+                    <th>Topic</th>
+                </tr>
                 </thead>
                 <tbody>
-                    {% for instance in object_list %}
+                {% for instance in object_list %}
                     {#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>#}
                     <tr>
                         <td>
@@ -48,17 +36,23 @@
                         </td>
                         <td>
                             {% for project in instance.projects.all %}
-                                <ul>{{ project.name }}</ul>
+                                <ul>
+                                <a href='{{ project.get_absolute_url }}'>{{ project }}</a>
+                                </ul>
                             {% endfor %}
                         </td>
                         <td>
                             {% for stakeholder in instance.stakeholders.all %}
-                                <ul>{{ stakeholder.first_name }} {{ stakeholder.last_name }}</ul>
+                                <ul>
+                                <a href='{{ stakeholder.get_absolute_url }}'>{{ stakeholder }}</a>
+                                </ul>
                             {% endfor %}
                         </td>
                         <td>
                             {% for ppdd in instance.ppdds.all %}
-                                <ul>{{ ppdd.first_name }} {{ ppdd.last_name }}</ul>
+                                <ul>
+                                    <a href='{{ ppdd.get_absolute_url }}'>{{ ppdd }}</a>
+                                </ul>
                             {% endfor %}
                         </td>
                         <td>
@@ -72,5 +66,15 @@
             </table>
         </div>
     </div>
-
+    </div>
+    {#    </div>#}
+    <script>
+        $(document).ready(function () {
+            $('#table_id').DataTable({
+                    columnDefs: [{type: 'date', 'targets': [0]}],
+                    order: [[0, 'desc']]
+                }
+            );
+        });
+    </script>
 {% endblock %}
