@@ -4,11 +4,6 @@ from .models import PPDD
 
 
 class PPDDForm(forms.ModelForm):
-    # first_name = forms.CharField(max_length=40)
-    # last_name = forms.CharField(max_length=40)
-    # role = forms.CharField(max_length=100, required=False)
-    # tele_no = forms.CharField(max_length=1000, required=False)
-
     class Meta:
         model = PPDD
         fields = [
@@ -25,3 +20,13 @@ class PPDDForm(forms.ModelForm):
             "role": forms.TextInput(attrs={'class': 'form-control'}),
             "tele_no": forms.TextInput(attrs={'class': 'form-control'}),
         }
+
+
+    def __init__(self, *args, **kwargs):
+        super(PPDDForm, self).__init__(*args, **kwargs)
+        self.fields['first_name'].label = "First Name"
+        self.fields['last_name'].label = "Last Name"
+        self.fields['tele_no'].label = "Telephone Number"
+        # self.fields['scope'].label = "Brief Outline Of Scope"
+        # validation
+        # self.fields['name'].required = True

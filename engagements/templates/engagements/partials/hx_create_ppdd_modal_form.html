@@ -5,6 +5,8 @@
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
             <div class="modal-body">
+                <h4>Create New PPDD Entry</h4>
+                <h6>Fields with asterix are mandatory</h6>
                 <form>
                     {% csrf_token %}
                     {{ ppdd_form|crispy }}
