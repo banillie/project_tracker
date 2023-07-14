@@ -25,6 +25,14 @@
                                 hx-target="#create-new-ppdd-hx-container-ppdd-list"
                                 type="submit" class="btn btn-primary" onclick="closeModal()">Save
                         </button>
+                    {% elif hx_update_ppdd_url %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_update_ppdd_url }}"
+                                hx-target="#update-ppdd-details-container"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
                     {% endif %}
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
                 </form>

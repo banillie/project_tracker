@@ -57,6 +57,9 @@ class PPDD(models.Model):
     def get_absolute_url(self):
         return reverse("ppdds:detail", kwargs={"slug": self.slug})
 
+    def get_update_url(self):
+        return reverse("ppdds:update", kwargs={"slug": self.slug})
+
     ## requires change to model
     # def save(self, *arg, **kwargs):
     #     try:

@@ -1,36 +1,27 @@
 <div id="create-new-ppdd-hx-container-ppdd-list">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <h1>PPDD Colleagues Page</h1>
-            <p>
-                This page contains a list of the PPDD colleagues who have engaged with projects. Thus far there
-                are {{ object_list|length }}. By clicking on an entry below you will be able to walk through the various
-                projects they have supported and the issues they have tackled. If you are reviewing a business case,
-                please reference this tab to identify colleagues who may have worked with specific project team that may
-                also have additional information which might be of use.
-            </p>
-
-            <p>
-                If you are looking for details on a particular ppdd colleague please use the search bar (below, right).
-                If you need to create a new ppdd team member entry you can do so using the button below.
-            </p>
-            {#            <p>PPDD List. There are {{ object_list|length }} recorded PPDD colleagues. These are listed below in alphabetical order (by surname):</p>#}
-            {#            {% for instance in object_list %}#}
-            {#                <p><a href='{{ instance.get_absolute_url }}'>{{ instance.first_name }} {{ instance.last_name }}</a></p>#}
-            {#            {% endfor %}#}
-            {#            <p><a href="{% url 'ppdds:create' %}" class="btn btn-primary">Create new PPDD colleague</a></p>#}
-            <p>
-                <button
-                        class="btn btn-primary"
-                        hx-get="{{ hx_create_ppdd_url_list }}"
-                        hx-target="#create-ppdd-modal"
-                        hx-trigger="click"
-                        hx-swap="innerHTML"
-                        _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
+            <div class="row text-center p-3">
+                <h1>PPDD Colleagues</h1>
+                <p>
+                    This page contains a list of the PPDD colleagues who have engaged with projects. Thus far there
+                    are {{ object_list|length }}.
+                    If you are looking for details on a particular ppdd colleague please use the search bar (below,
+                    right).
+                    If you need to create a new ppdd team member entry you can do so using the button below.
+            </div>
+       <p>
+            <button
+                    class="btn btn-primary"
+                    hx-get="{{ hx_create_ppdd_url_list }}"
+                    hx-target="#create-ppdd-modal"
+                    hx-trigger="click"
+                    hx-swap="innerHTML"
+                    _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
                 	.show to #modal-backdrop">
-                    Create New PPDD colleague
-                </button>
-                {#            <a href="{% url 'stakeholders:create' %}" class="btn btn-primary">Create New Stakeholder Entry</a>#}
+                Create New PPDD colleague
+            </button>
+            {#            <a href="{% url 'stakeholders:create' %}" class="btn btn-primary">Create New Stakeholder Entry</a>#}
             </p>
             <table class="display" id="table_id">
                 <thead>

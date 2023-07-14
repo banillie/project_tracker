@@ -27,6 +27,7 @@ def stakeholders_create_view(request, slug=None):
     context = {
         "stakeholder_form": stakeholder_form,
     }
+
     if not slug:
         context["hx_create_stakeholder_url_list"] = reverse("stakeholders:create")
     else:
