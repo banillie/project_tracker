@@ -1,8 +1,6 @@
 <div id="update-stakeholder-details-container">
-
     <div class="row">
         <div class="col text-center">
-            {#            <h4><b>Name:#}
             <h4>
                 <b>
                     {{ object.first_name }} {{ object.last_name }}
@@ -13,20 +11,11 @@
                     </b>
                 {% endif %}
             </h4>
-            {#    </p>#}
             {% if object.organisation.name == "DfT(c)" %}
                 {% if object.my_dft_url %}
-                    {#            <p>#}
                     <a class="btn btn-success" href="{{ object.my_dft_url }}" target="_blank">My DfT Link</a>
-                    {#            </p>#}
                 {% endif %}
             {% endif %}
-            {#            {% else %}#}
-            {#            <b>Organisation: </b>#}
-            {#                ({{ object.organisation }})#}
-            {#            {% endif %}#}
-            {#        </div>#}
-            {#        <div class="col text-end">#}
             <button
                     class="btn btn-primary"
                     hx-get="{{ hx_update_stakeholder_url }}"
@@ -37,8 +26,6 @@
                 	.show to #modal-backdrop">
                 Update Details
             </button>
-
-            {#    </p>#}
         </div>
     </div>
 </div>

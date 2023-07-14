@@ -1,40 +1,31 @@
 <div id="create-new-project-hx-container-p-list">
-    <div class="container-fluid">
+    <div class="container">
         <div class="row">
-            <h3>Projects Page</h3>
+            <div class="row text-center p-3">
+                <h1>Projects</h1>
+                <p>
+                    This page provides a list of all the projects and programmes we have engaged with thus far:
+                    currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list
+                    of
+                    projects and programmes in the department, but more as a list of those we have engaged with.
+                    If you are looking for details on a particular project please use the search bar (below, right). If
+                    you
+                    need to create a new project entry you can do so using the button below.
+                </p>
+            </div>
             <p>
-                This page provides a list of all the projects and programmes we have engaged with thus far:
-                currently {{ object_list|length }}. This list should not be viewed as a complete/comprehensive list
-                of
-                projects and programmes in the department, but more as a list of those we have engaged with (see
-                Neil
-                Nevil for a list of all projects and programmes across the DfT Portfolio).
-            <p>
-                The list below provides insight into the range of projects across model areas that have sought our
-                advice and support. Click on a project to review our engagement and the types of issues they have
-                asked
-                us to help them address.
-            </p>
-
-            <p>
-                If you are looking for details on a particular project please use the search bar (below, right). If
-                you
-                need to create a new project entry you can do so using the button below.
-            </p>
-
-        <p>
-            <button
-                    class="btn btn-primary"
-                    hx-get="{{ hx_create_project_url_list }}"
-                    hx-target="#create-project-modal"
-                    hx-trigger="click"
-                    hx-swap="innerHTML"
-                    _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
+                <button
+                        class="btn btn-primary"
+                        hx-get="{{ hx_create_project_url_list }}"
+                        hx-target="#create-project-modal"
+                        hx-trigger="click"
+                        hx-swap="innerHTML"
+                        _="on htmx:afterOnLoad wait 9ms then add .show to #modal then add
                 	.show to #modal-backdrop">
-                Create New Project
-            </button>
+                    Create New Project
+                </button>
 
-        </p>
+            </p>
             <table class="display" id="table_id">
                 <thead>
                 <tr>

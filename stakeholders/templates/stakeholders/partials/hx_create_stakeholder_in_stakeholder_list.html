@@ -5,17 +5,11 @@
                 <h1>Stakeholders</h1>
                 <p>
                     This page contains a list of the various project team stakeholders we have engaged with, who are
-                    embedded in
-                    various projects around the department. Thus far {{ object_list|length }}. This list helps to
-                    identify
-                    key
-                    team members we have or need to engage with should we need to contact a project team.
-                    {#            </p>#}
-                    {#            <p>#}
+                    embedded in various projects around the department. Thus far {{ object_list|length }}. This list
+                    helps to
+                    identify key team members we have or need to engage with should we need to contact a project team.
                     If you are looking for the details of a particular stakeholder please use the search bar (below,
-                    right).
-                    If
-                    you need to create a new stakeholder entry you can do so using the button below.
+                    right). If you need to create a new stakeholder entry you can do so using the button below.
                 </p>
             </div>
         </div>
@@ -35,7 +29,7 @@
                     </button>
                     {#            <a href="{% url 'stakeholders:create' %}" class="btn btn-primary">Create New Stakeholder Entry</a>#}
                 </p>
-{#                </div>#}
+                {#                </div>#}
                 <table class="display" id="table_id">
                     <thead>
                     <tr>
@@ -88,8 +82,8 @@
         </div>
     </div>
 </div>
-    <script>
-        $(document).ready(function () {
-            $('#table_id').DataTable();
-        });
-    </script>
+<script>
+    $(document).ready(function () {
+        $('#table_id').DataTable();
+    });
+</script>

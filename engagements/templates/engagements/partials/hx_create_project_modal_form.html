@@ -8,7 +8,6 @@
                 <h4>Create New Scheme Entry</h4>
                 <h6>Fields with asterix are mandatory</h6>
                 <form>
-
                     {% csrf_token %}
                     {{ project_form|crispy }}
                     <p></p>
@@ -28,10 +27,17 @@
                                 hx-target="#create-new-project-hx-container-p-list"
                                 type="submit" class="btn btn-primary" onclick="closeModal()">Save
                         </button>
+                    {% elif hx_update_project_url %}
+                        <button
+                                action="."
+                                method="POST"
+                                hx-post="{{ hx_update_project_url }}"
+                                hx-target="#update-project-details-container"
+                                type="submit" class="btn btn-primary" onclick="closeModal()">Save
+                        </button>
                     {% endif %}
                     <button type="button" class="btn btn-secondary" onclick="closeModal()">Close</button>
                 </form>
-
             </div>
         </div>
     </div>
