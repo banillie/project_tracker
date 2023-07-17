@@ -15,9 +15,10 @@
         background: #555;
     }
 </style>
+
 <div id="update-project-details-container">
-    <div class="row">
-        <div class="col text-center">
+    <div class="row m-1">
+        <div class="col text-center p-4">
             <h4>
                 <b>{{ object.name }}</b>
             </h4>
@@ -31,43 +32,65 @@
                 	.show to #modal-backdrop">
                 Update Details
             </button>
-            <p></p>
         </div>
     </div>
-    <div class="row">
-        <div class="col border p-4">
-            <b>Scope: </b>
-       <div class="scrollable-div" style="max-height: 150px; overflow-y: scroll;">
-{#            <div style="max-height: 150px; overflow-y: scroll;">#}
-                {% if object.scope %}
-                    <pre>{{ object.scope }}</pre>
-                {% else %}
-                    No scope given.
-                {% endif %}
+    <div class="row justify-content-center">
+        <div class="col-lg-6 p-4 custom-box-one">
+            <div class="col">
+                <p>
+                    <b>Abbreviation: </b> {{ object.abbreviation }}
+                </p>
+                <p>
+                    <b>Type: </b> {{ object.sort }}
+                </p>
+                <p>
+                    <b>Group: </b> {{ object.dft_group }}
+                </p>
+                <p>
+                    {% if object.tier %}
+                        <b>Tier: </b> {{ object.tier }}
+                    {% endif %}
+                </p>
+                <p>
+                    {% if object.stage_name %}
+                        <b>Stage: </b> {{ object.stage_name }}
+                    {% endif %}
+                </p>
+            </div>
+            <div class="col">
+                <b>Scope: </b>
+                <div class="scrollable-div" style="max-height: 300px; overflow-y: scroll;">
+                    {% if object.scope %}
+                        <pre>{{ object.scope }}</pre>
+                    {% else %}
+                        No scope given.
+                    {% endif %}
+                </div>
             </div>
         </div>
-        <div class="col p-4">
-            <p>
-                <b>Abbreviation: </b> {{ object.abbreviation }}
-            </p>
-            <p>
-                <b>Type: </b> {{ object.sort }}
-            </p>
-            <p>
-                <b>Group: </b> {{ object.dft_group }}
-            </p>
-            <p>
-                {% if object.tier %}
-                    <b>Tier: </b> {{ object.tier }}
+        <div class="col-lg-6 p-4 custom-box-one">
+            <div class="col text-center p-4">
+                {% if engagement_list %}
+                    <p><b>{{ engagement_list.count }} Engagements:</b></p>
                 {% endif %}
-            </p>
-            <p>
-                {% if object.stage_name %}
-                    <b>Stage: </b> {{ object.stage_name }}
+                {% for instance in engagement_list %}
+                    <a href='{{ instance.get_absolute_url }}'>{{ instance.date }}</a>{% if not forloop.last %};
+                {% else %}.{% endif %}
+                {% empty %}
+                    <b>No Engagements so far...</b>
+                {% endfor %}
+            </div>
+            <div class="col text-center p-4">
+                {% if stakeholder_list %}
+                    <p><b>{{ stakeholder_list.count }} Stakeholders:</b></p>
                 {% endif %}
-            </p>
+                {% for instance in stakeholder_list %}
+                    <a href='{{ instance.get_absolute_url }}'>{{ instance }}</a>{% if not forloop.last %};
+                {% else %}.{% endif %}
+                {% empty %}
+                    <b>No Stakeholders so far...</b>
+                {% endfor %}
+            </div>
         </div>
     </div>
-
-
 </div>

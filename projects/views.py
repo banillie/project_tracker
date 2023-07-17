@@ -149,6 +149,11 @@ def project_create_view(request, slug=None):
             return render(request, "projects/partials/hx_create_project_in_project_list.html", context)
         else:
             context["object"] = obj
+            engage_qs = Engagement.objects.filter(projects__slug=slug).order_by('-date')
+            stakeholder_ids = engage_qs.values_list("stakeholders", flat=True).distinct()
+            stakeholder_qs = Stakeholder.objects.filter(pk__in=stakeholder_ids).order_by("last_name")
+            context["engagement_list"] = engage_qs
+            context["stakeholder_list"] = stakeholder_qs
             return render(
                 request,
                 "projects/partials/hx_update_project.html",
