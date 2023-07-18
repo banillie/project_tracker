@@ -3,9 +3,26 @@
 {% block content %}
 
     <div class="container p-3">
+        <a href="{% url "engagements:engagement-list" %}" class="btn btn-link">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-left"
+                 viewBox="0 0 16 16">
+                <path fill-rule="evenodd"
+                      d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8z"/>
+            </svg>
+            List of Engagements
+        </a>
         <div class="row m-1">
             <div class="col text-center p-4">
-                <h4>Details of Engagement</h4>
+                <h4>
+                    <p>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                             class="bi bi-calendar3" viewBox="0 0 16 16">
+                            <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
+                            <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                        </svg>
+                        {{ object.date }}
+                    </p>
+                </h4>
                 <p>
                     <a class="btn btn-primary" href="{{ object.get_absolute_url }}update">Update</a>
                     <a class="btn btn-danger" href="{{ object.get_absolute_url }}delete">Delete</a>
@@ -13,21 +30,7 @@
             </div>
         </div>
         <div class="row">
-{#            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-12">#}
-                <b>Summary:</b>
-                <p>
-                <pre>{{ object.summary }}</pre>
-                </p>
-{#            </div>#}
-            <div class="col-6">
-                <p>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
-                         class="bi bi-calendar3" viewBox="0 0 16 16">
-                        <path d="M14 0H2a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zM1 3.857C1 3.384 1.448 3 2 3h12c.552 0 1 .384 1 .857v10.286c0 .473-.448.857-1 .857H2c-.552 0-1-.384-1-.857V3.857z"/>
-                        <path d="M6.5 7a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-9 3a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm3 0a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
-                    </svg>
-                    {{ object.date }}
-                </p>
+            <div class="col-4 p-4 custom-box-one">
                 <p>
                     <b>Project(s):</b>
                     {% for instance in project_list %}
@@ -57,6 +60,12 @@
                     {% for instance in topic_list %}
                         <a>{{ instance }}</a>
                     {% endfor %}
+                </p>
+            </div>
+            <div class="col-8 p-4 custom-box-one">
+                <b>Summary:</b>
+                <p>
+                <pre>{{ object.summary }}</pre>
                 </p>
             </div>
         </div>
