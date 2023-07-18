@@ -35,7 +35,7 @@
                 <tr>
                     <th>Name</th>
                     <th>Team</th>
-                    <th>My DfT</th>
+{#                    <th>My DfT</th>#}
                 </tr>
                 </thead>
                 <tbody>
@@ -49,15 +49,15 @@
                                 {{ instance.team }}
                             {% endif %}
                         </td>
-                        <td>
-                            {% if instance.organisation.name == "DfT(c)" %}
-                                {% if instance.my_dft_url %}
-                                    <p>
-                                        <a href="{{ instance.my_dft_url }}" target="_blank">My DfT Link</a>
-                                    </p>
-                                {% endif %}
-                            {% endif %}
-                        </td>
+{#                        <td>#}
+{#                            {% if instance.organisation.name == "DfT(c)" %}#}
+{#                                {% if instance.my_dft_url %}#}
+{#                                    <p>#}
+{#                                        <a href="{{ instance.my_dft_url }}" target="_blank">My DfT Link</a>#}
+{#                                    </p>#}
+{#                                {% endif %}#}
+{#                            {% endif %}#}
+{#                        </td>#}
                     </tr>
                 {% endfor %}
                 </tbody>

@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% load static %}
@@ -7,38 +6,43 @@
 {% block content %}
 
     <script>
-    $(document).ready( function () {
-        $('#table_id').DataTable();
-    } );
+        $(document).ready(function () {
+            $('#table_id').DataTable();
+        });
     </script>
-
+<div class="container fluid">
     <section class="hero">
-    <div class="container">
-      <div class="left-col">
-        <p class="subhead">PPDD Let's Collaborate</p>
-        <h1>An Engagement App for staying joined-up</h1>
+        <div class="container">
+            <div class="left-col">
+                <p class="subhead">PPDD Let's Collaborate</p>
+                <h1>An Engagement App for staying joined-up</h1>
 
-        <div class="hero-cta">
-          <a href="{%  url 'engagements:engagement-create' %}" class="primary-cta">Record Engagement!</a>
+                <div class="hero-cta">
+                    <a href="{% url 'engagements:engagement-create' %}" class="primary-cta">Record Engagement!</a>
+                </div>
+            </div>
+
+            <img src={% static 'pages/illustration.svg' %} class="hero-img" alt="Illustration">
+
         </div>
-      </div>
 
-      <img src= {% static 'pages/illustration.svg' %} class="hero-img" alt="Illustration">
+        <div>
 
-    </div>
+            <p style="margin-top: 6em">
+                Welcome to the Portfolio and Project Delivery Directorate (PPDD) Engagement Tracker. This tool has been
+                developed to help PPDD track the projects we engage with on an ad hoc basis, with the aim of helping us
+                understand not only who we have shared information with, but also to help identify the various themes
+                that we engage with colleagues on, to assess trends and also inform PPDDs approach in communicating
+                Project Delivery improvement areas.
+            </p>
 
-    <div>
-
-        <p style="margin-top: 6em">
-            Welcome to the Portfolio and Project Delivery Directorate (PPDD) Engagement Tracker. This tool has been developed to help PPDD track the projects we engage with on an ad hoc basis, with the aim of helping us understand not only who we have shared information with, but also to help identify the various themes that we engage with colleagues on, to assess trends and also inform PPDDs approach in communicating Project Delivery improvement areas.
-        </p>
-
-        <p>
-            As the tool develops additional features will be added to help provide a richer awareness of our performance in providing advice and engaging with product team members.
-        </p>
-    </div>
-  </section>
-    <section>
+            <p>
+                As the tool develops additional features will be added to help provide a richer awareness of our
+                performance in providing advice and engaging with product team members.
+            </p>
+        </div>
+    </section>
+    <div class="row">
         <form method="post" novalidate>{% csrf_token %}
             {% if error_msg is not None %}
                 <h5>You need to be logged in to post an idea</h5>
@@ -46,36 +50,36 @@
             <p>
                 If you have any ideas about how to improve this tool please post them to us below!
             </p>
-            {{ form|crispy}}
+            {{ form|crispy }}
             <br>
-                <p>
-                    <input class="btn btn-primary" type="submit" value="Post">
-                </p>
+            <p>
+                <input class="btn btn-primary" type="submit" value="Post">
+            </p>
         </form>
 
 
-            <div>
-                <p>Ideas already posted by PPDD colleagues.</p>
+        <div>
+            <p>Ideas already posted by PPDD colleagues.</p>
             <table class="display" id="table_id">
                 <thead>
-                    <tr>
-                        <th>Name</th>
-                        <th>Idea</th>
-                    </tr>
+                <tr>
+                    <th>Name</th>
+                    <th>Idea</th>
+                </tr>
                 </thead>
-                    <tbody>
-                    {% for instance in object_list %}
-                        <tr>
-                            <td>{{ instance.user.first_name }}
-                                {{ instance.user.last_name }}
-                            </td>
-                            <td>{{ instance.ideas }}</td>
-                        </tr>
-                    {% endfor %}
-                    </tbody>
+                <tbody>
+                {% for instance in object_list %}
+                    <tr>
+                        <td>{{ instance.user.first_name }}
+                            {{ instance.user.last_name }}
+                        </td>
+                        <td>{{ instance.ideas }}</td>
+                    </tr>
+                {% endfor %}
+                </tbody>
             </table>
         </div>
 
-    </section>
-
+    </div>
+</div>
 {% endblock %}
